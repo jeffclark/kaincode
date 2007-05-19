@@ -1,0 +1,24 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {add = id; addFeeds = id; edit = id; newGroup = id; remove = id; save = id; }; 
+            CLASS = Controller; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                descriptionField = NSTextField; 
+                editButton = NSButton; 
+                feedsTextView = NSTextView; 
+                linkField = NSTextField; 
+                nameField = NSTextField; 
+                outlineView = NSOutlineView; 
+                progressBar = NSProgressIndicator; 
+                removeButton = NSButton; 
+                totalSources = NSTextField; 
+                urlField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
