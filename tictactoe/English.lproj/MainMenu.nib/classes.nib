@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {doTurn = id; newGame = id; }; 
+            CLASS = AppController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {matrix = NSMatrix; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
