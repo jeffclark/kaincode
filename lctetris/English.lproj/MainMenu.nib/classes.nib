@@ -1,0 +1,17 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {OKHighScore = id; }; 
+            CLASS = MyView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                highScoreField = NSTextField; 
+                highScoreLabel = NSTextField; 
+                highscoreWindow = NSWindow; 
+            }; 
+            SUPERCLASS = NSOpenGLView; 
+        }
+    ); 
+    IBVersion = 1; 
+}
