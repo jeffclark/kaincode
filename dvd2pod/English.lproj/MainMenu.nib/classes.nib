@@ -1,0 +1,95 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                chooseOutputDirectory = id; 
+                rename = id; 
+                rip = id; 
+                toggleOptions = id; 
+                updateOptimizeMatrix = id; 
+                updateSendToiTunes = id; 
+            }; 
+            CLASS = Controller; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                dvdName = NSTextField; 
+                fRipButton = NSButton; 
+                fRipIndicator = NSProgressIndicator; 
+                fStatusField = NSTextField; 
+                fWindow = NSWindow; 
+                imageView = NSImageView; 
+                optimizeMatrix = NSMatrix; 
+                outputDirectoryPopUp = NSPopUpButton; 
+                renameField = NSTextField; 
+                sendToiTunes = NSButton; 
+                showOptions = NSButton; 
+                showOptionsField = NSTextField; 
+                titlesPopUp = NSPopUpButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = HBPictureGLView; LANGUAGE = ObjC; SUPERCLASS = NSOpenGLView; }, 
+        {
+            CLASS = HBTargetSizeField; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                fRipAudBitPopUp = NSPopUpButton; 
+                fRipCustomField = NSTextField; 
+                fRipFormatPopUp = NSPopUpButton; 
+                fRipLang2PopUp = NSPopUpButton; 
+            }; 
+            SUPERCLASS = NSTextField; 
+        }, 
+        {
+            ACTIONS = {ClosePanel = id; SettingsChanged = id; }; 
+            CLASS = PictureController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                fHeightField = NSTextField; 
+                fHeightStepper = NSStepper; 
+                fInfoField = NSTextField; 
+                fPictureGLView = HBPictureGLView; 
+                fRatioCheck = NSButton; 
+                fWidthField = NSTextField; 
+                fWidthStepper = NSStepper; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = PictureGLView; LANGUAGE = ObjC; SUPERCLASS = NSOpenGLView; }, 
+        {
+            ACTIONS = {
+                Browse = id; 
+                Browse2 = id; 
+                BrowseDone2 = id; 
+                Cancel = id; 
+                MatrixChanged = id; 
+                Open = id; 
+            }; 
+            CLASS = ScanController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                fBrowseButton = NSButton; 
+                fCancelButton = NSButton; 
+                fDetectedCell = NSButtonCell; 
+                fDetectedPopUp = NSPopUpButton; 
+                fFolderCell = NSButtonCell; 
+                fFolderField = NSTextField; 
+                fIndicator = NSProgressIndicator; 
+                fMatrix = NSMatrix; 
+                fOpenButton = NSButton; 
+                fPanel = NSPanel; 
+                fSelectString = NSTextField; 
+                fStatusField = NSTextField; 
+                fWindow = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
