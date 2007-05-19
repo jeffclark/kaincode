@@ -1,0 +1,20 @@
+{
+    IBClasses = (
+        {CLASS = CapacityBar; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {addValue = id; clearValues = id; selectColor = id; toggleVerticleLines = id; }; 
+            CLASS = Controller; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                capacityBar = CapacityBar; 
+                colorWell = NSColorWell; 
+                colorsPopUp = NSPopUpButton; 
+                drawLinesButton = NSButton; 
+                valueField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
