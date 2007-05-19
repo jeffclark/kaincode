@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {savePrefs = id; }; 
+            CLASS = converter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {prefMatrix = NSMatrix; prefWin = NSWindow; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
