@@ -1,0 +1,17 @@
+hostname ipod
+mount -t proc proc /proc
+cat /etc/motd
+ln -s /dev/pty/m0 /dev/ptyp0
+ln -s /dev/pty/m1 /dev/ptyp1
+ln -s /dev/ide/host0/bus0/target0/lun0/disc /dev/hda
+ln -s /dev/ide/host0/bus0/target0/lun0/part1 /dev/hda1
+ln -s /dev/ide/host0/bus0/target0/lun0/part2 /dev/hda2
+ln -s /dev/ide/host0/bus0/target0/lun0/part3 /dev/hda3
+ln -s /dev/tts/1 /dev/ttyS1
+mknod /dev/ttyp0 c 3 0
+mknod /dev/ttyp1 c 3 0
+#modprobe tsb43aa82
+#modprobe eth1394
+#ifconfig eth0 192.168.222.2 mtu 170
+hdparm -S 3 /dev/hda
+podzilla
