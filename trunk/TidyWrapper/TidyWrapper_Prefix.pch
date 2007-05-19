@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'TidyWrapper' target in the 'TidyWrapper' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
