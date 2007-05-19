@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {CLASS = NSObject; LANGUAGE = ObjC; }, 
+        {
+            CLASS = PSMTabBarControl; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {delegate = id; partnerView = id; style = id; tabView = NSTabView; }; 
+            SUPERCLASS = NSControl; 
+        }, 
+        {
+            ACTIONS = {checkForUpdates = id; }; 
+            CLASS = SUUpdater; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {import = id; newTab = id; sendFeedback = id; }; 
+            CLASS = TSController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mainWindow = NSWindow; tabBar = PSMTabBarControl; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
