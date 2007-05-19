@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            CLASS = DemoController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {textField = KWMultiValueTextField; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = KWMultiValueTextField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }
+    ); 
+    IBVersion = 1; 
+}
