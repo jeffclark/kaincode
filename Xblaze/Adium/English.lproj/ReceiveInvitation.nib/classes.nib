@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {accept = id; deny = id; }; 
+            CLASS = KWXfireInvitationController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {messageField = NSTextField; usernameField = NSTextField; }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

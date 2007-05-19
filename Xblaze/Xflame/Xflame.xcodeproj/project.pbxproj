@@ -1,0 +1,637 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A57DD3210AA62DAB007772EA /* XfireMacGameInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A57DD31F0AA62DAB007772EA /* XfireMacGameInfo.m */; };
+		A5BA0E600A702F9D00EB39E9 /* XFController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5BA0E5E0A702F9D00EB39E9 /* XFController.m */; };
+		A5FB85820A72B8DD00B543E8 /* xfire_games.ini in Resources */ = {isa = PBXBuildFile; fileRef = A5FB85120A72B8DD00B543E8 /* xfire_games.ini */; };
+		A5FB85830A72B8DD00B543E8 /* Xfire.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85150A72B8DD00B543E8 /* Xfire.mm */; };
+		A5FB85840A72B8DD00B543E8 /* XfireBuddyList.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85170A72B8DD00B543E8 /* XfireBuddyList.m */; };
+		A5FB85850A72B8DD00B543E8 /* XfireBuddyListEntry.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85190A72B8DD00B543E8 /* XfireBuddyListEntry.mm */; };
+		A5FB85860A72B8DD00B543E8 /* XfireGameInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FB851B0A72B8DD00B543E8 /* XfireGameInfo.m */; };
+		A5FB85870A72B8DD00B543E8 /* XfireGamesList.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FB851D0A72B8DD00B543E8 /* XfireGamesList.m */; };
+		A5FB85880A72B8DD00B543E8 /* authpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB851F0A72B8DD00B543E8 /* authpacket.cpp */; };
+		A5FB85890A72B8DD00B543E8 /* buddylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85210A72B8DD00B543E8 /* buddylist.cpp */; };
+		A5FB858A0A72B8DD00B543E8 /* buddylistgames2packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85230A72B8DD00B543E8 /* buddylistgames2packet.cpp */; };
+		A5FB858B0A72B8DD00B543E8 /* buddylistgamespacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85250A72B8DD00B543E8 /* buddylistgamespacket.cpp */; };
+		A5FB858C0A72B8DD00B543E8 /* buddylistnamespacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85270A72B8DD00B543E8 /* buddylistnamespacket.cpp */; };
+		A5FB858D0A72B8DD00B543E8 /* buddylistonlinepacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85290A72B8DD00B543E8 /* buddylistonlinepacket.cpp */; };
+		A5FB858E0A72B8DD00B543E8 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB852B0A72B8DD00B543E8 /* client.cpp */; };
+		A5FB858F0A72B8DD00B543E8 /* clientinformationpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB852D0A72B8DD00B543E8 /* clientinformationpacket.cpp */; };
+		A5FB85900A72B8DD00B543E8 /* clientloginpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB852F0A72B8DD00B543E8 /* clientloginpacket.cpp */; };
+		A5FB85910A72B8DD00B543E8 /* clientversionpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85310A72B8DD00B543E8 /* clientversionpacket.cpp */; };
+		A5FB85920A72B8DD00B543E8 /* dummyxfiregameresolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85330A72B8DD00B543E8 /* dummyxfiregameresolver.cpp */; };
+		A5FB85930A72B8DD00B543E8 /* invitebuddypacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85350A72B8DD00B543E8 /* invitebuddypacket.cpp */; };
+		A5FB85940A72B8DD00B543E8 /* inviterequestpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85370A72B8DD00B543E8 /* inviterequestpacket.cpp */; };
+		A5FB85950A72B8DD00B543E8 /* loginfailedpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85390A72B8DD00B543E8 /* loginfailedpacket.cpp */; };
+		A5FB85960A72B8DD00B543E8 /* loginsuccesspacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB853B0A72B8DD00B543E8 /* loginsuccesspacket.cpp */; };
+		A5FB85970A72B8DD00B543E8 /* messageackpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB853D0A72B8DD00B543E8 /* messageackpacket.cpp */; };
+		A5FB85980A72B8DD00B543E8 /* messagepacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB853F0A72B8DD00B543E8 /* messagepacket.cpp */; };
+		A5FB85990A72B8DD00B543E8 /* monitoredobj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85410A72B8DD00B543E8 /* monitoredobj.cpp */; };
+		A5FB859A0A72B8DD00B543E8 /* otherloginpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85430A72B8DD00B543E8 /* otherloginpacket.cpp */; };
+		A5FB859B0A72B8DD00B543E8 /* packetreader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85460A72B8DD00B543E8 /* packetreader.cpp */; };
+		A5FB859C0A72B8DD00B543E8 /* recvdidpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85480A72B8DD00B543E8 /* recvdidpacket.cpp */; };
+		A5FB859D0A72B8DD00B543E8 /* recvoldversionpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB854A0A72B8DD00B543E8 /* recvoldversionpacket.cpp */; };
+		A5FB859E0A72B8DD00B543E8 /* recvprefspacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB854C0A72B8DD00B543E8 /* recvprefspacket.cpp */; };
+		A5FB859F0A72B8DD00B543E8 /* recvremovebuddypacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB854E0A72B8DD00B543E8 /* recvremovebuddypacket.cpp */; };
+		A5FB85A00A72B8DD00B543E8 /* recvstatusmessagepacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85500A72B8DD00B543E8 /* recvstatusmessagepacket.cpp */; };
+		A5FB85A10A72B8DD00B543E8 /* sendacceptinvitationpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85520A72B8DD00B543E8 /* sendacceptinvitationpacket.cpp */; };
+		A5FB85A20A72B8DD00B543E8 /* senddenyinvitationpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85540A72B8DD00B543E8 /* senddenyinvitationpacket.cpp */; };
+		A5FB85A30A72B8DD00B543E8 /* sendgameserverpacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85560A72B8DD00B543E8 /* sendgameserverpacket.cpp */; };
+		A5FB85A40A72B8DD00B543E8 /* sendgamestatus2packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85580A72B8DD00B543E8 /* sendgamestatus2packet.cpp */; };
+		A5FB85A50A72B8DD00B543E8 /* sendgamestatuspacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB855A0A72B8DD00B543E8 /* sendgamestatuspacket.cpp */; };
+		A5FB85A60A72B8DD00B543E8 /* sendkeepalivepacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB855C0A72B8DD00B543E8 /* sendkeepalivepacket.cpp */; };
+		A5FB85A70A72B8DD00B543E8 /* sendmessagepacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB855E0A72B8DD00B543E8 /* sendmessagepacket.cpp */; };
+		A5FB85A80A72B8DD00B543E8 /* sendnickchangepacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85600A72B8DD00B543E8 /* sendnickchangepacket.cpp */; };
+		A5FB85A90A72B8DD00B543E8 /* sendremovebuddypacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85620A72B8DD00B543E8 /* sendremovebuddypacket.cpp */; };
+		A5FB85AA0A72B8DD00B543E8 /* sendstatusmessagepacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85640A72B8DD00B543E8 /* sendstatusmessagepacket.cpp */; };
+		A5FB85AB0A72B8DD00B543E8 /* SHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85660A72B8DD00B543E8 /* SHA1.cpp */; };
+		A5FB85AC0A72B8DD00B543E8 /* socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85680A72B8DD00B543E8 /* socket.cpp */; };
+		A5FB85AE0A72B8DD00B543E8 /* variablevalue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB856E0A72B8DD00B543E8 /* variablevalue.cpp */; };
+		A5FB85AF0A72B8DD00B543E8 /* xdebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85700A72B8DD00B543E8 /* xdebug.cpp */; };
+		A5FB85B00A72B8DD00B543E8 /* xfiregame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85720A72B8DD00B543E8 /* xfiregame.cpp */; };
+		A5FB85B10A72B8DD00B543E8 /* xfiregameresolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85740A72B8DD00B543E8 /* xfiregameresolver.cpp */; };
+		A5FB85B20A72B8DD00B543E8 /* xfirepacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85760A72B8DD00B543E8 /* xfirepacket.cpp */; };
+		A5FB85B30A72B8DD00B543E8 /* xfirepacketcontent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85780A72B8DD00B543E8 /* xfirepacketcontent.cpp */; };
+		A5FB85B40A72B8DD00B543E8 /* xfireparse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB857A0A72B8DD00B543E8 /* xfireparse.cpp */; };
+		A5FB85B50A72B8DD00B543E8 /* xfirerecvpacketcontent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB857C0A72B8DD00B543E8 /* xfirerecvpacketcontent.cpp */; };
+		A5FB85B60A72B8DD00B543E8 /* xfiresendpacketcontent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB857E0A72B8DD00B543E8 /* xfiresendpacketcontent.cpp */; };
+		A5FB85B70A72B8DD00B543E8 /* xfireutils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FB85800A72B8DD00B543E8 /* xfireutils.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* Xflame_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Xflame_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* Xflame.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Xflame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A57DD31F0AA62DAB007772EA /* XfireMacGameInfo.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = XfireMacGameInfo.m; sourceTree = "<group>"; };
+		A57DD3200AA62DAB007772EA /* XfireMacGameInfo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = XfireMacGameInfo.h; sourceTree = "<group>"; };
+		A5BA0E5E0A702F9D00EB39E9 /* XFController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = XFController.m; sourceTree = "<group>"; };
+		A5BA0E5F0A702F9D00EB39E9 /* XFController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = XFController.h; sourceTree = "<group>"; };
+		A5FB85120A72B8DD00B543E8 /* xfire_games.ini */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = xfire_games.ini; sourceTree = "<group>"; };
+		A5FB85140A72B8DD00B543E8 /* Xfire.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Xfire.h; sourceTree = "<group>"; };
+		A5FB85150A72B8DD00B543E8 /* Xfire.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = Xfire.mm; sourceTree = "<group>"; };
+		A5FB85160A72B8DD00B543E8 /* XfireBuddyList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = XfireBuddyList.h; sourceTree = "<group>"; };
+		A5FB85170A72B8DD00B543E8 /* XfireBuddyList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = XfireBuddyList.m; sourceTree = "<group>"; };
+		A5FB85180A72B8DD00B543E8 /* XfireBuddyListEntry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = XfireBuddyListEntry.h; sourceTree = "<group>"; };
+		A5FB85190A72B8DD00B543E8 /* XfireBuddyListEntry.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = XfireBuddyListEntry.mm; sourceTree = "<group>"; };
+		A5FB851A0A72B8DD00B543E8 /* XfireGameInfo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = XfireGameInfo.h; sourceTree = "<group>"; };
+		A5FB851B0A72B8DD00B543E8 /* XfireGameInfo.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = XfireGameInfo.m; sourceTree = "<group>"; };
+		A5FB851C0A72B8DD00B543E8 /* XfireGamesList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = XfireGamesList.h; sourceTree = "<group>"; };
+		A5FB851D0A72B8DD00B543E8 /* XfireGamesList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = XfireGamesList.m; sourceTree = "<group>"; };
+		A5FB851F0A72B8DD00B543E8 /* authpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = authpacket.cpp; sourceTree = "<group>"; };
+		A5FB85200A72B8DD00B543E8 /* authpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = authpacket.h; sourceTree = "<group>"; };
+		A5FB85210A72B8DD00B543E8 /* buddylist.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = buddylist.cpp; sourceTree = "<group>"; };
+		A5FB85220A72B8DD00B543E8 /* buddylist.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = buddylist.h; sourceTree = "<group>"; };
+		A5FB85230A72B8DD00B543E8 /* buddylistgames2packet.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = buddylistgames2packet.cpp; sourceTree = "<group>"; };
+		A5FB85240A72B8DD00B543E8 /* buddylistgames2packet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = buddylistgames2packet.h; sourceTree = "<group>"; };
+		A5FB85250A72B8DD00B543E8 /* buddylistgamespacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = buddylistgamespacket.cpp; sourceTree = "<group>"; };
+		A5FB85260A72B8DD00B543E8 /* buddylistgamespacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = buddylistgamespacket.h; sourceTree = "<group>"; };
+		A5FB85270A72B8DD00B543E8 /* buddylistnamespacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = buddylistnamespacket.cpp; sourceTree = "<group>"; };
+		A5FB85280A72B8DD00B543E8 /* buddylistnamespacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = buddylistnamespacket.h; sourceTree = "<group>"; };
+		A5FB85290A72B8DD00B543E8 /* buddylistonlinepacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = buddylistonlinepacket.cpp; sourceTree = "<group>"; };
+		A5FB852A0A72B8DD00B543E8 /* buddylistonlinepacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = buddylistonlinepacket.h; sourceTree = "<group>"; };
+		A5FB852B0A72B8DD00B543E8 /* client.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = client.cpp; sourceTree = "<group>"; };
+		A5FB852C0A72B8DD00B543E8 /* client.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = client.h; sourceTree = "<group>"; };
+		A5FB852D0A72B8DD00B543E8 /* clientinformationpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = clientinformationpacket.cpp; sourceTree = "<group>"; };
+		A5FB852E0A72B8DD00B543E8 /* clientinformationpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = clientinformationpacket.h; sourceTree = "<group>"; };
+		A5FB852F0A72B8DD00B543E8 /* clientloginpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = clientloginpacket.cpp; sourceTree = "<group>"; };
+		A5FB85300A72B8DD00B543E8 /* clientloginpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = clientloginpacket.h; sourceTree = "<group>"; };
+		A5FB85310A72B8DD00B543E8 /* clientversionpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = clientversionpacket.cpp; sourceTree = "<group>"; };
+		A5FB85320A72B8DD00B543E8 /* clientversionpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = clientversionpacket.h; sourceTree = "<group>"; };
+		A5FB85330A72B8DD00B543E8 /* dummyxfiregameresolver.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = dummyxfiregameresolver.cpp; sourceTree = "<group>"; };
+		A5FB85340A72B8DD00B543E8 /* dummyxfiregameresolver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = dummyxfiregameresolver.h; sourceTree = "<group>"; };
+		A5FB85350A72B8DD00B543E8 /* invitebuddypacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = invitebuddypacket.cpp; sourceTree = "<group>"; };
+		A5FB85360A72B8DD00B543E8 /* invitebuddypacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = invitebuddypacket.h; sourceTree = "<group>"; };
+		A5FB85370A72B8DD00B543E8 /* inviterequestpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = inviterequestpacket.cpp; sourceTree = "<group>"; };
+		A5FB85380A72B8DD00B543E8 /* inviterequestpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = inviterequestpacket.h; sourceTree = "<group>"; };
+		A5FB85390A72B8DD00B543E8 /* loginfailedpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = loginfailedpacket.cpp; sourceTree = "<group>"; };
+		A5FB853A0A72B8DD00B543E8 /* loginfailedpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = loginfailedpacket.h; sourceTree = "<group>"; };
+		A5FB853B0A72B8DD00B543E8 /* loginsuccesspacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = loginsuccesspacket.cpp; sourceTree = "<group>"; };
+		A5FB853C0A72B8DD00B543E8 /* loginsuccesspacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = loginsuccesspacket.h; sourceTree = "<group>"; };
+		A5FB853D0A72B8DD00B543E8 /* messageackpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = messageackpacket.cpp; sourceTree = "<group>"; };
+		A5FB853E0A72B8DD00B543E8 /* messageackpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = messageackpacket.h; sourceTree = "<group>"; };
+		A5FB853F0A72B8DD00B543E8 /* messagepacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = messagepacket.cpp; sourceTree = "<group>"; };
+		A5FB85400A72B8DD00B543E8 /* messagepacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = messagepacket.h; sourceTree = "<group>"; };
+		A5FB85410A72B8DD00B543E8 /* monitoredobj.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = monitoredobj.cpp; sourceTree = "<group>"; };
+		A5FB85420A72B8DD00B543E8 /* monitoredobj.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = monitoredobj.h; sourceTree = "<group>"; };
+		A5FB85430A72B8DD00B543E8 /* otherloginpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = otherloginpacket.cpp; sourceTree = "<group>"; };
+		A5FB85440A72B8DD00B543E8 /* otherloginpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = otherloginpacket.h; sourceTree = "<group>"; };
+		A5FB85450A72B8DD00B543E8 /* packetlistener.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = packetlistener.h; sourceTree = "<group>"; };
+		A5FB85460A72B8DD00B543E8 /* packetreader.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = packetreader.cpp; sourceTree = "<group>"; };
+		A5FB85470A72B8DD00B543E8 /* packetreader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = packetreader.h; sourceTree = "<group>"; };
+		A5FB85480A72B8DD00B543E8 /* recvdidpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = recvdidpacket.cpp; sourceTree = "<group>"; };
+		A5FB85490A72B8DD00B543E8 /* recvdidpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = recvdidpacket.h; sourceTree = "<group>"; };
+		A5FB854A0A72B8DD00B543E8 /* recvoldversionpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = recvoldversionpacket.cpp; sourceTree = "<group>"; };
+		A5FB854B0A72B8DD00B543E8 /* recvoldversionpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = recvoldversionpacket.h; sourceTree = "<group>"; };
+		A5FB854C0A72B8DD00B543E8 /* recvprefspacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = recvprefspacket.cpp; sourceTree = "<group>"; };
+		A5FB854D0A72B8DD00B543E8 /* recvprefspacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = recvprefspacket.h; sourceTree = "<group>"; };
+		A5FB854E0A72B8DD00B543E8 /* recvremovebuddypacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = recvremovebuddypacket.cpp; sourceTree = "<group>"; };
+		A5FB854F0A72B8DD00B543E8 /* recvremovebuddypacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = recvremovebuddypacket.h; sourceTree = "<group>"; };
+		A5FB85500A72B8DD00B543E8 /* recvstatusmessagepacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = recvstatusmessagepacket.cpp; sourceTree = "<group>"; };
+		A5FB85510A72B8DD00B543E8 /* recvstatusmessagepacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = recvstatusmessagepacket.h; sourceTree = "<group>"; };
+		A5FB85520A72B8DD00B543E8 /* sendacceptinvitationpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = sendacceptinvitationpacket.cpp; sourceTree = "<group>"; };
+		A5FB85530A72B8DD00B543E8 /* sendacceptinvitationpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = sendacceptinvitationpacket.h; sourceTree = "<group>"; };
+		A5FB85540A72B8DD00B543E8 /* senddenyinvitationpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = senddenyinvitationpacket.cpp; sourceTree = "<group>"; };
+		A5FB85550A72B8DD00B543E8 /* senddenyinvitationpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = senddenyinvitationpacket.h; sourceTree = "<group>"; };
+		A5FB85560A72B8DD00B543E8 /* sendgameserverpacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = sendgameserverpacket.cpp; sourceTree = "<group>"; };
+		A5FB85570A72B8DD00B543E8 /* sendgameserverpacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = sendgameserverpacket.h; sourceTree = "<group>"; };
+		A5FB85580A72B8DD00B543E8 /* sendgamestatus2packet.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = sendgamestatus2packet.cpp; sourceTree = "<group>"; };
+		A5FB85590A72B8DD00B543E8 /* sendgamestatus2packet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = sendgamestatus2packet.h; sourceTree = "<group>"; };
+		A5FB855A0A72B8DD00B543E8 /* sendgamestatuspacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = sendgamestatuspacket.cpp; sourceTree = "<group>"; };
+		A5FB855B0A72B8DD00B543E8 /* sendgamestatuspacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = sendgamestatuspacket.h; sourceTree = "<group>"; };
+		A5FB855C0A72B8DD00B543E8 /* sendkeepalivepacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = sendkeepalivepacket.cpp; sourceTree = "<group>"; };
+		A5FB855D0A72B8DD00B543E8 /* sendkeepalivepacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = sendkeepalivepacket.h; sourceTree = "<group>"; };
+		A5FB855E0A72B8DD00B543E8 /* sendmessagepacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = sendmessagepacket.cpp; sourceTree = "<group>"; };
+		A5FB855F0A72B8DD00B543E8 /* sendmessagepacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = sendmessagepacket.h; sourceTree = "<group>"; };
+		A5FB85600A72B8DD00B543E8 /* sendnickchangepacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = sendnickchangepacket.cpp; sourceTree = "<group>"; };
+		A5FB85610A72B8DD00B543E8 /* sendnickchangepacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = sendnickchangepacket.h; sourceTree = "<group>"; };
+		A5FB85620A72B8DD00B543E8 /* sendremovebuddypacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = sendremovebuddypacket.cpp; sourceTree = "<group>"; };
+		A5FB85630A72B8DD00B543E8 /* sendremovebuddypacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = sendremovebuddypacket.h; sourceTree = "<group>"; };
+		A5FB85640A72B8DD00B543E8 /* sendstatusmessagepacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = sendstatusmessagepacket.cpp; sourceTree = "<group>"; };
+		A5FB85650A72B8DD00B543E8 /* sendstatusmessagepacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = sendstatusmessagepacket.h; sourceTree = "<group>"; };
+		A5FB85660A72B8DD00B543E8 /* SHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = SHA1.cpp; sourceTree = "<group>"; };
+		A5FB85670A72B8DD00B543E8 /* SHA1.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SHA1.h; sourceTree = "<group>"; };
+		A5FB85680A72B8DD00B543E8 /* socket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = socket.cpp; sourceTree = "<group>"; };
+		A5FB85690A72B8DD00B543E8 /* socket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = socket.h; sourceTree = "<group>"; };
+		A5FB856A0A72B8DD00B543E8 /* socketexception.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = socketexception.h; sourceTree = "<group>"; };
+		A5FB856E0A72B8DD00B543E8 /* variablevalue.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = variablevalue.cpp; sourceTree = "<group>"; };
+		A5FB856F0A72B8DD00B543E8 /* variablevalue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = variablevalue.h; sourceTree = "<group>"; };
+		A5FB85700A72B8DD00B543E8 /* xdebug.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = xdebug.cpp; sourceTree = "<group>"; };
+		A5FB85710A72B8DD00B543E8 /* xdebug.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = xdebug.h; sourceTree = "<group>"; };
+		A5FB85720A72B8DD00B543E8 /* xfiregame.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = xfiregame.cpp; sourceTree = "<group>"; };
+		A5FB85730A72B8DD00B543E8 /* xfiregame.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = xfiregame.h; sourceTree = "<group>"; };
+		A5FB85740A72B8DD00B543E8 /* xfiregameresolver.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = xfiregameresolver.cpp; sourceTree = "<group>"; };
+		A5FB85750A72B8DD00B543E8 /* xfiregameresolver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = xfiregameresolver.h; sourceTree = "<group>"; };
+		A5FB85760A72B8DD00B543E8 /* xfirepacket.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = xfirepacket.cpp; sourceTree = "<group>"; };
+		A5FB85770A72B8DD00B543E8 /* xfirepacket.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = xfirepacket.h; sourceTree = "<group>"; };
+		A5FB85780A72B8DD00B543E8 /* xfirepacketcontent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = xfirepacketcontent.cpp; sourceTree = "<group>"; };
+		A5FB85790A72B8DD00B543E8 /* xfirepacketcontent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = xfirepacketcontent.h; sourceTree = "<group>"; };
+		A5FB857A0A72B8DD00B543E8 /* xfireparse.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = xfireparse.cpp; sourceTree = "<group>"; };
+		A5FB857B0A72B8DD00B543E8 /* xfireparse.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = xfireparse.h; sourceTree = "<group>"; };
+		A5FB857C0A72B8DD00B543E8 /* xfirerecvpacketcontent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = xfirerecvpacketcontent.cpp; sourceTree = "<group>"; };
+		A5FB857D0A72B8DD00B543E8 /* xfirerecvpacketcontent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = xfirerecvpacketcontent.h; sourceTree = "<group>"; };
+		A5FB857E0A72B8DD00B543E8 /* xfiresendpacketcontent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = xfiresendpacketcontent.cpp; sourceTree = "<group>"; };
+		A5FB857F0A72B8DD00B543E8 /* xfiresendpacketcontent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = xfiresendpacketcontent.h; sourceTree = "<group>"; };
+		A5FB85800A72B8DD00B543E8 /* xfireutils.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = xfireutils.cpp; sourceTree = "<group>"; };
+		A5FB85810A72B8DD00B543E8 /* xfireutils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = xfireutils.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A5BA0E5F0A702F9D00EB39E9 /* XFController.h */,
+				A5BA0E5E0A702F9D00EB39E9 /* XFController.m */,
+				A5FB85100A72B8DD00B543E8 /* Xfire */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* Xflame.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* Xflame */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Source */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = Xflame;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* Xflame_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A5FB85100A72B8DD00B543E8 /* Xfire */ = {
+			isa = PBXGroup;
+			children = (
+				A5FB85110A72B8DD00B543E8 /* resources */,
+				A5FB85130A72B8DD00B543E8 /* src */,
+			);
+			name = Xfire;
+			path = ../Xfire;
+			sourceTree = SOURCE_ROOT;
+		};
+		A5FB85110A72B8DD00B543E8 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				A5FB85120A72B8DD00B543E8 /* xfire_games.ini */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		A5FB85130A72B8DD00B543E8 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A5FB85140A72B8DD00B543E8 /* Xfire.h */,
+				A5FB85150A72B8DD00B543E8 /* Xfire.mm */,
+				A5FB85160A72B8DD00B543E8 /* XfireBuddyList.h */,
+				A5FB85170A72B8DD00B543E8 /* XfireBuddyList.m */,
+				A5FB85180A72B8DD00B543E8 /* XfireBuddyListEntry.h */,
+				A5FB85190A72B8DD00B543E8 /* XfireBuddyListEntry.mm */,
+				A5FB851A0A72B8DD00B543E8 /* XfireGameInfo.h */,
+				A5FB851B0A72B8DD00B543E8 /* XfireGameInfo.m */,
+				A5FB851C0A72B8DD00B543E8 /* XfireGamesList.h */,
+				A5FB851D0A72B8DD00B543E8 /* XfireGamesList.m */,
+				A57DD31F0AA62DAB007772EA /* XfireMacGameInfo.m */,
+				A57DD3200AA62DAB007772EA /* XfireMacGameInfo.h */,
+				A5FB851E0A72B8DD00B543E8 /* xfirelib */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		A5FB851E0A72B8DD00B543E8 /* xfirelib */ = {
+			isa = PBXGroup;
+			children = (
+				A5FB851F0A72B8DD00B543E8 /* authpacket.cpp */,
+				A5FB85200A72B8DD00B543E8 /* authpacket.h */,
+				A5FB85210A72B8DD00B543E8 /* buddylist.cpp */,
+				A5FB85220A72B8DD00B543E8 /* buddylist.h */,
+				A5FB85230A72B8DD00B543E8 /* buddylistgames2packet.cpp */,
+				A5FB85240A72B8DD00B543E8 /* buddylistgames2packet.h */,
+				A5FB85250A72B8DD00B543E8 /* buddylistgamespacket.cpp */,
+				A5FB85260A72B8DD00B543E8 /* buddylistgamespacket.h */,
+				A5FB85270A72B8DD00B543E8 /* buddylistnamespacket.cpp */,
+				A5FB85280A72B8DD00B543E8 /* buddylistnamespacket.h */,
+				A5FB85290A72B8DD00B543E8 /* buddylistonlinepacket.cpp */,
+				A5FB852A0A72B8DD00B543E8 /* buddylistonlinepacket.h */,
+				A5FB852B0A72B8DD00B543E8 /* client.cpp */,
+				A5FB852C0A72B8DD00B543E8 /* client.h */,
+				A5FB852D0A72B8DD00B543E8 /* clientinformationpacket.cpp */,
+				A5FB852E0A72B8DD00B543E8 /* clientinformationpacket.h */,
+				A5FB852F0A72B8DD00B543E8 /* clientloginpacket.cpp */,
+				A5FB85300A72B8DD00B543E8 /* clientloginpacket.h */,
+				A5FB85310A72B8DD00B543E8 /* clientversionpacket.cpp */,
+				A5FB85320A72B8DD00B543E8 /* clientversionpacket.h */,
+				A5FB85330A72B8DD00B543E8 /* dummyxfiregameresolver.cpp */,
+				A5FB85340A72B8DD00B543E8 /* dummyxfiregameresolver.h */,
+				A5FB85350A72B8DD00B543E8 /* invitebuddypacket.cpp */,
+				A5FB85360A72B8DD00B543E8 /* invitebuddypacket.h */,
+				A5FB85370A72B8DD00B543E8 /* inviterequestpacket.cpp */,
+				A5FB85380A72B8DD00B543E8 /* inviterequestpacket.h */,
+				A5FB85390A72B8DD00B543E8 /* loginfailedpacket.cpp */,
+				A5FB853A0A72B8DD00B543E8 /* loginfailedpacket.h */,
+				A5FB853B0A72B8DD00B543E8 /* loginsuccesspacket.cpp */,
+				A5FB853C0A72B8DD00B543E8 /* loginsuccesspacket.h */,
+				A5FB853D0A72B8DD00B543E8 /* messageackpacket.cpp */,
+				A5FB853E0A72B8DD00B543E8 /* messageackpacket.h */,
+				A5FB853F0A72B8DD00B543E8 /* messagepacket.cpp */,
+				A5FB85400A72B8DD00B543E8 /* messagepacket.h */,
+				A5FB85410A72B8DD00B543E8 /* monitoredobj.cpp */,
+				A5FB85420A72B8DD00B543E8 /* monitoredobj.h */,
+				A5FB85430A72B8DD00B543E8 /* otherloginpacket.cpp */,
+				A5FB85440A72B8DD00B543E8 /* otherloginpacket.h */,
+				A5FB85450A72B8DD00B543E8 /* packetlistener.h */,
+				A5FB85460A72B8DD00B543E8 /* packetreader.cpp */,
+				A5FB85470A72B8DD00B543E8 /* packetreader.h */,
+				A5FB85480A72B8DD00B543E8 /* recvdidpacket.cpp */,
+				A5FB85490A72B8DD00B543E8 /* recvdidpacket.h */,
+				A5FB854A0A72B8DD00B543E8 /* recvoldversionpacket.cpp */,
+				A5FB854B0A72B8DD00B543E8 /* recvoldversionpacket.h */,
+				A5FB854C0A72B8DD00B543E8 /* recvprefspacket.cpp */,
+				A5FB854D0A72B8DD00B543E8 /* recvprefspacket.h */,
+				A5FB854E0A72B8DD00B543E8 /* recvremovebuddypacket.cpp */,
+				A5FB854F0A72B8DD00B543E8 /* recvremovebuddypacket.h */,
+				A5FB85500A72B8DD00B543E8 /* recvstatusmessagepacket.cpp */,
+				A5FB85510A72B8DD00B543E8 /* recvstatusmessagepacket.h */,
+				A5FB85520A72B8DD00B543E8 /* sendacceptinvitationpacket.cpp */,
+				A5FB85530A72B8DD00B543E8 /* sendacceptinvitationpacket.h */,
+				A5FB85540A72B8DD00B543E8 /* senddenyinvitationpacket.cpp */,
+				A5FB85550A72B8DD00B543E8 /* senddenyinvitationpacket.h */,
+				A5FB85560A72B8DD00B543E8 /* sendgameserverpacket.cpp */,
+				A5FB85570A72B8DD00B543E8 /* sendgameserverpacket.h */,
+				A5FB85580A72B8DD00B543E8 /* sendgamestatus2packet.cpp */,
+				A5FB85590A72B8DD00B543E8 /* sendgamestatus2packet.h */,
+				A5FB855A0A72B8DD00B543E8 /* sendgamestatuspacket.cpp */,
+				A5FB855B0A72B8DD00B543E8 /* sendgamestatuspacket.h */,
+				A5FB855C0A72B8DD00B543E8 /* sendkeepalivepacket.cpp */,
+				A5FB855D0A72B8DD00B543E8 /* sendkeepalivepacket.h */,
+				A5FB855E0A72B8DD00B543E8 /* sendmessagepacket.cpp */,
+				A5FB855F0A72B8DD00B543E8 /* sendmessagepacket.h */,
+				A5FB85600A72B8DD00B543E8 /* sendnickchangepacket.cpp */,
+				A5FB85610A72B8DD00B543E8 /* sendnickchangepacket.h */,
+				A5FB85620A72B8DD00B543E8 /* sendremovebuddypacket.cpp */,
+				A5FB85630A72B8DD00B543E8 /* sendremovebuddypacket.h */,
+				A5FB85640A72B8DD00B543E8 /* sendstatusmessagepacket.cpp */,
+				A5FB85650A72B8DD00B543E8 /* sendstatusmessagepacket.h */,
+				A5FB85660A72B8DD00B543E8 /* SHA1.cpp */,
+				A5FB85670A72B8DD00B543E8 /* SHA1.h */,
+				A5FB85680A72B8DD00B543E8 /* socket.cpp */,
+				A5FB85690A72B8DD00B543E8 /* socket.h */,
+				A5FB856A0A72B8DD00B543E8 /* socketexception.h */,
+				A5FB856E0A72B8DD00B543E8 /* variablevalue.cpp */,
+				A5FB856F0A72B8DD00B543E8 /* variablevalue.h */,
+				A5FB85700A72B8DD00B543E8 /* xdebug.cpp */,
+				A5FB85710A72B8DD00B543E8 /* xdebug.h */,
+				A5FB85720A72B8DD00B543E8 /* xfiregame.cpp */,
+				A5FB85730A72B8DD00B543E8 /* xfiregame.h */,
+				A5FB85740A72B8DD00B543E8 /* xfiregameresolver.cpp */,
+				A5FB85750A72B8DD00B543E8 /* xfiregameresolver.h */,
+				A5FB85760A72B8DD00B543E8 /* xfirepacket.cpp */,
+				A5FB85770A72B8DD00B543E8 /* xfirepacket.h */,
+				A5FB85780A72B8DD00B543E8 /* xfirepacketcontent.cpp */,
+				A5FB85790A72B8DD00B543E8 /* xfirepacketcontent.h */,
+				A5FB857A0A72B8DD00B543E8 /* xfireparse.cpp */,
+				A5FB857B0A72B8DD00B543E8 /* xfireparse.h */,
+				A5FB857C0A72B8DD00B543E8 /* xfirerecvpacketcontent.cpp */,
+				A5FB857D0A72B8DD00B543E8 /* xfirerecvpacketcontent.h */,
+				A5FB857E0A72B8DD00B543E8 /* xfiresendpacketcontent.cpp */,
+				A5FB857F0A72B8DD00B543E8 /* xfiresendpacketcontent.h */,
+				A5FB85800A72B8DD00B543E8 /* xfireutils.cpp */,
+				A5FB85810A72B8DD00B543E8 /* xfireutils.h */,
+			);
+			path = xfirelib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* Xflame */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Xflame" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Xflame;
+			productInstallPath = "$(HOME)/Applications";
+			productName = Xflame;
+			productReference = 8D1107320486CEB800E47090 /* Xflame.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Xflame" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* Xflame */;
+			projectDirPath = "";
+			targets = (
+				8D1107260486CEB800E47090 /* Xflame */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				A5FB85820A72B8DD00B543E8 /* xfire_games.ini in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				A5BA0E600A702F9D00EB39E9 /* XFController.m in Sources */,
+				A5FB85830A72B8DD00B543E8 /* Xfire.mm in Sources */,
+				A5FB85840A72B8DD00B543E8 /* XfireBuddyList.m in Sources */,
+				A5FB85850A72B8DD00B543E8 /* XfireBuddyListEntry.mm in Sources */,
+				A5FB85860A72B8DD00B543E8 /* XfireGameInfo.m in Sources */,
+				A5FB85870A72B8DD00B543E8 /* XfireGamesList.m in Sources */,
+				A5FB85880A72B8DD00B543E8 /* authpacket.cpp in Sources */,
+				A5FB85890A72B8DD00B543E8 /* buddylist.cpp in Sources */,
+				A5FB858A0A72B8DD00B543E8 /* buddylistgames2packet.cpp in Sources */,
+				A5FB858B0A72B8DD00B543E8 /* buddylistgamespacket.cpp in Sources */,
+				A5FB858C0A72B8DD00B543E8 /* buddylistnamespacket.cpp in Sources */,
+				A5FB858D0A72B8DD00B543E8 /* buddylistonlinepacket.cpp in Sources */,
+				A5FB858E0A72B8DD00B543E8 /* client.cpp in Sources */,
+				A5FB858F0A72B8DD00B543E8 /* clientinformationpacket.cpp in Sources */,
+				A5FB85900A72B8DD00B543E8 /* clientloginpacket.cpp in Sources */,
+				A5FB85910A72B8DD00B543E8 /* clientversionpacket.cpp in Sources */,
+				A5FB85920A72B8DD00B543E8 /* dummyxfiregameresolver.cpp in Sources */,
+				A5FB85930A72B8DD00B543E8 /* invitebuddypacket.cpp in Sources */,
+				A5FB85940A72B8DD00B543E8 /* inviterequestpacket.cpp in Sources */,
+				A5FB85950A72B8DD00B543E8 /* loginfailedpacket.cpp in Sources */,
+				A5FB85960A72B8DD00B543E8 /* loginsuccesspacket.cpp in Sources */,
+				A5FB85970A72B8DD00B543E8 /* messageackpacket.cpp in Sources */,
+				A5FB85980A72B8DD00B543E8 /* messagepacket.cpp in Sources */,
+				A5FB85990A72B8DD00B543E8 /* monitoredobj.cpp in Sources */,
+				A5FB859A0A72B8DD00B543E8 /* otherloginpacket.cpp in Sources */,
+				A5FB859B0A72B8DD00B543E8 /* packetreader.cpp in Sources */,
+				A5FB859C0A72B8DD00B543E8 /* recvdidpacket.cpp in Sources */,
+				A5FB859D0A72B8DD00B543E8 /* recvoldversionpacket.cpp in Sources */,
+				A5FB859E0A72B8DD00B543E8 /* recvprefspacket.cpp in Sources */,
+				A5FB859F0A72B8DD00B543E8 /* recvremovebuddypacket.cpp in Sources */,
+				A5FB85A00A72B8DD00B543E8 /* recvstatusmessagepacket.cpp in Sources */,
+				A5FB85A10A72B8DD00B543E8 /* sendacceptinvitationpacket.cpp in Sources */,
+				A5FB85A20A72B8DD00B543E8 /* senddenyinvitationpacket.cpp in Sources */,
+				A5FB85A30A72B8DD00B543E8 /* sendgameserverpacket.cpp in Sources */,
+				A5FB85A40A72B8DD00B543E8 /* sendgamestatus2packet.cpp in Sources */,
+				A5FB85A50A72B8DD00B543E8 /* sendgamestatuspacket.cpp in Sources */,
+				A5FB85A60A72B8DD00B543E8 /* sendkeepalivepacket.cpp in Sources */,
+				A5FB85A70A72B8DD00B543E8 /* sendmessagepacket.cpp in Sources */,
+				A5FB85A80A72B8DD00B543E8 /* sendnickchangepacket.cpp in Sources */,
+				A5FB85A90A72B8DD00B543E8 /* sendremovebuddypacket.cpp in Sources */,
+				A5FB85AA0A72B8DD00B543E8 /* sendstatusmessagepacket.cpp in Sources */,
+				A5FB85AB0A72B8DD00B543E8 /* SHA1.cpp in Sources */,
+				A5FB85AC0A72B8DD00B543E8 /* socket.cpp in Sources */,
+				A5FB85AE0A72B8DD00B543E8 /* variablevalue.cpp in Sources */,
+				A5FB85AF0A72B8DD00B543E8 /* xdebug.cpp in Sources */,
+				A5FB85B00A72B8DD00B543E8 /* xfiregame.cpp in Sources */,
+				A5FB85B10A72B8DD00B543E8 /* xfiregameresolver.cpp in Sources */,
+				A5FB85B20A72B8DD00B543E8 /* xfirepacket.cpp in Sources */,
+				A5FB85B30A72B8DD00B543E8 /* xfirepacketcontent.cpp in Sources */,
+				A5FB85B40A72B8DD00B543E8 /* xfireparse.cpp in Sources */,
+				A5FB85B50A72B8DD00B543E8 /* xfirerecvpacketcontent.cpp in Sources */,
+				A5FB85B60A72B8DD00B543E8 /* xfiresendpacketcontent.cpp in Sources */,
+				A5FB85B70A72B8DD00B543E8 /* xfireutils.cpp in Sources */,
+				A57DD3210AA62DAB007772EA /* XfireMacGameInfo.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29B97319FDCFA39411CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "MSG_NOSIGNAL=512";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = Xflame;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = Xflame;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = i386;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Xflame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Xflame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
