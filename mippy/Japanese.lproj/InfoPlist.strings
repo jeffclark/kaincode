@@ -1,0 +1,6 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleName = "Mippy";
+CFBundleShortVersionString = "Mippy バージョン 1.0";
+CFBundleGetInfoString = "Mippy バージョン 1.0, Copyright 2006 Kevin Wojniak.";
+NSHumanReadableCopyright = "Copyright 2006 Kevin Wojniak.";
