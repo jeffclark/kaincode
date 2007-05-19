@@ -1,0 +1,17 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = UCController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                binTextField = NSTextField; 
+                decTextField = NSTextField; 
+                hexTextField = NSTextField; 
+                octTextField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
