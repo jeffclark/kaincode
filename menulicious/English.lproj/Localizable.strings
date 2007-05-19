@@ -1,0 +1,20 @@
+/* Menu */
+"REFRESH" = "Refresh Tags";
+"PREFS" = "Preferences...";
+"ABOUT" = "About";
+"QUIT" = "Quit";
+"UPDATING" = "Updating, please wait...";
+"APPNAME" = "Menulicious";
+"TAGS" = "Tags";
+"%@ (%d)" = "%@ (%d)";
+
+/* Preferences */
+"BOX1" = "del.icio.us Account";
+"BOX2" = "Misc";
+"USER" = "Username:";
+"PASS" = "Password:";
+"UPDATE" = "Update";
+"MISC1" = "Add Menulicious to login items";
+"MISC2" = "Show post count for each tag";
+"MISC3" = "Show tags directly in main menu";
+"MISC4" = "Show images in menu items";

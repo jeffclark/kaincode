@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {save = id; update = id; }; 
+            CLASS = MLPreferences; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                addToLoginItems = NSButton; 
+                box1 = NSBox; 
+                box2 = NSBox; 
+                dcPassword = NSTextField; 
+                dcUsername = NSTextField; 
+                passLabel = NSTextField; 
+                showImages = NSButton; 
+                showPostCount = NSButton; 
+                showTagsInMainMenu = NSButton; 
+                updateButton = NSButton; 
+                userLabel = NSTextField; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}
