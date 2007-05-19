@@ -1,0 +1,16 @@
+"Convert" = "Convert";
+"Cancel" = "Cancel";
+"None" = "None";
+"Choose" = "Choose...";
+"DVD" = "DVD";
+
+"No DVD" = "No DVD disk found.";
+
+"Show Options" = "Show Options";
+"Hide Options" = "Hide Options";
+
+"Reading disk" = "Reading disk, please wait...";
+"DVD Loaded" = "DVD is ready. Click \"Convert\" to begin.";
+"%.2f%% complete..." = "%.2f%% complete...";
+"Sending to iTunes" = "Sending to iTunes...";
+"Conversion cancelled" = "Conversion cancelled";
