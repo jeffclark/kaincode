@@ -1,0 +1,435 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A5179F8C0A3FAAE0002FE2A5 /* delicious_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = A5179F8B0A3FAAE0002FE2A5 /* delicious_bw.png */; };
+		A517A06B0A3FBCCF002FE2A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A517A06A0A3FBCCF002FE2A5 /* Localizable.strings */; };
+		A526C99E0AF5B9BD009D5282 /* DCAPICache.m in Sources */ = {isa = PBXBuildFile; fileRef = A526C9910AF5B9BD009D5282 /* DCAPICache.m */; };
+		A526C99F0AF5B9BD009D5282 /* DCAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A526C9930AF5B9BD009D5282 /* DCAPIClient.m */; };
+		A526C9A00AF5B9BD009D5282 /* DCAPIDate.m in Sources */ = {isa = PBXBuildFile; fileRef = A526C9950AF5B9BD009D5282 /* DCAPIDate.m */; };
+		A526C9A10AF5B9BD009D5282 /* DCAPIParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A526C9970AF5B9BD009D5282 /* DCAPIParser.m */; };
+		A526C9A20AF5B9BD009D5282 /* DCAPIPost.m in Sources */ = {isa = PBXBuildFile; fileRef = A526C9990AF5B9BD009D5282 /* DCAPIPost.m */; };
+		A526C9A30AF5B9BD009D5282 /* DCAPITag.m in Sources */ = {isa = PBXBuildFile; fileRef = A526C99B0AF5B9BD009D5282 /* DCAPITag.m */; };
+		A526C9A40AF5B9BD009D5282 /* DCAPITagFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A526C99D0AF5B9BD009D5282 /* DCAPITagFormatter.m */; };
+		A526C9C10AF5B9E6009D5282 /* NSString+SFHFUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A526C9BF0AF5B9E6009D5282 /* NSString+SFHFUtils.m */; };
+		A526C9CE0AF5B9F4009D5282 /* NSFileManager+ESBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A526C9CD0AF5B9F4009D5282 /* NSFileManager+ESBExtensions.m */; };
+		A526CA0A0AF5BBA5009D5282 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A526CA090AF5BBA5009D5282 /* Sparkle.framework */; };
+		A526CA770AF5BDBB009D5282 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A526CA090AF5BBA5009D5282 /* Sparkle.framework */; };
+		A526CAAC0AF5BE64009D5282 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = A526CAAB0AF5BE64009D5282 /* MainMenu.nib */; };
+		A526CAB00AF5BE67009D5282 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = A526CAAF0AF5BE67009D5282 /* Preferences.nib */; };
+		A53F5FE60A1C894200B542C6 /* MLDeliciousAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = A53F5FE40A1C894200B542C6 /* MLDeliciousAccount.m */; };
+		A561033C0A179EA1003CBC41 /* MLController.m in Sources */ = {isa = PBXBuildFile; fileRef = A561033B0A179EA1003CBC41 /* MLController.m */; };
+		A56104F40A17AFB7003CBC41 /* NSMenu+MLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = A56104F30A17AFB7003CBC41 /* NSMenu+MLExtension.m */; };
+		A56105B70A17B58C003CBC41 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A56105B60A17B58C003CBC41 /* Credits.rtf */; };
+		A56105FC0A17BE22003CBC41 /* MLPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = A56105FB0A17BE22003CBC41 /* MLPreferences.m */; };
+		A5FB9A7C0A75F36A00B543E8 /* delicious_bw_alt.png in Resources */ = {isa = PBXBuildFile; fileRef = A5FB9A7B0A75F36A00B543E8 /* delicious_bw_alt.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A526CA730AF5BDB3009D5282 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A526CA770AF5BDBB009D5282 /* Sparkle.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* Menulicious_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menulicious_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* Menulicious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Menulicious.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5179F8B0A3FAAE0002FE2A5 /* delicious_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delicious_bw.png; sourceTree = "<group>"; };
+		A517A0680A3FBCC5002FE2A5 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A526C9900AF5B9BD009D5282 /* DCAPICache.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DCAPICache.h; sourceTree = "<group>"; };
+		A526C9910AF5B9BD009D5282 /* DCAPICache.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DCAPICache.m; sourceTree = "<group>"; };
+		A526C9920AF5B9BD009D5282 /* DCAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DCAPIClient.h; sourceTree = "<group>"; };
+		A526C9930AF5B9BD009D5282 /* DCAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DCAPIClient.m; sourceTree = "<group>"; };
+		A526C9940AF5B9BD009D5282 /* DCAPIDate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DCAPIDate.h; sourceTree = "<group>"; };
+		A526C9950AF5B9BD009D5282 /* DCAPIDate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DCAPIDate.m; sourceTree = "<group>"; };
+		A526C9960AF5B9BD009D5282 /* DCAPIParser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DCAPIParser.h; sourceTree = "<group>"; };
+		A526C9970AF5B9BD009D5282 /* DCAPIParser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DCAPIParser.m; sourceTree = "<group>"; };
+		A526C9980AF5B9BD009D5282 /* DCAPIPost.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DCAPIPost.h; sourceTree = "<group>"; };
+		A526C9990AF5B9BD009D5282 /* DCAPIPost.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DCAPIPost.m; sourceTree = "<group>"; };
+		A526C99A0AF5B9BD009D5282 /* DCAPITag.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DCAPITag.h; sourceTree = "<group>"; };
+		A526C99B0AF5B9BD009D5282 /* DCAPITag.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DCAPITag.m; sourceTree = "<group>"; };
+		A526C99C0AF5B9BD009D5282 /* DCAPITagFormatter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DCAPITagFormatter.h; sourceTree = "<group>"; };
+		A526C99D0AF5B9BD009D5282 /* DCAPITagFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DCAPITagFormatter.m; sourceTree = "<group>"; };
+		A526C9B30AF5B9D5009D5282 /* defines.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		A526C9BF0AF5B9E6009D5282 /* NSString+SFHFUtils.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSString+SFHFUtils.m"; sourceTree = "<group>"; };
+		A526C9C00AF5B9E6009D5282 /* NSString+SFHFUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSString+SFHFUtils.h"; sourceTree = "<group>"; };
+		A526C9CC0AF5B9F4009D5282 /* NSFileManager+ESBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ESBExtensions.h"; sourceTree = "<group>"; };
+		A526C9CD0AF5B9F4009D5282 /* NSFileManager+ESBExtensions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+ESBExtensions.m"; sourceTree = "<group>"; };
+		A526C9D50AF5BA0A009D5282 /* DCTypes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DCTypes.h; sourceTree = "<group>"; };
+		A526CA090AF5BBA5009D5282 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		A53F5FE40A1C894200B542C6 /* MLDeliciousAccount.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MLDeliciousAccount.m; sourceTree = "<group>"; };
+		A53F5FE50A1C894200B542C6 /* MLDeliciousAccount.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MLDeliciousAccount.h; sourceTree = "<group>"; };
+		A561033A0A179EA1003CBC41 /* MLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLController.h; sourceTree = "<group>"; };
+		A561033B0A179EA1003CBC41 /* MLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLController.m; sourceTree = "<group>"; };
+		A56104F20A17AFB7003CBC41 /* NSMenu+MLExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenu+MLExtension.h"; sourceTree = "<group>"; };
+		A56104F30A17AFB7003CBC41 /* NSMenu+MLExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+MLExtension.m"; sourceTree = "<group>"; };
+		A56105B60A17B58C003CBC41 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		A56105F80A17BE1A003CBC41 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Preferences.nib; sourceTree = "<group>"; };
+		A56105FA0A17BE22003CBC41 /* MLPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPreferences.h; sourceTree = "<group>"; };
+		A56105FB0A17BE22003CBC41 /* MLPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPreferences.m; sourceTree = "<group>"; };
+		A5FB9A7B0A75F36A00B543E8 /* delicious_bw_alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delicious_bw_alt.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				A526CA0A0AF5BBA5009D5282 /* Sparkle.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A561033A0A179EA1003CBC41 /* MLController.h */,
+				A561033B0A179EA1003CBC41 /* MLController.m */,
+				A56105FA0A17BE22003CBC41 /* MLPreferences.h */,
+				A56105FB0A17BE22003CBC41 /* MLPreferences.m */,
+				A53F5FE50A1C894200B542C6 /* MLDeliciousAccount.h */,
+				A53F5FE40A1C894200B542C6 /* MLDeliciousAccount.m */,
+				A56104F20A17AFB7003CBC41 /* NSMenu+MLExtension.h */,
+				A56104F30A17AFB7003CBC41 /* NSMenu+MLExtension.m */,
+				A526C98F0AF5B9BC009D5282 /* DCAPI */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A526CA090AF5BBA5009D5282 /* Sparkle.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* Menulicious.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* Menulicious */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = Menulicious;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* Menulicious_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A517A0AC0A3FBEAA002FE2A5 /* Images */,
+				A56105B60A17B58C003CBC41 /* Credits.rtf */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				A517A06A0A3FBCCF002FE2A5 /* Localizable.strings */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				A526CAAB0AF5BE64009D5282 /* MainMenu.nib */,
+				A526CAAF0AF5BE67009D5282 /* Preferences.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A517A0AC0A3FBEAA002FE2A5 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				A5FB9A7B0A75F36A00B543E8 /* delicious_bw_alt.png */,
+				A5179F8B0A3FAAE0002FE2A5 /* delicious_bw.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		A526C98F0AF5B9BC009D5282 /* DCAPI */ = {
+			isa = PBXGroup;
+			children = (
+				A526C9B30AF5B9D5009D5282 /* defines.h */,
+				A526C9900AF5B9BD009D5282 /* DCAPICache.h */,
+				A526C9910AF5B9BD009D5282 /* DCAPICache.m */,
+				A526C9920AF5B9BD009D5282 /* DCAPIClient.h */,
+				A526C9930AF5B9BD009D5282 /* DCAPIClient.m */,
+				A526C9940AF5B9BD009D5282 /* DCAPIDate.h */,
+				A526C9950AF5B9BD009D5282 /* DCAPIDate.m */,
+				A526C9960AF5B9BD009D5282 /* DCAPIParser.h */,
+				A526C9970AF5B9BD009D5282 /* DCAPIParser.m */,
+				A526C9980AF5B9BD009D5282 /* DCAPIPost.h */,
+				A526C9990AF5B9BD009D5282 /* DCAPIPost.m */,
+				A526C99A0AF5B9BD009D5282 /* DCAPITag.h */,
+				A526C99B0AF5B9BD009D5282 /* DCAPITag.m */,
+				A526C99C0AF5B9BD009D5282 /* DCAPITagFormatter.h */,
+				A526C99D0AF5B9BD009D5282 /* DCAPITagFormatter.m */,
+				A526C9BF0AF5B9E6009D5282 /* NSString+SFHFUtils.m */,
+				A526C9C00AF5B9E6009D5282 /* NSString+SFHFUtils.h */,
+				A526C9CC0AF5B9F4009D5282 /* NSFileManager+ESBExtensions.h */,
+				A526C9CD0AF5B9F4009D5282 /* NSFileManager+ESBExtensions.m */,
+				A526C9D50AF5BA0A009D5282 /* DCTypes.h */,
+			);
+			path = DCAPI;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* Menulicious */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Menulicious" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				A526CA730AF5BDB3009D5282 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Menulicious;
+			productInstallPath = "$(HOME)/Applications";
+			productName = Menulicious;
+			productReference = 8D1107320486CEB800E47090 /* Menulicious.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Menulicious" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* Menulicious */;
+			projectDirPath = "";
+			targets = (
+				8D1107260486CEB800E47090 /* Menulicious */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A526CAAC0AF5BE64009D5282 /* MainMenu.nib in Resources */,
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				A56105B70A17B58C003CBC41 /* Credits.rtf in Resources */,
+				A526CAB00AF5BE67009D5282 /* Preferences.nib in Resources */,
+				A5179F8C0A3FAAE0002FE2A5 /* delicious_bw.png in Resources */,
+				A517A06B0A3FBCCF002FE2A5 /* Localizable.strings in Resources */,
+				A5FB9A7C0A75F36A00B543E8 /* delicious_bw_alt.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				A561033C0A179EA1003CBC41 /* MLController.m in Sources */,
+				A56104F40A17AFB7003CBC41 /* NSMenu+MLExtension.m in Sources */,
+				A56105FC0A17BE22003CBC41 /* MLPreferences.m in Sources */,
+				A53F5FE60A1C894200B542C6 /* MLDeliciousAccount.m in Sources */,
+				A526C99E0AF5B9BD009D5282 /* DCAPICache.m in Sources */,
+				A526C99F0AF5B9BD009D5282 /* DCAPIClient.m in Sources */,
+				A526C9A00AF5B9BD009D5282 /* DCAPIDate.m in Sources */,
+				A526C9A10AF5B9BD009D5282 /* DCAPIParser.m in Sources */,
+				A526C9A20AF5B9BD009D5282 /* DCAPIPost.m in Sources */,
+				A526C9A30AF5B9BD009D5282 /* DCAPITag.m in Sources */,
+				A526C9A40AF5B9BD009D5282 /* DCAPITagFormatter.m in Sources */,
+				A526C9C10AF5B9E6009D5282 /* NSString+SFHFUtils.m in Sources */,
+				A526C9CE0AF5B9F4009D5282 /* NSFileManager+ESBExtensions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A517A06A0A3FBCCF002FE2A5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A517A0680A3FBCC5002FE2A5 /* English */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		A526CAAB0AF5BE64009D5282 /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29B97319FDCFA39411CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+		A526CAAF0AF5BE67009D5282 /* Preferences.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A56105F80A17BE1A003CBC41 /* English */,
+			);
+			name = Preferences.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = Menulicious;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				ONLY_LINK_ESSENTIAL_SYMBOLS = YES;
+				PRODUCT_NAME = Menulicious;
+				STRIP_INSTALLED_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Menulicious" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Menulicious" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
