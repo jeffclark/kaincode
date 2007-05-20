@@ -1,0 +1,478 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D1107280486CEB800E47090 /* LCTetris_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* LCTetris_Prefix.pch */; };
+		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A52822190854CD690051BC85 /* PathUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = A52822170854CD690051BC85 /* PathUtils.h */; };
+		A528221A0854CD690051BC85 /* PathUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A52822180854CD690051BC85 /* PathUtils.cpp */; };
+		A52822800854CE6E0051BC85 /* LCTetrisBlock.tga in Resources */ = {isa = PBXBuildFile; fileRef = A528227F0854CE6E0051BC85 /* LCTetrisBlock.tga */; };
+		A5477AD4084F87F700C388C1 /* tetris2.mid in Resources */ = {isa = PBXBuildFile; fileRef = A5477AD2084F87F700C388C1 /* tetris2.mid */; };
+		A5477AD5084F87F700C388C1 /* tetris3.mid in Resources */ = {isa = PBXBuildFile; fileRef = A5477AD3084F87F700C388C1 /* tetris3.mid */; };
+		A5477B87084F952E00C388C1 /* HighScore.nib in Resources */ = {isa = PBXBuildFile; fileRef = A5477B85084F952E00C388C1 /* HighScore.nib */; };
+		A5693B180848E684004D3EF6 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = A5693B160848E684004D3EF6 /* Core.h */; };
+		A5693B190848E684004D3EF6 /* Core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5693B170848E684004D3EF6 /* Core.cpp */; };
+		A5693DB6084D589E004D3EF6 /* AudioPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = A5693DB4084D589E004D3EF6 /* AudioPlayer.h */; };
+		A5693DB7084D589E004D3EF6 /* AudioPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5693DB5084D589E004D3EF6 /* AudioPlayer.cpp */; };
+		A5693DC1084D58FF004D3EF6 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5693DC0084D58FF004D3EF6 /* QuickTime.framework */; };
+		A569405A084D7786004D3EF6 /* tetris1.mid in Resources */ = {isa = PBXBuildFile; fileRef = A5694059084D7786004D3EF6 /* tetris1.mid */; };
+		A5694789084EC432004D3EF6 /* Prefs.h in Headers */ = {isa = PBXBuildFile; fileRef = A5694787084EC432004D3EF6 /* Prefs.h */; };
+		A569478A084EC432004D3EF6 /* Prefs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5694788084EC432004D3EF6 /* Prefs.cpp */; };
+		A569490B084EE70E004D3EF6 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5694909084EE70E004D3EF6 /* GLUT.framework */; };
+		A569491D084EE7E5004D3EF6 /* gameover.wav in Resources */ = {isa = PBXBuildFile; fileRef = A569491C084EE7E5004D3EF6 /* gameover.wav */; };
+		A5704A8D067F7201001915FD /* MyView.h in Headers */ = {isa = PBXBuildFile; fileRef = A5704A8B067F7201001915FD /* MyView.h */; };
+		A5704A8E067F7201001915FD /* MyView.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5704A8C067F7201001915FD /* MyView.mm */; };
+		A5704AA1067F72A6001915FD /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5704AA0067F72A6001915FD /* OpenGL.framework */; };
+		A5714FF80853FE650011434E /* Textures.h in Headers */ = {isa = PBXBuildFile; fileRef = A5714FF60853FE650011434E /* Textures.h */; };
+		A5714FF90853FE650011434E /* Textures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5714FF70853FE650011434E /* Textures.cpp */; };
+		A587C19A07F2510E0071853D /* Includes.h in Headers */ = {isa = PBXBuildFile; fileRef = A587C19907F2510E0071853D /* Includes.h */; };
+		A5EC48E90846734C00E05FC4 /* Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5EC48E70846734C00E05FC4 /* Block.cpp */; };
+		A5EC48EA0846734C00E05FC4 /* Block.h in Headers */ = {isa = PBXBuildFile; fileRef = A5EC48E80846734C00E05FC4 /* Block.h */; };
+		A5EC49FF0846CC8300E05FC4 /* Frame.h in Headers */ = {isa = PBXBuildFile; fileRef = A5EC49FD0846CC8300E05FC4 /* Frame.h */; };
+		A5EC4A000846CC8300E05FC4 /* Frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5EC49FE0846CC8300E05FC4 /* Frame.cpp */; };
+		A5EC4A120846CD5400E05FC4 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = A5EC4A110846CD5400E05FC4 /* Constants.h */; };
+		A5EC4B7C0846DB1C00E05FC4 /* Piece.h in Headers */ = {isa = PBXBuildFile; fileRef = A5EC4B7A0846DB1C00E05FC4 /* Piece.h */; };
+		A5EC4B7D0846DB1C00E05FC4 /* Piece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5EC4B7B0846DB1C00E05FC4 /* Piece.cpp */; };
+		A5F73B3A084F59FC00C2156D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F73B39084F59FC00C2156D /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* LCTetris_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCTetris_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* LCTetris.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LCTetris.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A52822170854CD690051BC85 /* PathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathUtils.h; sourceTree = "<group>"; };
+		A52822180854CD690051BC85 /* PathUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathUtils.cpp; sourceTree = "<group>"; };
+		A528227F0854CE6E0051BC85 /* LCTetrisBlock.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = LCTetrisBlock.tga; sourceTree = "<group>"; };
+		A5477AD2084F87F700C388C1 /* tetris2.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = tetris2.mid; sourceTree = "<group>"; };
+		A5477AD3084F87F700C388C1 /* tetris3.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = tetris3.mid; sourceTree = "<group>"; };
+		A5477B86084F952E00C388C1 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/HighScore.nib; sourceTree = "<group>"; };
+		A5693B160848E684004D3EF6 /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		A5693B170848E684004D3EF6 /* Core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Core.cpp; sourceTree = "<group>"; };
+		A5693DB4084D589E004D3EF6 /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
+		A5693DB5084D589E004D3EF6 /* AudioPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioPlayer.cpp; sourceTree = "<group>"; };
+		A5693DC0084D58FF004D3EF6 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
+		A5694059084D7786004D3EF6 /* tetris1.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = tetris1.mid; sourceTree = "<group>"; };
+		A5694787084EC432004D3EF6 /* Prefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefs.h; sourceTree = "<group>"; };
+		A5694788084EC432004D3EF6 /* Prefs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Prefs.cpp; sourceTree = "<group>"; };
+		A5694909084EE70E004D3EF6 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
+		A569491C084EE7E5004D3EF6 /* gameover.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gameover.wav; sourceTree = "<group>"; };
+		A5704A8B067F7201001915FD /* MyView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MyView.h; sourceTree = "<group>"; };
+		A5704A8C067F7201001915FD /* MyView.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = MyView.mm; sourceTree = "<group>"; };
+		A5704AA0067F72A6001915FD /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		A5714FF60853FE650011434E /* Textures.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Textures.h; sourceTree = "<group>"; };
+		A5714FF70853FE650011434E /* Textures.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Textures.cpp; sourceTree = "<group>"; };
+		A587C19907F2510E0071853D /* Includes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Includes.h; sourceTree = "<group>"; };
+		A5EC48E70846734C00E05FC4 /* Block.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Block.cpp; sourceTree = "<group>"; };
+		A5EC48E80846734C00E05FC4 /* Block.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
+		A5EC49FD0846CC8300E05FC4 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		A5EC49FE0846CC8300E05FC4 /* Frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Frame.cpp; sourceTree = "<group>"; };
+		A5EC4A110846CD5400E05FC4 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		A5EC4B7A0846DB1C00E05FC4 /* Piece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Piece.h; sourceTree = "<group>"; };
+		A5EC4B7B0846DB1C00E05FC4 /* Piece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Piece.cpp; sourceTree = "<group>"; };
+		A5F73B39084F59FC00C2156D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				A5704AA1067F72A6001915FD /* OpenGL.framework in Frameworks */,
+				A5693DC1084D58FF004D3EF6 /* QuickTime.framework in Frameworks */,
+				A569490B084EE70E004D3EF6 /* GLUT.framework in Frameworks */,
+				A5F73B3A084F59FC00C2156D /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A5704A8B067F7201001915FD /* MyView.h */,
+				A5704A8C067F7201001915FD /* MyView.mm */,
+				A587BDE907F078B90071853D /* C++ */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A5F73B39084F59FC00C2156D /* Carbon.framework */,
+				A5694909084EE70E004D3EF6 /* GLUT.framework */,
+				A5693DC0084D58FF004D3EF6 /* QuickTime.framework */,
+				A5704AA0067F72A6001915FD /* OpenGL.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* LCTetris.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* OpenGLFun */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = OpenGLFun;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* LCTetris_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A528227F0854CE6E0051BC85 /* LCTetrisBlock.tga */,
+				A5694059084D7786004D3EF6 /* tetris1.mid */,
+				A5477AD2084F87F700C388C1 /* tetris2.mid */,
+				A5477AD3084F87F700C388C1 /* tetris3.mid */,
+				A569491C084EE7E5004D3EF6 /* gameover.wav */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+				A5477B85084F952E00C388C1 /* HighScore.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A587BDE907F078B90071853D /* C++ */ = {
+			isa = PBXGroup;
+			children = (
+				A587C19907F2510E0071853D /* Includes.h */,
+				A5EC4A110846CD5400E05FC4 /* Constants.h */,
+				A5693B160848E684004D3EF6 /* Core.h */,
+				A5693B170848E684004D3EF6 /* Core.cpp */,
+				A5EC4B7A0846DB1C00E05FC4 /* Piece.h */,
+				A5EC4B7B0846DB1C00E05FC4 /* Piece.cpp */,
+				A5EC48E80846734C00E05FC4 /* Block.h */,
+				A5EC48E70846734C00E05FC4 /* Block.cpp */,
+				A5EC49FD0846CC8300E05FC4 /* Frame.h */,
+				A5EC49FE0846CC8300E05FC4 /* Frame.cpp */,
+				A5693DB4084D589E004D3EF6 /* AudioPlayer.h */,
+				A5693DB5084D589E004D3EF6 /* AudioPlayer.cpp */,
+				A5694787084EC432004D3EF6 /* Prefs.h */,
+				A5694788084EC432004D3EF6 /* Prefs.cpp */,
+				A5714FF60853FE650011434E /* Textures.h */,
+				A5714FF70853FE650011434E /* Textures.cpp */,
+				A52822170854CD690051BC85 /* PathUtils.h */,
+				A52822180854CD690051BC85 /* PathUtils.cpp */,
+			);
+			name = "C++";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8D1107270486CEB800E47090 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D1107280486CEB800E47090 /* LCTetris_Prefix.pch in Headers */,
+				A5704A8D067F7201001915FD /* MyView.h in Headers */,
+				A587C19A07F2510E0071853D /* Includes.h in Headers */,
+				A5EC48EA0846734C00E05FC4 /* Block.h in Headers */,
+				A5EC49FF0846CC8300E05FC4 /* Frame.h in Headers */,
+				A5EC4A120846CD5400E05FC4 /* Constants.h in Headers */,
+				A5EC4B7C0846DB1C00E05FC4 /* Piece.h in Headers */,
+				A5693B180848E684004D3EF6 /* Core.h in Headers */,
+				A5693DB6084D589E004D3EF6 /* AudioPlayer.h in Headers */,
+				A5694789084EC432004D3EF6 /* Prefs.h in Headers */,
+				A5714FF80853FE650011434E /* Textures.h in Headers */,
+				A52822190854CD690051BC85 /* PathUtils.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* LCTetris */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A58EC250085735BE00FC6F2D /* Build configuration list for PBXNativeTarget "LCTetris" */;
+			buildPhases = (
+				8D1107270486CEB800E47090 /* Headers */,
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LCTetris;
+			productInstallPath = "$(HOME)/Applications";
+			productName = OpenGLFun;
+			productReference = 8D1107320486CEB800E47090 /* LCTetris.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = A58EC254085735BE00FC6F2D /* Build configuration list for PBXProject "LCTetris" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* OpenGLFun */;
+			projectDirPath = "";
+			targets = (
+				8D1107260486CEB800E47090 /* LCTetris */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				A569405A084D7786004D3EF6 /* tetris1.mid in Resources */,
+				A569491D084EE7E5004D3EF6 /* gameover.wav in Resources */,
+				A5477AD4084F87F700C388C1 /* tetris2.mid in Resources */,
+				A5477AD5084F87F700C388C1 /* tetris3.mid in Resources */,
+				A5477B87084F952E00C388C1 /* HighScore.nib in Resources */,
+				A52822800854CE6E0051BC85 /* LCTetrisBlock.tga in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				A5704A8E067F7201001915FD /* MyView.mm in Sources */,
+				A5EC48E90846734C00E05FC4 /* Block.cpp in Sources */,
+				A5EC4A000846CC8300E05FC4 /* Frame.cpp in Sources */,
+				A5EC4B7D0846DB1C00E05FC4 /* Piece.cpp in Sources */,
+				A5693B190848E684004D3EF6 /* Core.cpp in Sources */,
+				A5693DB7084D589E004D3EF6 /* AudioPlayer.cpp in Sources */,
+				A569478A084EC432004D3EF6 /* Prefs.cpp in Sources */,
+				A5714FF90853FE650011434E /* Textures.cpp in Sources */,
+				A528221A0854CD690051BC85 /* PathUtils.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29B97319FDCFA39411CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+		A5477B85084F952E00C388C1 /* HighScore.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5477B86084F952E00C388C1 /* English */,
+			);
+			name = HighScore.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A58EC251085735BE00FC6F2D /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LCTetris_Prefix.pch;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = LCTetris;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		A58EC252085735BE00FC6F2D /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LCTetris_Prefix.pch;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = LCTetris;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		A58EC253085735BE00FC6F2D /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LCTetris_Prefix.pch;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = LCTetris;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = Default;
+		};
+		A58EC255085735BE00FC6F2D /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Development;
+		};
+		A58EC256085735BE00FC6F2D /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Deployment;
+		};
+		A58EC257085735BE00FC6F2D /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A58EC250085735BE00FC6F2D /* Build configuration list for PBXNativeTarget "LCTetris" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A58EC251085735BE00FC6F2D /* Development */,
+				A58EC252085735BE00FC6F2D /* Deployment */,
+				A58EC253085735BE00FC6F2D /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		A58EC254085735BE00FC6F2D /* Build configuration list for PBXProject "LCTetris" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A58EC255085735BE00FC6F2D /* Development */,
+				A58EC256085735BE00FC6F2D /* Deployment */,
+				A58EC257085735BE00FC6F2D /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
