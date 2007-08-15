@@ -1,0 +1,202 @@
+{\rtf1\mac\ansicpg10000\cocoartf102
+{\fonttbl\f0\fswiss\fcharset77 Helvetica-Bold;\f1\fswiss\fcharset77 Helvetica;\f2\fnil\fcharset77 Monaco;
+}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww12040\viewh14480\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f0\b\fs48 \cf0 qtplay
+\f1\b0\fs24 \
+
+\f0\b\fs36 Sarah Childers
+\f1\b0\fs24 \
+http://home.earthlink.net/~rainbowflight/\
+rainbowflight@earthlink.net\
+\
+Quicktime player is a command line utility to play Audio CD's, MP3's, and other music files.\
+\
+
+\f0\b\fs36 Features
+\f1\b0\fs24 \
+\
+\'a5 Plays any audio file supported by Quicktime, including Audio CDs, AIFF, MIDI, and MP3.\
+\'a5 Special flag for simply playing CDs, for lazy people.\
+\'a5 Playlist features such as loop, shuffle, and random.\
+\'a5 Special flags for reading playlists and standard input.\
+\'a5 Support for playing files in random order while keeping playlists (eg. symphonies) in tact\
+\'a5 Support for process signals: SIGINT, SIGTSTP, and SIGCONT.\
+\
+
+\f0\b\fs36 Usage
+\f1\b0\fs24 \
+\
+
+\f2 usage: qtplay [OPTION] [file(s) | directory(s) | -]\
+       qtplay [OPTION] -cd\
+       qtplay [OPTION] -f [file(s)]\
+\
+ -l      loop\
+ -q      quiet\
+ -Q      quicktime only\
+ -r      recursive\
+ -S      sound manager only\
+ -v      verbose\
+ -z      shuffle play\
+ -Z      random play\
+ -1      one random file\
+\
+ -t val  update time (in seconds; default = .1)\
+ -T val  kill time (in ticks; default = double click time)\
+ -V val  volume (in percent; default = 100)\
+\
+ -       read standard input\
+ -cd     plays all CDs\
+ -f      treat contents of file(s) as if on command line (ie. as playlist)
+\f1 \
+\
+
+\f0\b\fs36 Advanced Usage
+\f1\b0\fs24 \
+\
+qtplay supports the following signals:\
+\
+
+\f0\b SIGINT
+\f1\b0 		This signal is used to 
+\f0\b stop
+\f1\b0  the current song, and go on to the next. If two signals (^C^C) are received in succession, then the program aborts. (This is similar to the behavior of mpg123)\
+	(By default, the shell defines this signal by the keyboard shortcut: control-c)\
+
+\f0\b SIGTSTP
+\f1\b0 		This signal is used to 
+\f0\b pause
+\f1\b0  the current song. (Note: Call SIGTSTP instead of SIGSTOP)\
+	(By default, the shell defines this signal by the keyboard shortcut: control-z)\
+
+\f0\b SIGCONT
+\f1\b0 	This signal is used to 
+\f0\b continue
+\f1\b0  the current song.\
+	(Once a process has been suspended/paused, you can resume/continue it by typing the command: fg)\
+\
+
+\f0\b\fs36 Examples
+\f1\b0\fs24 \
+\
+play files in current directory:\
+
+\f2   qtplay
+\f1 \
+play all Audio CDs:\
+
+\f2   qtplay -cd
+\f1 \
+play files (plays files in the order given):\
+
+\f2   qtplay /Volumes/Audio\\ CD/ file.mp3 file2.mp3
+\f1 \
+play files randomized (plays a random file, then another random file, ...):\
+
+\f2   qtplay -Z file.mp3 file2.mp3
+\f1 \
+play files shuffled and looped (plays each file once in a random order, then loops and plays each file once in a different random order, ...):\
+
+\f2   qtplay -l -z file.mp3 file2.mp3
+\f1 \
+play all of your music randomized:\
+
+\f2   qtplay -r -Z ~/Music/
+\f1 \
+play one random song of your music:\
+
+\f2   qtplay -r -1 ~/Music/
+\f1 \
+play files (playlist):\
+
+\f2   /bin/ls /Volumes/Audio\\ CD/* > playlist.txt\
+  qtplay -f playlist.txt
+\f1 \
+play files (playlist), alternate method:
+\f2 \
+  /bin/ls /Volumes/Audio\\ CD/* | qtplay -
+\f1 \
+play files (playlist) in shuffled order keeping symphonies in tact:\
+
+\f2   /bin/ls /Volumes/Audio\\ CD/Track\\ 0[1-4].cdda > symphony1.txt
+\f1 \
+
+\f2   /bin/ls /Volumes/Audio\\ CD/Track\\ 0[5-8].cdda > symphony2.txt\
+  qtplay -z symphony1.txt symphony2.txt
+\f1 \
+\
+
+\f0\b\fs36 Installation
+\f1\b0\fs24 \
+\
+Install the binary and man page to a place in your path, such as...\
+
+\f2 	~/bin/qtplay\
+	~/man/man1/qtplay.1
+\f1 \
+or, for system wide usage, such as...\
+
+\f2 	/usr/local/bin/qtplay\
+	/usr/local/man/man1/qtplay.1
+\f1 \
+\
+
+\f0\b\fs36 Known Bugs and Limitations
+\f1\b0\fs24 \
+\
+\'a5 user reported crashing from using qtplay from procmail\
+\'a5 can't fast-forward, rewind songs\
+\'a5 can't read non-Quicktime internet URLs (ie. text playlists)\
+\'a5 in verbose mode, doesn't determine length of track\
+\'a5 flag for buffer size\
+\
+
+\f0\b\fs36 Version History
+\f1\b0\fs24 \
+\
+1.0 (9/7/02)\
+	Public Release\
+1.1 (9/27/02)\
+	\'a5 better random seed (thanks to Matt Slot)\
+	\'a5 automatic recognition of CDs\
+	\'a5 ability to read stdin\
+	\'a5 converted from Cocoa/ProjectBuilder to Carbon/gcc\
+	\'a5 support for signals: SIGINT (control-C) to skip song\
+	\'a5 support for Alias files\
+1.2 (12/23/02)\
+	\'a5 new man page (thanks to Josh Bude)\
+	\'a5 fixed bug where white boxes show on screen if there were video tracks (thanks to Carsten Klapp)\
+	\'a5 fixed bug in Mac OS X 10.0.x for CD detection. CD detection based on filesystem ID only\
+	\'a5 added "volume" flag\
+	\'a5 added "update time" flag for changing processor usage\
+	\'a5 support for playing sound resource files\
+	\'a5 support for signals: SIGTSTP (^Z) to pause song and SIGCONT (fg/bg) to continue song\
+	\'a5 various bug fixes for displaying filename path\
+1.3 (9/18/03)\
+	\'a5 Rewrote structure of code for better maintenance and easier feature integration.\
+	\'a5 Added ability to play internet URLs (as well as POSIX pathnames).\
+	\'a5 Added "kill time" flag for override double click time. (ie. control-C control-C)\
+	\'a5 Fixed inaccuracy of comparing timing of kill time to double click time.\
+	\'a5 Added "treat files as playlist" flag: contents of file(s) treated as if on command line.\
+	\'a5 Added ability to play text files ("playlists") as a non-random entity.\
+	\'a5 Added "Quicktime Only" and "Sound Manager Only" flags.\
+	\'a5 Added "one random file" flag. (idea thanks to Bryan Muir)\
+	\'a5 Added printing version number in verbose mode. Added version flag (--version).\
+	\'a5 Added "DJ Mode" flag  (ie. speak filename).\
+	\'a5 Fixed error codes and print statements. Error messages uses stderr instead of stdout.\
+	\'a5 Fixed bug so flags parsed correctly.\
+	\'a5 Removed the 100% volume flag limitation.\
+	\'a5 Fixed bug where the text of the path/url didn't always exist.\
+	\'a5 Fixed bug where correctly differentiates the commands `qtplay` and `qtplay ""`.\
+1.3.1 (1/30/04)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+\cf0 	\'a5 Fixed bug so playing Aliases works again.\
+	\'a5 Fixed bug when playing playlist so correctly interprets relative (as well as absolute) paths within a file.\
+	\'a5 Un-hardcoded mount point for Audio CDs.\
+	\'a5 Added "--" flag to force stop processing options.\
+	\'a5 Fixed bugs for error messages when use flags incorrectly.\
+}
