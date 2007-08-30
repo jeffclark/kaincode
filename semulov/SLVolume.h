@@ -17,6 +17,13 @@ typedef enum
 	SLVolumeNetwork,
 	SLVolumeiDisk,
 	SLVolumeFTP,
+	SLVolumeWebDAV,
+	SLVolumeDiskImage,
+	SLVolumeAudioCDROM,
+	SLVolumeCDROM,
+	SLVolumeDVD,
+	SLVolumeDVDVideo,
+	SLVolumeHardDrive,
 } SLVolumeType;
 
 @interface SLVolume : NSObject
@@ -28,13 +35,14 @@ typedef enum
 	BOOL _root;
 	NSURL *_hostURL;
 	BOOL _internal;
+	NSString *_imagePath;
 	
 	SLVolumeType _type;
 }
 
 + (NSArray *)allVolumes;
 
-- (id)initWithStatfs:(struct statfs *)statfs;
+- (id)initWithStatfs:(struct statfs *)statfs mountedDiskImages:(NSDictionary *)diskImages;
 
 - (NSString *)path;
 - (NSString *)name;
@@ -44,6 +52,8 @@ typedef enum
 - (SLVolumeType)type;
 - (NSURL *)hostURL;
 - (BOOL)isInternalHardDrive;
+
+- (NSString *)diskImagePath;
 
 - (BOOL)isiPod;
 
