@@ -11,7 +11,6 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		A518D7740BB19CC5009EC77B /* DiskArbitration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A518D7730BB19CC5009EC77B /* DiskArbitration.framework */; };
-		A518D80D0BB1A7CA009EC77B /* Semulov.icns in Resources */ = {isa = PBXBuildFile; fileRef = A518D80C0BB1A7CA009EC77B /* Semulov.icns */; };
 		A5455F8C0AFE64C6001F61C8 /* SLController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5455F8B0AFE64C6001F61C8 /* SLController.m */; };
 		A5455FE70AFE66A1001F61C8 /* SLVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = A5455FE60AFE66A1001F61C8 /* SLVolume.m */; };
 		A54561770AFE71EB001F61C8 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54561760AFE71EB001F61C8 /* Growl.framework */; };
@@ -20,6 +19,15 @@
 		A545639A0AFE8442001F61C8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54563990AFE8442001F61C8 /* Carbon.framework */; };
 		A54564630AFE8E9B001F61C8 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54564620AFE8E9B001F61C8 /* Sparkle.framework */; };
 		A54564770AFE8E9F001F61C8 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A54564620AFE8E9B001F61C8 /* Sparkle.framework */; };
+		A5537D770C822E8000A1806D /* UKLoginItemRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = A5537D750C822E8000A1806D /* UKLoginItemRegistry.m */; };
+		A5537D780C822E8000A1806D /* UKLoginItemRegistry.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A5537D760C822E8000A1806D /* UKLoginItemRegistry.h */; };
+		A5537D7D0C822E9700A1806D /* LoginItemsAE.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A5537D7B0C822E9700A1806D /* LoginItemsAE.h */; };
+		A5537D7E0C822E9700A1806D /* LoginItemsAE.c in Sources */ = {isa = PBXBuildFile; fileRef = A5537D7C0C822E9700A1806D /* LoginItemsAE.c */; };
+		A5537F0D0C822FE000A1806D /* SLNSImageAdditions.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A5537F0B0C822FE000A1806D /* SLNSImageAdditions.h */; };
+		A5537F0E0C822FE000A1806D /* SLNSImageAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5537F0C0C822FE000A1806D /* SLNSImageAdditions.m */; };
+		A5537F1C0C82312D00A1806D /* SemulovIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A5537F1B0C82312D00A1806D /* SemulovIcon.icns */; };
+		A55382AB0C82565100A1806D /* DVDPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A55382A60C82565100A1806D /* DVDPlayback.framework */; };
+		A55383670C825C9A00A1806D /* DiscRecording.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A553835D0C825C9A00A1806D /* DiscRecording.framework */; };
 		A555295F0B10B981005EB062 /* EjectPressed.tiff in Resources */ = {isa = PBXBuildFile; fileRef = A555295D0B10B981005EB062 /* EjectPressed.tiff */; };
 		A55529600B10B981005EB062 /* Eject.tiff in Resources */ = {isa = PBXBuildFile; fileRef = A555295E0B10B981005EB062 /* Eject.tiff */; };
 		A5552A140B10C2C9005EB062 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A5552A130B10C2C9005EB062 /* Credits.rtf */; };
@@ -36,6 +44,9 @@
 			files = (
 				A54564770AFE8E9F001F61C8 /* Sparkle.framework in Copy Frameworks */,
 				A54561830AFE7201001F61C8 /* Growl.framework in Copy Frameworks */,
+				A5537D780C822E8000A1806D /* UKLoginItemRegistry.h in Copy Frameworks */,
+				A5537D7D0C822E9700A1806D /* LoginItemsAE.h in Copy Frameworks */,
+				A5537F0D0C822FE000A1806D /* SLNSImageAdditions.h in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -45,15 +56,11 @@
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* Semulov_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Semulov_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* Semulov.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Semulov.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Semulov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Semulov.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A518D7730BB19CC5009EC77B /* DiskArbitration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiskArbitration.framework; path = /System/Library/Frameworks/DiskArbitration.framework; sourceTree = "<absolute>"; };
-		A518D80C0BB1A7CA009EC77B /* Semulov.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Semulov.icns; sourceTree = "<group>"; };
 		A5455F8A0AFE64C6001F61C8 /* SLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLController.h; sourceTree = "<group>"; };
 		A5455F8B0AFE64C6001F61C8 /* SLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLController.m; sourceTree = "<group>"; };
 		A5455FE50AFE66A1001F61C8 /* SLVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVolume.h; sourceTree = "<group>"; };
@@ -63,6 +70,15 @@
 		A54561850AFE720D001F61C8 /* SLGrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLGrowlController.m; sourceTree = "<group>"; };
 		A54563990AFE8442001F61C8 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		A54564620AFE8E9B001F61C8 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		A5537D750C822E8000A1806D /* UKLoginItemRegistry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = UKLoginItemRegistry.m; sourceTree = "<group>"; };
+		A5537D760C822E8000A1806D /* UKLoginItemRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = UKLoginItemRegistry.h; sourceTree = "<group>"; };
+		A5537D7B0C822E9700A1806D /* LoginItemsAE.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = LoginItemsAE.h; sourceTree = "<group>"; };
+		A5537D7C0C822E9700A1806D /* LoginItemsAE.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = LoginItemsAE.c; sourceTree = "<group>"; };
+		A5537F0B0C822FE000A1806D /* SLNSImageAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLNSImageAdditions.h; sourceTree = "<group>"; };
+		A5537F0C0C822FE000A1806D /* SLNSImageAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLNSImageAdditions.m; sourceTree = "<group>"; };
+		A5537F1B0C82312D00A1806D /* SemulovIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SemulovIcon.icns; sourceTree = "<group>"; };
+		A55382A60C82565100A1806D /* DVDPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVDPlayback.framework; path = /System/Library/Frameworks/DVDPlayback.framework; sourceTree = "<absolute>"; };
+		A553835D0C825C9A00A1806D /* DiscRecording.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscRecording.framework; path = /System/Library/Frameworks/DiscRecording.framework; sourceTree = "<absolute>"; };
 		A555295D0B10B981005EB062 /* EjectPressed.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = EjectPressed.tiff; sourceTree = "<group>"; };
 		A555295E0B10B981005EB062 /* Eject.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Eject.tiff; sourceTree = "<group>"; };
 		A5552A130B10C2C9005EB062 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
@@ -81,6 +97,8 @@
 				A545639A0AFE8442001F61C8 /* Carbon.framework in Frameworks */,
 				A54564630AFE8E9B001F61C8 /* Sparkle.framework in Frameworks */,
 				A518D7740BB19CC5009EC77B /* DiskArbitration.framework in Frameworks */,
+				A55382AB0C82565100A1806D /* DVDPlayback.framework in Frameworks */,
+				A55383670C825C9A00A1806D /* DiscRecording.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,10 +112,13 @@
 				A5455F8B0AFE64C6001F61C8 /* SLController.m */,
 				A5455FE50AFE66A1001F61C8 /* SLVolume.h */,
 				A5455FE60AFE66A1001F61C8 /* SLVolume.m */,
-				A54561840AFE720D001F61C8 /* SLGrowlController.h */,
-				A54561850AFE720D001F61C8 /* SLGrowlController.m */,
 				A5552A470B1105B0005EB062 /* SLPrefsController.h */,
 				A5552A480B1105B0005EB062 /* SLPrefsController.m */,
+				A54561840AFE720D001F61C8 /* SLGrowlController.h */,
+				A54561850AFE720D001F61C8 /* SLGrowlController.m */,
+				A5537F0B0C822FE000A1806D /* SLNSImageAdditions.h */,
+				A5537F0C0C822FE000A1806D /* SLNSImageAdditions.m */,
+				A5537D730C822E6900A1806D /* LoginItems */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -105,10 +126,10 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A553835D0C825C9A00A1806D /* DiscRecording.framework */,
+				A55382A60C82565100A1806D /* DVDPlayback.framework */,
 				A518D7730BB19CC5009EC77B /* DiskArbitration.framework */,
 				A54563990AFE8442001F61C8 /* Carbon.framework */,
-				A54564620AFE8E9B001F61C8 /* Sparkle.framework */,
-				A54561760AFE71EB001F61C8 /* Growl.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -117,9 +138,8 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
-				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
-				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				A54564620AFE8E9B001F61C8 /* Sparkle.framework */,
+				A54561760AFE71EB001F61C8 /* Growl.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -156,7 +176,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A518D80C0BB1A7CA009EC77B /* Semulov.icns */,
+				A5537F1B0C82312D00A1806D /* SemulovIcon.icns */,
 				A555295D0B10B981005EB062 /* EjectPressed.tiff */,
 				A555295E0B10B981005EB062 /* Eject.tiff */,
 				A5552A130B10C2C9005EB062 /* Credits.rtf */,
@@ -174,6 +194,17 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A5537D730C822E6900A1806D /* LoginItems */ = {
+			isa = PBXGroup;
+			children = (
+				A5537D760C822E8000A1806D /* UKLoginItemRegistry.h */,
+				A5537D750C822E8000A1806D /* UKLoginItemRegistry.m */,
+				A5537D7B0C822E9700A1806D /* LoginItemsAE.h */,
+				A5537D7C0C822E9700A1806D /* LoginItemsAE.c */,
+			);
+			name = LoginItems;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,7 +254,7 @@
 				A55529600B10B981005EB062 /* Eject.tiff in Resources */,
 				A5552A140B10C2C9005EB062 /* Credits.rtf in Resources */,
 				A5552A460B11058F005EB062 /* Preferences.nib in Resources */,
-				A518D80D0BB1A7CA009EC77B /* Semulov.icns in Resources */,
+				A5537F1C0C82312D00A1806D /* SemulovIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +270,9 @@
 				A5455FE70AFE66A1001F61C8 /* SLVolume.m in Sources */,
 				A54561870AFE720D001F61C8 /* SLGrowlController.m in Sources */,
 				A5552A4A0B1105B0005EB062 /* SLPrefsController.m in Sources */,
+				A5537D770C822E8000A1806D /* UKLoginItemRegistry.m in Sources */,
+				A5537D7E0C822E9700A1806D /* LoginItemsAE.c in Sources */,
+				A5537F0E0C822FE000A1806D /* SLNSImageAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +353,10 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;

@@ -11,33 +11,15 @@
 #import "SLGrowlController.h"
 #import <Sparkle/SUUpdater.h>
 #import "SLPrefsController.h"
-
-@interface NSImage (resize)
-- (NSImage *)resize:(NSSize)size;
-@end
-@implementation NSImage (resize)
-- (NSImage *)resize:(NSSize)size
-{
-    NSImage *image = [[[NSImage alloc] initWithSize:size] autorelease];
-    
-    [image setSize:size];
-    
- 	[self setScalesWhenResized: YES];
-	[self setSize:size];
-	
-    [image lockFocus];
-	[self compositeToPoint:NSZeroPoint operation:NSCompositeCopy];
-    [image unlockFocus];
-	
-    return image;
-}
-@end
+#import "SLNSImageAdditions.h"
+#import "UKLoginItemRegistry.h"
 
 
 #define SLShowVolumesNumber @"SLShowVolumesNumber"
 #define SLShowStartupDisk	@"SLShowStartupDisk"
 #define SLShowEjectAll		@"SLShowEjectAll"
 #define SLDisableInternalHD	@"SLDisableInternalHD"
+#define SLLaunchAtStartup	@"SLLaunchAtStartup"
 
 
 @implementation SLController
@@ -49,6 +31,7 @@
 		[NSNumber numberWithBool:NO], SLShowStartupDisk,
 		[NSNumber numberWithBool:NO], SLShowEjectAll,
 		[NSNumber numberWithBool:YES], SLDisableInternalHD,
+		[NSNumber numberWithBool:NO], SLLaunchAtStartup,
 		nil]];
 }
 
@@ -97,11 +80,29 @@
 	[sdc addObserver:self forKeyPath:@"values.SLShowStartupDisk" options:nil context:SLShowStartupDisk];
 	[sdc addObserver:self forKeyPath:@"values.SLShowEjectAll" options:nil context:SLShowEjectAll];
 	[sdc addObserver:self forKeyPath:@"values.SLDisableInternalHD" options:nil context:SLDisableInternalHD];
+	[sdc addObserver:self forKeyPath:@"values.SLLaunchAtStartup" options:nil context:SLLaunchAtStartup];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	[self updateStatusItemMenu];
+	if ([(NSString *)context isEqualToString:@"SLLaunchAtStartup"])
+	{
+		NSURL *appURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"SLLaunchAtStartup"])
+		{
+			// add us to the login items
+			if ([UKLoginItemRegistry indexForLoginItemWithURL:appURL] == -1)
+				[UKLoginItemRegistry addLoginItemWithURL:appURL hideIt:NO];
+		}
+		else
+		{
+			[UKLoginItemRegistry removeLoginItemWithURL:appURL];
+		}
+	}
+	else
+	{
+		[self updateStatusItemMenu];
+	}
 }
 
 #pragma mark -
@@ -144,13 +145,14 @@
 	SLVolume *vol = nil;
 	SLVolumeType _lastType = -1;
 	int vcount = 0;
-	NSMenuItem *menuItem = nil, *altMenu = nil;
+	NSMenuItem *titleMenu = nil, *menuItem = nil, *altMenu = nil, *altaltMenu;
 	NSString *titleName = nil;
 	
 	while (vol = [volumesEnum nextObject])
 	{
 		if (showStartupDisk == NO && [vol isRoot]) continue;
 		
+		titleMenu = nil;
 		if ([vol type] != _lastType)
 		{
 			_lastType = [vol type];
@@ -160,34 +162,87 @@
 			else if (_lastType == SLVolumeRoot)
 				titleName = @"Startup Disk";
 			else if (_lastType == SLVolumeiPod)
-				titleName = @"iPod";
+				titleName = @"iPods";
 			else if (_lastType == SLVolumeNetwork)
 				titleName = @"Network";
 			else if (_lastType == SLVolumeiDisk)
-				titleName = @"iDisk";
+				titleName = @"iDisks";
 			else if (_lastType == SLVolumeFTP)
-				titleName = @"FTP";			
-			menuItem = [[NSMenuItem alloc] initWithTitle:titleName action:nil keyEquivalent:@""];
-			[menu addItem:menuItem];		
-			[menuItem release];
+				titleName = @"FTP";
+			else if (_lastType == SLVolumeWebDAV)
+				titleName = @"WebDAV";
+			else if (_lastType == SLVolumeDiskImage)
+				titleName = @"Disk Images";
+			else if (_lastType == SLVolumeDVD)
+				titleName = @"DVDs";
+			else if (_lastType == SLVolumeDVDVideo)
+				titleName = @"Video DVDs";
+			else if (_lastType == SLVolumeCDROM)
+				titleName = @"CDs";
+			else if (_lastType == SLVolumeAudioCDROM)
+				titleName = @"Audio CDs";
+			else if (_lastType == SLVolumeHardDrive)
+				titleName = @"Hard Drives";
+			titleMenu = [[NSMenuItem alloc] initWithTitle:titleName action:nil keyEquivalent:@""];
 		}
 		
-		menuItem = [[NSMenuItem alloc] initWithTitle:[vol name] action:([vol isRoot] ? nil : @selector(doEject:)) keyEquivalent:@""];
+		SEL mainItemAction = ([vol isRoot] ? nil : @selector(doEject:));
+		NSImage *mainItemImage = [[vol image] slResize:NSMakeSize(16, 16)];
+		
+		// setup the main item
+		menuItem = [[NSMenuItem alloc] initWithTitle:[vol name] action:mainItemAction keyEquivalent:@""];
 		[menuItem setRepresentedObject:vol];
-		[menuItem setImage:[[vol image] resize:NSMakeSize(16, 16)]];
+		[menuItem setImage:mainItemImage];
 		[menuItem setIndentationLevel:1];
+		[menuItem setTarget:self];
 		if (![self volumeCanBeEjected:vol])
 			[menuItem setAction:nil];
-		[menu addItem:menuItem];
 		
-		altMenu = [menuItem copy];
+		// setup the first alternate item
+		altMenu = [[NSMenuItem alloc] initWithTitle:[vol name] action:mainItemAction keyEquivalent:@""];
 		[altMenu setAlternate:YES];
-		[altMenu setTitle:[NSString stringWithFormat:@"Show %@", [altMenu title]]];
 		[altMenu setKeyEquivalentModifierMask:NSAlternateKeyMask];
-		[altMenu setAction:@selector(doShowInFinder:)];
-		[menu addItem:altMenu];
-		[altMenu release];
+		[altMenu setRepresentedObject:vol];
+		[altMenu setImage:mainItemImage];
+		[altMenu setIndentationLevel:1];
+		[altMenu setTarget:self];
+		if ([vol type] == SLVolumeDiskImage)
+		{
+			[altMenu setTitle:[NSString stringWithFormat:@"Discard %@", [vol name]]];
+			[altMenu setAction:@selector(doEjectAndDeleteDiskImage:)];
+		}
+		if (![self volumeCanBeEjected:vol])
+			[altMenu setAction:nil];
+
+		// setup the second alternate item
+		altaltMenu = [[NSMenuItem alloc] initWithTitle:[vol name] action:mainItemAction keyEquivalent:@""];
+		[altaltMenu setAlternate:YES];
+		[altaltMenu setKeyEquivalentModifierMask:NSAlternateKeyMask | NSCommandKeyMask];
+		[altaltMenu setRepresentedObject:vol];
+		[altaltMenu setImage:mainItemImage];
+		[altaltMenu setIndentationLevel:1];
+		[altaltMenu setTitle:[NSString stringWithFormat:@"Show %@", [vol name]]];
+		[altaltMenu setAction:@selector(doShowInFinder:)];
+		[altaltMenu setTarget:self];
 		
+		if (titleMenu)
+		{
+			[menu addItem:titleMenu];
+			[titleMenu release];
+		}
+
+		[menu addItem:menuItem];
+		[menu addItem:altMenu];
+		[menu addItem:altaltMenu];
+		
+		/*if (altaltMenu)
+		{
+			[menu addItem:altaltMenu];
+			[altaltMenu release];
+		}*/			
+
+		[altaltMenu release];
+		[altMenu release];
 		[menuItem release];
 
 		vcount++;
@@ -273,13 +328,20 @@
 	[NSApp terminate:nil];
 }
 
-- (void)doEject:(id)sender
+- (BOOL)ejectVolumeWithFeedback:(SLVolume *)volume
 {
-	if (![[sender representedObject] eject])
+	if (![volume eject])
 	{
 		[NSApp activateIgnoringOtherApps:YES];
 		NSRunAlertPanel(@"Unmount failed",@"Failed to eject volume.",@"OK",nil,nil);
+		return NO;
 	}
+	return YES;
+}
+
+- (void)doEject:(id)sender
+{
+	[self ejectVolumeWithFeedback:[sender representedObject]];
 }
 
 - (void)doEjectAll:(id)sender
@@ -300,6 +362,37 @@
 	}
 }
 
+- (void)doEjectAndDeleteDiskImage:(id)sender
+{
+	SLVolume *vol = [sender representedObject];
+	NSString *imagePath = [vol diskImagePath];
+
+	[NSApp activateIgnoringOtherApps:YES];
+
+	if (![[NSFileManager defaultManager] fileExistsAtPath:imagePath])
+	{
+		NSRunAlertPanel(@"Disk image not found",@"The corresponding disk image file for the mounted volume could not be found.",@"OK",nil,nil);
+		return;
+	}
+	
+	if (NSRunAlertPanel(@"Are you sure you want to unmount this volume and delete its associated disk image?",@"You cannot undo this action.",@"No",@"Yes",nil) == NSCancelButton)
+	{
+		if ([self ejectVolumeWithFeedback:vol])
+			[[NSFileManager defaultManager] removeFileAtPath:imagePath handler:nil];
+	}
+
+	// move it to the trash
+	/*NSString *sourceDir = [imagePath stringByDeletingLastPathComponent];
+	NSArray *files = [NSArray arrayWithObject:[imagePath lastPathComponent]];
+	NSString *trashDir = [NSHomeDirectory() stringByAppendingPathComponent:@".Trash"];
+	int tag = 0;
+	[[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation
+												 source:sourceDir
+											destination:trashDir
+												  files:files
+													tag:&tag];*/
+}
+
 - (void)doUpdates:(id)sender
 {
 	[_updater checkForUpdates:nil];
@@ -307,7 +400,9 @@
 
 - (void)doFeedback:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"mailto:kainjow@kainjow.com?subject=Semulov%20Feedback"]];
+	NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+	NSString *urlString = [[NSString stringWithFormat:@"mailto:kainjow@kainjow.com?subject=Semulov %@ Feedback", appVersion] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
 }
 
 - (void)doPrefs:(id)sender
