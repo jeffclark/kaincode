@@ -15,11 +15,13 @@
 #import "UKLoginItemRegistry.h"
 
 
-#define SLShowVolumesNumber @"SLShowVolumesNumber"
-#define SLShowStartupDisk	@"SLShowStartupDisk"
-#define SLShowEjectAll		@"SLShowEjectAll"
-#define SLDisableInternalHD	@"SLDisableInternalHD"
-#define SLLaunchAtStartup	@"SLLaunchAtStartup"
+#define SLShowVolumesNumber		@"SLShowVolumesNumber"
+#define SLShowStartupDisk		@"SLShowStartupDisk"
+#define SLShowEjectAll			@"SLShowEjectAll"
+#define SLDisableInternalHD		@"SLDisableInternalHD"
+#define SLLaunchAtStartup		@"SLLaunchAtStartup"
+#define SLDisableDiscardWarning	@"SLDisableDiscardWarning"
+#define SLHideInternalDrives	@"SLHideInternalDrives"
 
 
 @implementation SLController
@@ -32,6 +34,7 @@
 		[NSNumber numberWithBool:NO], SLShowEjectAll,
 		[NSNumber numberWithBool:YES], SLDisableInternalHD,
 		[NSNumber numberWithBool:NO], SLLaunchAtStartup,
+		[NSNumber numberWithBool:NO], SLDisableDiscardWarning,
 		nil]];
 }
 
@@ -81,6 +84,7 @@
 	[sdc addObserver:self forKeyPath:@"values.SLShowEjectAll" options:nil context:SLShowEjectAll];
 	[sdc addObserver:self forKeyPath:@"values.SLDisableInternalHD" options:nil context:SLDisableInternalHD];
 	[sdc addObserver:self forKeyPath:@"values.SLLaunchAtStartup" options:nil context:SLLaunchAtStartup];
+	[sdc addObserver:self forKeyPath:@"values.SLHideInternalDrives" options:nil context:SLHideInternalDrives];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -117,15 +121,35 @@
 	}
 	_statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength/*(_showVolumesNumber ? NSVariableStatusItemLength : 24)*/] retain];
 	[_statusItem setHighlightMode:YES];
-	[_statusItem setImage:[NSImage imageNamed:@"Eject"]];
-	[_statusItem setAlternateImage:[NSImage imageNamed:@"EjectPressed"]];
+	
+	NSImage *ejectImage = [NSImage imageNamed:@"Eject"];
+	if ([ejectImage respondsToSelector:@selector(setTemplate:)])
+	{
+		// Leopard compatibility
+		[ejectImage setTemplate:YES];
+	}
+	else
+	{
+		// Leopard generates the alternative image automagically.
+		// Tiger does not so we have to set it ourselves
+		[_statusItem setAlternateImage:[NSImage imageNamed:@"EjectWhite"]];
+	}
+	[_statusItem setImage:ejectImage];
 	[self updateStatusItemMenu];
 }
 
 - (BOOL)volumeCanBeEjected:(SLVolume *)volume
 {
-	return !([[[[NSUserDefaultsController sharedUserDefaultsController] values] valueForKey:SLDisableInternalHD] boolValue] == YES && 
-			[volume isInternalHardDrive]);
+	NSArray *userDefaultValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
+	
+	if ([volume isInternalHardDrive] == NO)
+		return YES;
+	
+	if ([[userDefaultValues valueForKey:SLDisableInternalHD] boolValue] || 
+		[[userDefaultValues valueForKey:SLHideInternalDrives] boolValue])
+		return NO;
+	
+	return YES;
 }
 
 - (void)updateStatusItemMenu
@@ -135,6 +159,7 @@
 	BOOL showVolumesNumber = [[defaultValues valueForKey:SLShowVolumesNumber] boolValue];
 	BOOL showStartupDisk = [[defaultValues valueForKey:SLShowStartupDisk] boolValue];
 	BOOL showEjectAll = [[defaultValues valueForKey:SLShowEjectAll] boolValue];
+	BOOL hideInternalDrives = [[defaultValues valueForKey:SLHideInternalDrives] boolValue];
 	
 	while ([[_statusItem menu] numberOfItems])
 		[[_statusItem menu] removeItemAtIndex:0];
@@ -150,7 +175,11 @@
 	
 	while (vol = [volumesEnum nextObject])
 	{
-		if (showStartupDisk == NO && [vol isRoot]) continue;
+		if ((showStartupDisk == NO && [vol isRoot]) ||
+			(hideInternalDrives && [vol isInternalHardDrive]))
+		{
+			continue;
+		}
 		
 		titleMenu = nil;
 		if ([vol type] != _lastType)
@@ -375,7 +404,11 @@
 		return;
 	}
 	
-	if (NSRunAlertPanel(@"Are you sure you want to unmount this volume and delete its associated disk image?",@"You cannot undo this action.",@"No",@"Yes",nil) == NSCancelButton)
+	BOOL showWarning = [[NSUserDefaults standardUserDefaults] boolForKey:@"SLDisableDiscardWarning"];
+	if (
+		(showWarning == YES) ||
+		((showWarning == NO) && (NSRunAlertPanel(@"Are you sure you want to unmount this volume and delete its associated disk image?",@"You cannot undo this action.",@"No",@"Yes",nil) == NSCancelButton))
+		)
 	{
 		if ([self ejectVolumeWithFeedback:vol])
 			[[NSFileManager defaultManager] removeFileAtPath:imagePath handler:nil];
