@@ -35,6 +35,7 @@
 		[NSNumber numberWithBool:YES], SLDisableInternalHD,
 		[NSNumber numberWithBool:NO], SLLaunchAtStartup,
 		[NSNumber numberWithBool:NO], SLDisableDiscardWarning,
+		[NSNumber numberWithBool:NO], SLHideInternalDrives,
 		nil]];
 }
 
