@@ -23,7 +23,7 @@
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	WPS *wps = [[WPS alloc] initWithUsername:@"kainjow" realm:@"kainjow.com"];
+	WPS *wps = [[WPS alloc] initWithUsername:@"USERNAME" realm:@"REALM"];
 	WPSLocation *loc = [wps currentLocation];
 	[self performSelectorOnMainThread:@selector(gotLocation:) withObject:loc waitUntilDone:YES];
 	[wps release];
