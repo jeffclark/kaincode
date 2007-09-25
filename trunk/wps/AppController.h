@@ -16,4 +16,6 @@
 	IBOutlet NSTextField *longField;
 }
 
+- (IBAction)viewMap:(id)sender;
+
 @end
