@@ -38,4 +38,14 @@
 	[progressBar stopAnimation:nil];
 }
 
+- (IBAction)viewMap:(id)sender
+{
+	NSString *gmap = [NSString stringWithFormat:@"http://maps.google.com/maps?q=%f %f",
+		[latField floatValue],
+		[longField floatValue]];
+	NSURL *gmapURL = [NSURL URLWithString:[gmap stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	if (gmapURL)
+		[[NSWorkspace sharedWorkspace] openURL:gmapURL];
+}
+
 @end
