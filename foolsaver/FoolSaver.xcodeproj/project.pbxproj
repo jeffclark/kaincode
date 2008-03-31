@@ -188,9 +188,11 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = A5799C3408B2A1FC002BCEF5 /* Build configuration list for PBXProject "FoolSaver" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			mainGroup = 089C166AFE841209C02AAC07 /* FoolSaver */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				8D255AC50486D3F9007BF209 /* FoolSaver */,
 			);

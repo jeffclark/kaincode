@@ -17,7 +17,7 @@
 	if (self = [super initWithFrame:frame isPreview:isPreview])
 	{
 		srandom(time(NULL));
-		drawPoint = NSMakePoint(-1, -1);
+		drawPoint = NSMakePoint(-1.0, -1.0);
 		prefs = nil;
 		[self updateImage:nil];
 		
@@ -69,7 +69,7 @@
 {
     [super drawRect:rect];
 	
-	if (NSEqualPoints(drawPoint, NSMakePoint(-1, -1)))
+	if (NSEqualPoints(drawPoint, NSMakePoint(-1.0, -1.0)))
 		return;
 	
 	NSRect bounds = [self bounds];
@@ -78,7 +78,7 @@
 	[NSBezierPath fillRect:bounds];
 	
 	NSRect drawFromRect, drawInRect;
-	drawFromRect.origin = NSMakePoint(0, 0);
+	drawFromRect.origin = NSMakePoint(0.0, 0.0);
 	drawFromRect.size = [winXPPro size];
 	
 	drawInRect.origin = drawPoint;
