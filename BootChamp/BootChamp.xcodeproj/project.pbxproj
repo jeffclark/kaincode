@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,9 +11,12 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		A5A106DE0C3C83AA006A3862 /* BOController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A106DD0C3C83AA006A3862 /* BOController.m */; };
+		A5696EA80E21B7CC0063130E /* BOAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5696EA70E21B7CC0063130E /* BOAppController.m */; };
+		A5A106DE0C3C83AA006A3862 /* BOBoot.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A106DD0C3C83AA006A3862 /* BOBoot.m */; };
 		A5A108400C3C8DBC006A3862 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5A1083F0C3C8DBC006A3862 /* Security.framework */; };
 		A5A108600C3C8E45006A3862 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5A1085F0C3C8E45006A3862 /* Carbon.framework */; };
+		A5D8A6490E21C3CA00F9756E /* BOStatusMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D8A6480E21C3CA00F9756E /* BOStatusMenuController.m */; };
+		A5D8A6B10E21C7CF00F9756E /* bootchamp.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D8A6B00E21C7CF00F9756E /* bootchamp.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,10 +30,16 @@
 		32CA4F630368D1EE00C91783 /* BootChamp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BootChamp_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* BootChamp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BootChamp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5A106DC0C3C83AA006A3862 /* BOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOController.h; sourceTree = "<group>"; };
-		A5A106DD0C3C83AA006A3862 /* BOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOController.m; sourceTree = "<group>"; };
+		A5696EA60E21B7CC0063130E /* BOAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOAppController.h; sourceTree = "<group>"; };
+		A5696EA70E21B7CC0063130E /* BOAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOAppController.m; sourceTree = "<group>"; };
+		A5A106DC0C3C83AA006A3862 /* BOBoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOBoot.h; sourceTree = "<group>"; };
+		A5A106DD0C3C83AA006A3862 /* BOBoot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOBoot.m; sourceTree = "<group>"; };
 		A5A1083F0C3C8DBC006A3862 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		A5A1085F0C3C8E45006A3862 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		A5D8A6470E21C3CA00F9756E /* BOStatusMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOStatusMenuController.h; sourceTree = "<group>"; };
+		A5D8A6480E21C3CA00F9756E /* BOStatusMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOStatusMenuController.m; sourceTree = "<group>"; };
+		A5D8A6580E21C4AA00F9756E /* BODefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BODefines.h; sourceTree = "<group>"; };
+		A5D8A6B00E21C7CF00F9756E /* bootchamp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bootchamp.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,8 +59,13 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				A5A106DC0C3C83AA006A3862 /* BOController.h */,
-				A5A106DD0C3C83AA006A3862 /* BOController.m */,
+				A5D8A6580E21C4AA00F9756E /* BODefines.h */,
+				A5696EA60E21B7CC0063130E /* BOAppController.h */,
+				A5696EA70E21B7CC0063130E /* BOAppController.m */,
+				A5D8A6470E21C3CA00F9756E /* BOStatusMenuController.h */,
+				A5D8A6480E21C3CA00F9756E /* BOStatusMenuController.m */,
+				A5A106DC0C3C83AA006A3862 /* BOBoot.h */,
+				A5A106DD0C3C83AA006A3862 /* BOBoot.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -108,6 +122,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A5D8A6B00E21C7CF00F9756E /* bootchamp.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
@@ -151,9 +166,11 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BootChamp" */;
+			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* BootChamp */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* BootChamp */,
 			);
@@ -167,6 +184,7 @@
 			files = (
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				A5D8A6B10E21C7CF00F9756E /* bootchamp.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,7 +196,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				A5A106DE0C3C83AA006A3862 /* BOController.m in Sources */,
+				A5A106DE0C3C83AA006A3862 /* BOBoot.m in Sources */,
+				A5696EA80E21B7CC0063130E /* BOAppController.m in Sources */,
+				A5D8A6490E21C3CA00F9756E /* BOStatusMenuController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,17 +259,18 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};
