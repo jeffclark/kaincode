@@ -7,8 +7,23 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "BOAppController.h"
 
 int main(int argc, char *argv[])
 {
-    return NSApplicationMain(argc,  (const char **) argv);
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	[NSApplication sharedApplication];
+	
+	BOAppController *controller = [[BOAppController alloc] init];
+	
+	[NSApp setDelegate:controller];
+	[NSApp run];
+	
+	[controller release];
+	
+	[pool release];
+	
+    return 0;
 }
+
