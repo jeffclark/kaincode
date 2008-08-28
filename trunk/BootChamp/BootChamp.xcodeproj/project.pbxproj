@@ -10,10 +10,12 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		A5696EA80E21B7CC0063130E /* BOAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5696EA70E21B7CC0063130E /* BOAppController.m */; };
+		A58D8D6E0E6483160073F663 /* DiskArbitration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58D8D6D0E6483160073F663 /* DiskArbitration.framework */; };
 		A5A106DE0C3C83AA006A3862 /* BOBoot.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A106DD0C3C83AA006A3862 /* BOBoot.m */; };
 		A5A108400C3C8DBC006A3862 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5A1083F0C3C8DBC006A3862 /* Security.framework */; };
 		A5A108600C3C8E45006A3862 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5A1085F0C3C8E45006A3862 /* Carbon.framework */; };
 		A5D8A6490E21C3CA00F9756E /* BOStatusMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D8A6480E21C3CA00F9756E /* BOStatusMenuController.m */; };
+		A5DA47FF0E64938F001C5148 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5DA47FE0E64938F001C5148 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,7 @@
 		8D1107320486CEB800E47090 /* BootChamp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BootChamp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5696EA60E21B7CC0063130E /* BOAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOAppController.h; sourceTree = "<group>"; };
 		A5696EA70E21B7CC0063130E /* BOAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOAppController.m; sourceTree = "<group>"; };
+		A58D8D6D0E6483160073F663 /* DiskArbitration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiskArbitration.framework; path = /System/Library/Frameworks/DiskArbitration.framework; sourceTree = "<absolute>"; };
 		A5A106DC0C3C83AA006A3862 /* BOBoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOBoot.h; sourceTree = "<group>"; };
 		A5A106DD0C3C83AA006A3862 /* BOBoot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOBoot.m; sourceTree = "<group>"; };
 		A5A1083F0C3C8DBC006A3862 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
@@ -34,6 +37,8 @@
 		A5D8A6470E21C3CA00F9756E /* BOStatusMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOStatusMenuController.h; sourceTree = "<group>"; };
 		A5D8A6480E21C3CA00F9756E /* BOStatusMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOStatusMenuController.m; sourceTree = "<group>"; };
 		A5D8A6580E21C4AA00F9756E /* BODefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BODefines.h; sourceTree = "<group>"; };
+		A5DA47FC0E64938B001C5148 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A5DA48460E6494C9001C5148 /* Polish */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Polish; path = Polish.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +49,7 @@
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				A5A108400C3C8DBC006A3862 /* Security.framework in Frameworks */,
 				A5A108600C3C8E45006A3862 /* Carbon.framework in Frameworks */,
+				A58D8D6E0E6483160073F663 /* DiskArbitration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +73,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A58D8D6D0E6483160073F663 /* DiskArbitration.framework */,
 				A5A1085F0C3C8E45006A3862 /* Carbon.framework */,
 				A5A1083F0C3C8DBC006A3862 /* Security.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
@@ -98,6 +105,7 @@
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
+				8D1107310486CEB800E47090 /* Info.plist */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -116,7 +124,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107310486CEB800E47090 /* Info.plist */,
+				A5DA47FE0E64938F001C5148 /* Localizable.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -159,6 +167,13 @@
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BootChamp" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				Polish,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* BootChamp */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -173,6 +188,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5DA47FF0E64938F001C5148 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +207,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A5DA47FE0E64938F001C5148 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5DA47FC0E64938B001C5148 /* English */,
+				A5DA48460E6494C9001C5148 /* Polish */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {

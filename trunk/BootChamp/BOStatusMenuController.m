@@ -119,7 +119,9 @@
 
 - (void)bootWindows:(id)sender
 {
-	bootIntoWindows();
+	[NSApp activateIgnoringOtherApps:YES];
+	if (bootIntoWindows())
+		[NSApp terminate:nil];
 }
 
 - (void)about:(id)sender
@@ -131,6 +133,7 @@
 - (void)sendFeedback:(id)sender
 {
 	NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+	// do not localize the subject
 	NSString *urlString = [[NSString stringWithFormat:@"mailto:kainjow@kainjow.com?subject=%@ %@ Feedback", [[NSProcessInfo processInfo] processName], appVersion] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
 }
