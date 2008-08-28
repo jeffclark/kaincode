@@ -9,4 +9,4 @@
 #import <Cocoa/Cocoa.h>
 
 
-void bootIntoWindows();
+int bootIntoWindows();

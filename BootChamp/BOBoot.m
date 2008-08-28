@@ -10,7 +10,7 @@
 #import <Carbon/Carbon.h>
 #import <Security/Security.h>
 #import <sys/mount.h>
-
+#import <DiskArbitration/DiskArbitration.h>
 
 enum {
 	switchSuccessError = 0,
@@ -49,7 +49,7 @@ BOOL restartComputer()
 	return (error == noErr);
 }
 
-NSString* windowsVolume()
+NSDictionary *windowsVolume()
 {
 	struct statfs *buf = NULL;
 	unsigned i, count = 0;
@@ -57,54 +57,112 @@ NSString* windowsVolume()
 	count = getmntinfo(&buf, 0);
 	for (i=0; i<count; i++)
 	{
+		BOOL isValidBootCampVolume = NO;
+		char *volType = buf[i].f_fstypename;
+		char *volPath = buf[i].f_mntonname;
+		NSString *volKind = nil;
+		NSString *bsdName = [NSString stringWithCString:buf[i].f_mntfromname encoding:NSUTF8StringEncoding];
+		
 		if ((buf[i].f_flags & MNT_LOCAL) != MNT_LOCAL)
 			continue;
 		
-		char *volType = buf[i].f_fstypename;
-		char *volPath = buf[i].f_mntonname;
-		if ((strcmp(volType, "ntfs") == 0) || (strcmp(volType, "msdos") == 0))
+		// use normal statfs to check for FAT32 (msdos), or NTFS (ufsd, ntfs)
+		if ((strcmp(volType, "ntfs") == 0) || (strcmp(volType, "msdos") == 0) || (strcmp(volType, "ufsd") == 0))
+			isValidBootCampVolume = YES;
+		
+		// When MacFUSE and NTFS-3G are installed, statfs shows "fusefs" for the type name, so we need to use
+		// the DiskArbitration framework to get the "kind", and check that specifically.
+		if (!isValidBootCampVolume && (strcmp(volType, "fusefs") == 0))
 		{
-			NSString *path = [NSString stringWithUTF8String:volPath];
-			if (path)
-				return path;
+			DASessionRef session = DASessionCreate(kCFAllocatorDefault);
+			if (session)
+			{
+				DADiskRef disk = DADiskCreateFromBSDName(kCFAllocatorDefault, session, [bsdName UTF8String]);
+				if (disk)
+				{
+					CFDictionaryRef desc = DADiskCopyDescription(disk);
+					if (desc) {
+						NSDictionary *dict = (NSDictionary *)desc;
+						volKind = [dict objectForKey:(NSString *)kDADiskDescriptionVolumeKindKey];
+						if ((volKind != nil) && [(NSString *)volKind rangeOfString:@"ntfs-3g" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+							isValidBootCampVolume = YES;
+						}
+						
+						CFRelease(desc);
+					}
+					CFRelease(disk);
+				}
+				CFRelease(session);
+			}
 		}
+
+		NSLog(@"%s: %s (%@, %@)", volPath, volType, volKind, bsdName);
+
+		if (isValidBootCampVolume)
+			return [NSDictionary dictionaryWithObjectsAndKeys:
+					bsdName, @"bsdName",
+					[[NSString stringWithUTF8String:volPath] lastPathComponent], @"name",
+					nil];
 	}
 	
 	return nil;
 }
 
-BOOL setVolumeAsStartupDisk(NSString *volume, BOOL *userCancelled)
+BOOL setStartupDisk(NSString *bsdName, NSString *name, BOOL *userCancelled)
 {
 	OSStatus status;
 	AuthorizationRef authorizationRef;
 	
 	status = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment, kAuthorizationFlagDefaults, &authorizationRef);
-	if (status != noErr)
+	if (status != errAuthorizationSuccess) {
+		NSLog(@"AuthorizationCreate error %d", status);
 		return NO;
+	}
+	
+	NSString *prompt = [NSString stringWithFormat:NSLocalizedString(@"Administrative access is needed to temporarily change your startup disk to \"%@\".", ""), name];
+	const char *promptUTF8 = [prompt UTF8String];
+	AuthorizationItem envItems = {kAuthorizationEnvironmentPrompt, strlen(promptUTF8), (void *)promptUTF8, 0};
+	AuthorizationEnvironment env = {1, &envItems};
+	AuthorizationItem rightsItems = {kAuthorizationRightExecute, 0, NULL, 0};
+	AuthorizationRights rights = {1, &rightsItems};
+	status = AuthorizationCopyRights(authorizationRef, &rights, &env, kAuthorizationFlagInteractionAllowed | kAuthorizationFlagExtendRights, NULL);
+	if (status != errAuthorizationSuccess) {
+		NSLog(@"AuthorizationCopyRights error %d", status);
+		AuthorizationFree(authorizationRef, kAuthorizationFlagDefaults);
+		*userCancelled = (status == errAuthorizationCanceled);
+		return NO;
+	}
 	
 	char *args[7];
 	args[0] = "--verbose";		// extra debug info in Console
 	args[1] = "--legacy";		// support for BIOS-based operating systems
 	args[2] = "--setBoot";		// boot it up
 	args[3] = "--nextonly";		// only change the boot disk for next boot
-	args[4] = "--folder";
-	args[5] = (char *)[volume UTF8String];
+	args[4] = "--device";
+	args[5] = (char *)[bsdName UTF8String];
 	args[6] = NULL;
 	
-	status = AuthorizationExecuteWithPrivileges(authorizationRef, "/usr/sbin/bless", 0, args, NULL);
-	*userCancelled = (status == errAuthorizationCanceled);
-	return (status == noErr);
+	status = AuthorizationExecuteWithPrivileges(authorizationRef, "/usr/sbin/bless", kAuthorizationFlagDefaults, args, NULL);
+	if (status != errAuthorizationSuccess) {
+		*userCancelled = (status == errAuthorizationCanceled);
+		NSLog(@"AuthorizationExecuteWithPrivileges error %d", status);
+	}
+
+	AuthorizationFree(authorizationRef, kAuthorizationFlagDefaults);
+	return (status == errAuthorizationSuccess);
 }
 
 int switchToWindowsAndRestart()
 {
-	NSString *volume = windowsVolume();
-	if (volume == nil)
+	NSDictionary *dict = windowsVolume();
+	if (dict == nil || [dict count] < 2)
 		return noWindowsVolumeError;
 	
-	BOOL userCancelledAuthentication;
-	if (!setVolumeAsStartupDisk(volume, &userCancelledAuthentication))
+	BOOL userCancelledAuthentication = NO;
+	if (!setStartupDisk([dict objectForKey:@"bsdName"], [dict objectForKey:@"name"], &userCancelledAuthentication)) {
+		[NSApp activateIgnoringOtherApps:YES]; // app may have gone unactive from auth dialog
 		return (userCancelledAuthentication ? authCancelled : authFailedOrBlessFailedError);
+	}
 	
 	if (!restartComputer())
 		return restartFailedError;
@@ -112,17 +170,16 @@ int switchToWindowsAndRestart()
 	return switchSuccessError;
 }
 
-void bootIntoWindows()
+int bootIntoWindows()
 {
 	BOOL quit = NO;
-	
-	[NSApp activateIgnoringOtherApps:YES];
-
-	switch (switchToWindowsAndRestart())
+	int status = switchToWindowsAndRestart();
+	NSLog(@"switchToWindowsAndRestart: %d", status);
+	switch (status)
 	{
 		case noWindowsVolumeError:
 			NSRunAlertPanel(NSLocalizedString(@"BootChamp was unable to find a Windows volume", nil),
-							NSLocalizedString(@"If your Windows installation is on a separate drive, please connect it and relaunch BootChamp.", nil),
+							NSLocalizedString(@"Supported file systems are FAT32 and NTFS.", nil),
 							nil,nil,nil);
 			break;
 			
@@ -139,11 +196,12 @@ void bootIntoWindows()
 			break;
 			
 		case authCancelled:
+			break;
+
 		case switchSuccessError:
 			quit = YES;
 			break;
 	}
 	
-	if (quit)
-		[NSApp terminate:nil];
+	return quit;
 }
