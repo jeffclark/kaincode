@@ -14,10 +14,11 @@
 
 enum {
 	switchSuccessError = 0,
-	noWindowsVolumeError = 1,
-	authFailedOrBlessFailedError = 2,
-	authCancelled = 3,
-	restartFailedError = 4,
+	noWindowsVolumeError,
+	authFailedOrBlessFailedError,
+	authCancelled,
+	bcblessError,
+	restartFailedError,
 };
 
 
@@ -63,8 +64,7 @@ NSDictionary *windowsVolume()
 		NSString *volKind = nil;
 		NSString *bsdName = [NSString stringWithCString:buf[i].f_mntfromname encoding:NSUTF8StringEncoding];
 		
-		if ((buf[i].f_flags & MNT_LOCAL) != MNT_LOCAL)
-			continue;
+		BOOL isLocal = ((buf[i].f_flags & MNT_LOCAL) == MNT_LOCAL);
 		
 		// use normal statfs to check for FAT32 (msdos), or NTFS (ufsd, ntfs)
 		if ((strcmp(volType, "ntfs") == 0) || (strcmp(volType, "msdos") == 0) || (strcmp(volType, "ufsd") == 0))
@@ -96,7 +96,7 @@ NSDictionary *windowsVolume()
 			}
 		}
 
-		NSLog(@"%s: %s (%@, %@)", volPath, volType, volKind, bsdName);
+		NSLog(@"%s: %s (%@, %@, %d)", volPath, volType, volKind, bsdName, isLocal);
 
 		if (isValidBootCampVolume)
 			return [NSDictionary dictionaryWithObjectsAndKeys:
@@ -108,7 +108,7 @@ NSDictionary *windowsVolume()
 	return nil;
 }
 
-BOOL setStartupDisk(NSString *bsdName, NSString *name, BOOL *userCancelled)
+BOOL setStartupDisk(NSString *bsdName, NSString *name, BOOL *userCancelled, NSDictionary **outputDict)
 {
 	OSStatus status;
 	AuthorizationRef authorizationRef;
@@ -133,35 +133,54 @@ BOOL setStartupDisk(NSString *bsdName, NSString *name, BOOL *userCancelled)
 		return NO;
 	}
 	
-	char *args[7];
-	args[0] = "--verbose";		// extra debug info in Console
-	args[1] = "--legacy";		// support for BIOS-based operating systems
-	args[2] = "--setBoot";		// boot it up
-	args[3] = "--nextonly";		// only change the boot disk for next boot
-	args[4] = "--device";
-	args[5] = (char *)[bsdName UTF8String];
-	args[6] = NULL;
+	char *args[3];
+	args[0] = "-device";
+	args[1] = (char *)[bsdName UTF8String];
+	args[2] = NULL;
 	
-	status = AuthorizationExecuteWithPrivileges(authorizationRef, "/usr/sbin/bless", kAuthorizationFlagDefaults, args, NULL);
+	FILE *file = NULL;
+	NSString *toolPath = [[NSBundle mainBundle] pathForResource:@"bcbless" ofType:nil];
+	status = AuthorizationExecuteWithPrivileges(authorizationRef, [toolPath fileSystemRepresentation], kAuthorizationFlagDefaults, args, &file);
 	if (status != errAuthorizationSuccess) {
 		*userCancelled = (status == errAuthorizationCanceled);
 		NSLog(@"AuthorizationExecuteWithPrivileges error %d", status);
 	}
+	
+	NSMutableString *str = [NSMutableString string];
+	char line[512];
+	while (fgets(line, 512, file) != NULL)
+		[str appendFormat:@"%s", line];
+	*outputDict = [NSPropertyListSerialization propertyListFromData:[str dataUsingEncoding:NSUTF8StringEncoding] mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:nil];
+	if (file)
+		fclose(file);
 
 	AuthorizationFree(authorizationRef, kAuthorizationFlagDefaults);
 	return (status == errAuthorizationSuccess);
 }
 
-int switchToWindowsAndRestart()
+int switchToWindowsAndRestart(NSString **bcblessErrorMessage)
 {
 	NSDictionary *dict = windowsVolume();
 	if (dict == nil || [dict count] < 2)
 		return noWindowsVolumeError;
 	
+	NSDictionary *outputDict = nil;
 	BOOL userCancelledAuthentication = NO;
-	if (!setStartupDisk([dict objectForKey:@"bsdName"], [dict objectForKey:@"name"], &userCancelledAuthentication)) {
-		[NSApp activateIgnoringOtherApps:YES]; // app may have gone unactive from auth dialog
-		return (userCancelledAuthentication ? authCancelled : authFailedOrBlessFailedError);
+	if (!setStartupDisk([dict objectForKey:@"bsdName"], [dict objectForKey:@"name"], &userCancelledAuthentication, &outputDict))
+	{
+		if (userCancelledAuthentication)
+			return authCancelled;
+
+		return authFailedOrBlessFailedError;
+	}
+
+	if (outputDict && [outputDict isKindOfClass:[NSDictionary class]])
+	{
+		NSString *error = [outputDict objectForKey:@"Error"];
+		if (error) {
+			*bcblessErrorMessage = error;
+			return bcblessError;
+		}
 	}
 	
 	if (!restartComputer())
@@ -173,8 +192,13 @@ int switchToWindowsAndRestart()
 int bootIntoWindows()
 {
 	BOOL quit = NO;
-	int status = switchToWindowsAndRestart();
+	NSString *bcblessErrorMessage = nil;
+	int status = switchToWindowsAndRestart(&bcblessErrorMessage);
+
 	NSLog(@"switchToWindowsAndRestart: %d", status);
+	
+	[NSApp activateIgnoringOtherApps:YES]; // app may have gone unactive from auth dialog
+	
 	switch (status)
 	{
 		case noWindowsVolumeError:
@@ -188,7 +212,13 @@ int bootIntoWindows()
 							NSLocalizedString(@"Authentication may have failed.", nil),
 							nil,nil,nil);
 			break;
-
+			
+		case bcblessError:
+			NSRunAlertPanel(NSLocalizedString(@"BootChamp was unable to set your Windows volume as the temporary startup disk", nil),
+							bcblessErrorMessage,
+							nil,nil,nil);
+			break;
+			
 		case restartFailedError:
 			NSRunAlertPanel(NSLocalizedString(@"BootChamp was unable to restart your computer", nil),
 							NSLocalizedString(@"Please restart your computer manually.", nil),
