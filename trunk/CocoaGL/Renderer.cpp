@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include <OpenGL/gl.h>
 
 void Renderer::InitGL()
 {
