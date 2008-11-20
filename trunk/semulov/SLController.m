@@ -41,18 +41,8 @@
 
 - (id)init
 {
-	if (self = [super init])
+	if ([super init])
 	{
-		[self setupStatusItem];
-		
-		[[SLGrowlController sharedController] setup];
-		
-		_updater = [[SUUpdater alloc] init];
-		
-		[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(handleMount:) name:NSWorkspaceDidMountNotification object:nil];
-		[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(handleUnmount:) name:NSWorkspaceDidUnmountNotification object:nil];
-		
-		[self setupBindings];
 	}
 	
 	return self;
@@ -66,7 +56,6 @@
 	[[NSStatusBar systemStatusBar] removeStatusItem:_statusItem];
 	[_statusItem release];
 
-	[_slMenuItem release];
 	[_volumes release];
 	[_updater release];
 	[_prefs release];
@@ -75,17 +64,34 @@
 }
 
 #pragma mark -
+#pragma mark App Delegate
+
+- (void)applicationDidFinishLaunching:(NSNotification *)notif
+{
+	[self setupStatusItem];
+	
+	[[SLGrowlController sharedController] setup];
+	
+	_updater = [[SUUpdater alloc] init];
+	
+	[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(handleMount:) name:NSWorkspaceDidMountNotification object:nil];
+	[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(handleUnmount:) name:NSWorkspaceDidUnmountNotification object:nil];
+	
+	[self setupBindings];
+}
+
+#pragma mark -
 #pragma mark Bindings
 
 - (void)setupBindings
 {
 	NSUserDefaultsController *sdc = [NSUserDefaultsController sharedUserDefaultsController];
-	[sdc addObserver:self forKeyPath:@"values.SLShowVolumesNumber" options:nil context:SLShowVolumesNumber];
-	[sdc addObserver:self forKeyPath:@"values.SLShowStartupDisk" options:nil context:SLShowStartupDisk];
-	[sdc addObserver:self forKeyPath:@"values.SLShowEjectAll" options:nil context:SLShowEjectAll];
-	[sdc addObserver:self forKeyPath:@"values.SLDisableInternalHD" options:nil context:SLDisableInternalHD];
-	[sdc addObserver:self forKeyPath:@"values.SLLaunchAtStartup" options:nil context:SLLaunchAtStartup];
-	[sdc addObserver:self forKeyPath:@"values.SLHideInternalDrives" options:nil context:SLHideInternalDrives];
+	[sdc addObserver:self forKeyPath:@"values.SLShowVolumesNumber" options:0 context:SLShowVolumesNumber];
+	[sdc addObserver:self forKeyPath:@"values.SLShowStartupDisk" options:0 context:SLShowStartupDisk];
+	[sdc addObserver:self forKeyPath:@"values.SLShowEjectAll" options:0 context:SLShowEjectAll];
+	[sdc addObserver:self forKeyPath:@"values.SLDisableInternalHD" options:0 context:SLDisableInternalHD];
+	[sdc addObserver:self forKeyPath:@"values.SLLaunchAtStartup" options:0 context:SLLaunchAtStartup];
+	[sdc addObserver:self forKeyPath:@"values.SLHideInternalDrives" options:0 context:SLHideInternalDrives];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -120,7 +126,7 @@
 		[[NSStatusBar systemStatusBar] removeStatusItem:_statusItem];
 		[_statusItem release];
 	}
-	_statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength/*(_showVolumesNumber ? NSVariableStatusItemLength : 24)*/] retain];
+	_statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
 	[_statusItem setHighlightMode:YES];
 	
 	NSImage *ejectImage = [NSImage imageNamed:@"Eject"];
@@ -143,7 +149,7 @@
 {
 	NSArray *userDefaultValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
 	
-	if ([volume isInternalHardDrive] == NO)
+	if ([volume isInternalHardDrive] == NO && [volume isRoot] == NO)
 		return YES;
 	
 	if ([[userDefaultValues valueForKey:SLDisableInternalHD] boolValue] || 
@@ -155,26 +161,26 @@
 
 - (void)updateStatusItemMenu
 {
-	NSMenu *menu = [[NSMenu alloc] init];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // this is needed to fix memory issue when ejecting all
+	
+	[_statusItem setMenu:[[[NSMenu alloc] init] autorelease]];
+	
+	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
+	
 	NSDictionary *defaultValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
 	BOOL showVolumesNumber = [[defaultValues valueForKey:SLShowVolumesNumber] boolValue];
 	BOOL showStartupDisk = [[defaultValues valueForKey:SLShowStartupDisk] boolValue];
 	BOOL showEjectAll = [[defaultValues valueForKey:SLShowEjectAll] boolValue];
 	BOOL hideInternalDrives = [[defaultValues valueForKey:SLHideInternalDrives] boolValue];
 	
-	while ([[_statusItem menu] numberOfItems])
-		[[_statusItem menu] removeItemAtIndex:0];
-
 	[_volumes release];
 	_volumes = [[SLVolume allVolumes] retain];
-	NSEnumerator *volumesEnum = [_volumes objectEnumerator];
-	SLVolume *vol = nil;
 	SLVolumeType _lastType = -1;
-	int vcount = 0;
+	NSInteger vcount = 0;
 	NSMenuItem *titleMenu = nil, *menuItem = nil, *altMenu = nil, *altaltMenu;
 	NSString *titleName = nil;
 	
-	while (vol = [volumesEnum nextObject])
+	for (SLVolume *vol in _volumes)
 	{
 		if ((showStartupDisk == NO && [vol isRoot]) ||
 			(hideInternalDrives && [vol isInternalHardDrive]))
@@ -182,7 +188,6 @@
 			continue;
 		}
 		
-		titleMenu = nil;
 		if ([vol type] != _lastType)
 		{
 			_lastType = [vol type];
@@ -220,7 +225,7 @@
 		NSImage *mainItemImage = [[vol image] slResize:NSMakeSize(16, 16)];
 		
 		// setup the main item
-		menuItem = [[NSMenuItem alloc] initWithTitle:[vol name] action:mainItemAction keyEquivalent:@""];
+		menuItem = [[[NSMenuItem alloc] initWithTitle:[vol name] action:mainItemAction keyEquivalent:@""] autorelease];
 		[menuItem setRepresentedObject:vol];
 		[menuItem setImage:mainItemImage];
 		[menuItem setIndentationLevel:1];
@@ -229,7 +234,7 @@
 			[menuItem setAction:nil];
 		
 		// setup the first alternate item
-		altMenu = [[NSMenuItem alloc] initWithTitle:[vol name] action:mainItemAction keyEquivalent:@""];
+		altMenu = [[[NSMenuItem alloc] initWithTitle:[vol name] action:mainItemAction keyEquivalent:@""] autorelease];
 		[altMenu setAlternate:YES];
 		[altMenu setKeyEquivalentModifierMask:NSAlternateKeyMask];
 		[altMenu setRepresentedObject:vol];
@@ -245,7 +250,7 @@
 			[altMenu setAction:nil];
 
 		// setup the second alternate item
-		altaltMenu = [[NSMenuItem alloc] initWithTitle:[vol name] action:mainItemAction keyEquivalent:@""];
+		altaltMenu = [[[NSMenuItem alloc] initWithTitle:[vol name] action:mainItemAction keyEquivalent:@""] autorelease];
 		[altaltMenu setAlternate:YES];
 		[altaltMenu setKeyEquivalentModifierMask:NSAlternateKeyMask | NSCommandKeyMask];
 		[altaltMenu setRepresentedObject:vol];
@@ -259,22 +264,13 @@
 		{
 			[menu addItem:titleMenu];
 			[titleMenu release];
+			titleMenu = nil;
 		}
 
 		[menu addItem:menuItem];
 		[menu addItem:altMenu];
 		[menu addItem:altaltMenu];
 		
-		/*if (altaltMenu)
-		{
-			[menu addItem:altaltMenu];
-			[altaltMenu release];
-		}*/			
-
-		[altaltMenu release];
-		[altMenu release];
-		[menuItem release];
-
 		vcount++;
 	}
 	
@@ -294,25 +290,23 @@
 		[menu addItem:[NSMenuItem separatorItem]];
 	}
 
-	if (_slMenuItem == nil)
-	{
-		NSMenu *slSubmenu = [[NSMenu alloc] init];
-		_slMenuItem = [[NSMenuItem alloc] initWithTitle:@"Semulov" action:nil keyEquivalent:@""];
-		[slSubmenu addItemWithTitle:@"About" action:@selector(doAbout:) keyEquivalent:@""];
-		[slSubmenu addItem:[NSMenuItem separatorItem]];
-		[slSubmenu addItemWithTitle:@"Preferences..." action:@selector(doPrefs:) keyEquivalent:@""];
-		[slSubmenu addItemWithTitle:@"Check for Updates..." action:@selector(doUpdates:) keyEquivalent:@""];
-		[slSubmenu addItem:[NSMenuItem separatorItem]];
-		[slSubmenu addItemWithTitle:@"Send Feedback" action:@selector(doFeedback:) keyEquivalent:@""];
-		[slSubmenu addItem:[NSMenuItem separatorItem]];
-		[slSubmenu addItemWithTitle:@"Quit" action:@selector(doQuit:) keyEquivalent:@""];
-		[_slMenuItem setSubmenu:slSubmenu];
-		[slSubmenu release];
-	}
-	[menu addItem:_slMenuItem];
+	
+	NSMenuItem *slMenuItem = [[[NSMenuItem alloc] initWithTitle:@"Semulov" action:nil keyEquivalent:@""] autorelease];
+	NSMenu *slSubmenu = [[[NSMenu alloc] init] autorelease];
+	[slSubmenu addItemWithTitle:@"About" action:@selector(doAbout:) keyEquivalent:@""];
+	[slSubmenu addItem:[NSMenuItem separatorItem]];
+	[slSubmenu addItemWithTitle:@"Preferences..." action:@selector(doPrefs:) keyEquivalent:@""];
+	[slSubmenu addItemWithTitle:@"Check for Updates..." action:@selector(doUpdates:) keyEquivalent:@""];
+	[slSubmenu addItem:[NSMenuItem separatorItem]];
+	[slSubmenu addItemWithTitle:@"Send Feedback" action:@selector(doFeedback:) keyEquivalent:@""];
+	[slSubmenu addItem:[NSMenuItem separatorItem]];
+	[slSubmenu addItemWithTitle:@"Quit" action:@selector(doQuit:) keyEquivalent:@""];
+	[slMenuItem setSubmenu:slSubmenu];
+	[menu addItem:slMenuItem];
 
 	[_statusItem setMenu:menu];
-	[menu release];
+	
+	[pool release];
 }
 
 #pragma mark -
@@ -376,11 +370,12 @@
 
 - (void)doEjectAll:(id)sender
 {
-	NSEnumerator *volumesEnum = [_volumes objectEnumerator];
-	SLVolume *vol = nil;
-	while (vol = [volumesEnum nextObject])
-		if ([self volumeCanBeEjected:vol])
+	NSArray *volumesCopy = [[_volumes copy] autorelease];
+	for (SLVolume *vol in volumesCopy) {
+		if ([self volumeCanBeEjected:vol]) {
 			[vol eject];
+		}
+	}
 }
 
 - (void)doShowInFinder:(id)sender
@@ -414,17 +409,6 @@
 		if ([self ejectVolumeWithFeedback:vol])
 			[[NSFileManager defaultManager] removeFileAtPath:imagePath handler:nil];
 	}
-
-	// move it to the trash
-	/*NSString *sourceDir = [imagePath stringByDeletingLastPathComponent];
-	NSArray *files = [NSArray arrayWithObject:[imagePath lastPathComponent]];
-	NSString *trashDir = [NSHomeDirectory() stringByAppendingPathComponent:@".Trash"];
-	int tag = 0;
-	[[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation
-												 source:sourceDir
-											destination:trashDir
-												  files:files
-													tag:&tag];*/
 }
 
 - (void)doUpdates:(id)sender

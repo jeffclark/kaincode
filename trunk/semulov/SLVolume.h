@@ -26,7 +26,7 @@ typedef enum
 	SLVolumeHardDrive,
 } SLVolumeType;
 
-@interface SLVolume : NSObject
+@interface SLVolume : NSObject <NSCopying>
 {
 	NSString *_path;
 	NSString *_name;
