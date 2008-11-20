@@ -22,15 +22,6 @@
 	return instance;
 }
 
-- (id)init
-{
-	if (self = [super init])
-	{
-	}
-	
-	return self;
-}
-
 - (void)setup
 {
 	[GrowlApplicationBridge setGrowlDelegate:self];

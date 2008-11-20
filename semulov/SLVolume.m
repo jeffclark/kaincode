@@ -8,18 +8,10 @@
 
 #import "SLVolume.h"
 #import <DiskArbitration/DiskArbitration.h>
-#import <DVDPlayback/DVDPlayback.h>
 #import <DiscRecording/DiscRecording.h>
 
 
-static NSMutableDictionary *slValidDVDs;
-
 @implementation SLVolume
-
-+ (void)initialize
-{
-	slValidDVDs = [[NSMutableDictionary alloc] init];
-}
 
 + (NSDictionary *)mountedDiskImages
 {
@@ -29,7 +21,7 @@ static NSMutableDictionary *slValidDVDs;
 	NSData *outData = nil;
 	NSString *plistStr = nil;
 	
-	hdiUtilTask = [[NSTask alloc] init];
+	hdiUtilTask = [[[NSTask alloc] init] autorelease];
 	inPipe = [NSPipe pipe];
 	inHandle = [inPipe fileHandleForWriting];
 	outPipe = [NSPipe pipe];
@@ -47,15 +39,11 @@ static NSMutableDictionary *slValidDVDs;
 	[hdiUtilTask setStandardOutput:outPipe];
 	[hdiUtilTask setStandardInput:inPipe];
 	
-	[inHandle closeFile];
-	
 	[hdiUtilTask launch];
-	
+	[inHandle writeData:[NSData data]];
+	[inHandle closeFile];
 	outData = [outHandle readDataToEndOfFile];
-	[outHandle closeFile];
-
 	[hdiUtilTask waitUntilExit];
-	[hdiUtilTask release];
 	
 	plistStr = [[[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding] autorelease];
 	if (plistStr == nil)
@@ -114,13 +102,11 @@ static NSMutableDictionary *slValidDVDs;
 + (NSArray *)allVolumes
 {
 	NSMutableArray *volumes = [NSMutableArray array];
-	
+
 	struct statfs *buf;
-	int i, count;
+	NSInteger i, count;
 	
 	NSDictionary *diskImages = [SLVolume mountedDiskImages];
-	
-	DVDInitialize();
 	
 	count = getmntinfo(&buf, 0);
 	for (i=0; i<count; i++)
@@ -133,8 +119,6 @@ static NSMutableDictionary *slValidDVDs;
 		}
 	}
 	
-	DVDDispose();
-	
 	[volumes sortUsingSelector:@selector(compare:)];
 	
 	return volumes;
@@ -142,9 +126,11 @@ static NSMutableDictionary *slValidDVDs;
 
 - (id)initWithStatfs:(struct statfs *)statfs mountedDiskImages:(NSDictionary *)diskImages
 {
-	if (self = [super init])
+	if ([super init])
 	{
+		NSString *fileSystemType = [NSString stringWithCString:statfs->f_fstypename encoding:NSUTF8StringEncoding];
 		NSString *path = [NSString stringWithUTF8String:statfs->f_mntonname];
+		NSLog(@"%@: %@", [path lastPathComponent], fileSystemType);
 		if (!([path isEqualToString:@"/"] || [path hasPrefix:@"/Volumes"]))
 		{
 			[self release];
@@ -176,7 +162,7 @@ static NSMutableDictionary *slValidDVDs;
 				FSCopyURLForVolume(catalogInfo.volume, &hostURL);
 				if (hostURL)
 				{
-					_hostURL = [[(NSURL *)hostURL copy] autorelease];
+					_hostURL = [(NSURL *)hostURL copy];
 					CFRelease(hostURL);
 					
 					if ([[_hostURL host] isEqualToString:@"idisk.mac.com"])
@@ -185,7 +171,7 @@ static NSMutableDictionary *slValidDVDs;
 						_type = SLVolumeFTP;
 					else
 					{
-						if (strcmp("webdav", statfs->f_fstypename) == 0)
+						if ([fileSystemType isEqualToString:@"webdav"])
 						{
 							_type = SLVolumeWebDAV;
 						}
@@ -295,6 +281,8 @@ static NSMutableDictionary *slValidDVDs;
 							// (will be overridden later if we're a DVD or CD)
 							_type = SLVolumeHardDrive;
 						}
+						
+						CFRelease(desc);
 					}
 					CFRelease(disk);
 				}
@@ -302,34 +290,19 @@ static NSMutableDictionary *slValidDVDs;
 			}
 			
 			// check for a DVD
-			if ([slValidDVDs objectForKey:[self path]])
-			{
-				// already cached this volume as a video DVD
-				_type = SLVolumeDVDVideo;
-			}
-			else
-			{
-				Boolean isValid = false;
-				if ((DVDIsValidMediaRef(&ref, &isValid) == noErr) && (isValid == true))
+			if (devicePath) {
+				DRDevice *dvdDevice = [DRDevice deviceForBSDName:[NSString stringWithCString:statfs->f_mntfromname encoding:NSUTF8StringEncoding]]; //deviceForIORegistryEntryPath:(NSString *)devicePath];
+				if ((dvdDevice != nil) && ([dvdDevice mediaIsPresent]))
 				{
-					_type = SLVolumeDVDVideo;
-					[slValidDVDs setObject:[NSNumber numberWithBool:YES] forKey:[self path]];
+					if ([[dvdDevice mediaType] hasPrefix:@"DRDeviceMediaTypeDVD"])
+						_type = SLVolumeDVD;
+					else if ([[dvdDevice mediaType] hasPrefix:@"DRDeviceMediaTypeCD"])
+						_type = SLVolumeCDROM;
 				}
 				else
 				{
-					// not a video DVD
-					
-					if ([[DRDevice devices] count])
-					{
-						DRDevice *dvdDevice = [DRDevice deviceForIORegistryEntryPath:(NSString *)devicePath];
-						if ((dvdDevice != nil) && ([dvdDevice mediaIsPresent]))
-						{
-							if ([[dvdDevice mediaType] hasPrefix:@"DRDeviceMediaTypeDVD"])
-								_type = SLVolumeDVD;
-							else if ([[dvdDevice mediaType] hasPrefix:@"DRDeviceMediaTypeCD"])
-								_type = SLVolumeCDROM;
-						}
-					}
+					if ([fileSystemType isEqualToString:@"udf"])
+						_type = SLVolumeDVD;
 				}
 			}
 		}
@@ -343,24 +316,40 @@ static NSMutableDictionary *slValidDVDs;
 	[_path release];
 	[_name release];
 	[_image release];
+	[_hostURL release];
 	[_imagePath release];
 
 	[super dealloc];
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+	SLVolume *copy = [[SLVolume alloc] init];
+	copy->_path = [_path copy];
+	copy->_name = [_name copy];
+	copy->_image = [_image copy];
+	copy->_hostURL = [_hostURL copy];
+	copy->_imagePath = [_imagePath copy];
+	copy->_local = _local;
+	copy->_root = _root;
+	copy->_internal = _internal;
+	copy->_type = _type;
+	return copy;
+}
+
 - (NSString *)path
 {
-	return [[_path copy] autorelease];
+	return [[_path retain] autorelease];
 }
 
 - (NSString *)name
 {
-	return [[_name copy] autorelease];
+	return [[_name retain] autorelease];
 }
 
 - (NSImage *)image
 {
-	return [[_image copy] autorelease];
+	return [[_image retain] autorelease];
 }
 
 - (BOOL)isLocal
@@ -373,6 +362,11 @@ static NSMutableDictionary *slValidDVDs;
 	return _root;
 }
 
+void volumeUnmountCallback(FSVolumeOperation volumeOp, void *clientData, OSStatus err, FSVolumeRefNum volumeRefNum, pid_t dissenter)
+{
+	printf("callback err: %d\n", err);
+}
+
 - (BOOL)eject
 {
 	BOOL ret = NO;
@@ -382,14 +376,20 @@ static NSMutableDictionary *slValidDVDs;
 	if (!ret)
 	{
 		FSRef ref;
-		if (FSPathMakeRef((const unsigned char *)[[self path] fileSystemRepresentation], &ref, NULL) == noErr)
+		if (FSPathMakeRef((const UInt8 *)[[self path] fileSystemRepresentation], &ref, NULL) == noErr)
 		{
 			FSCatalogInfo catalogInfo;
 			if (FSGetCatalogInfo (&ref, kFSCatInfoVolume, &catalogInfo, NULL, NULL, NULL) == noErr)
 			{
-				pid_t *dissenter;
-				if (FSUnmountVolumeSync(catalogInfo.volume, 0, dissenter) == noErr)
-					ret = YES;
+				//pid_t *dissenter = NULL;
+				FSVolumeUnmountUPP unmountUPP = NewFSVolumeUnmountUPP(volumeUnmountCallback);
+				FSVolumeOperation volumeOp;
+				if (FSCreateVolumeOperation(&volumeOp) == noErr) {
+					if (FSUnmountVolumeAsync(catalogInfo.volume, 0, volumeOp, NULL, unmountUPP, CFRunLoopGetMain(), kCFRunLoopDefaultMode) == noErr)
+					//if (FSUnmountVolumeSync(catalogInfo.volume, 0, dissenter) == noErr)
+						ret = YES;
+					FSDisposeVolumeOperation(volumeOp);
+				}
 			}
 		}
 	}
@@ -409,7 +409,7 @@ static NSMutableDictionary *slValidDVDs;
 
 - (NSURL *)hostURL
 {
-	return [[_hostURL copy] autorelease];
+	return [[_hostURL retain] autorelease];
 }
 
 - (BOOL)isInternalHardDrive

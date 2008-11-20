@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,19 +20,15 @@
 		A54564630AFE8E9B001F61C8 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54564620AFE8E9B001F61C8 /* Sparkle.framework */; };
 		A54564770AFE8E9F001F61C8 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A54564620AFE8E9B001F61C8 /* Sparkle.framework */; };
 		A5537D770C822E8000A1806D /* UKLoginItemRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = A5537D750C822E8000A1806D /* UKLoginItemRegistry.m */; };
-		A5537D780C822E8000A1806D /* UKLoginItemRegistry.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A5537D760C822E8000A1806D /* UKLoginItemRegistry.h */; };
-		A5537D7D0C822E9700A1806D /* LoginItemsAE.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A5537D7B0C822E9700A1806D /* LoginItemsAE.h */; };
 		A5537D7E0C822E9700A1806D /* LoginItemsAE.c in Sources */ = {isa = PBXBuildFile; fileRef = A5537D7C0C822E9700A1806D /* LoginItemsAE.c */; };
-		A5537F0D0C822FE000A1806D /* SLNSImageAdditions.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A5537F0B0C822FE000A1806D /* SLNSImageAdditions.h */; };
 		A5537F0E0C822FE000A1806D /* SLNSImageAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5537F0C0C822FE000A1806D /* SLNSImageAdditions.m */; };
 		A5537F1C0C82312D00A1806D /* SemulovIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A5537F1B0C82312D00A1806D /* SemulovIcon.icns */; };
-		A55382AB0C82565100A1806D /* DVDPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A55382A60C82565100A1806D /* DVDPlayback.framework */; };
 		A55383670C825C9A00A1806D /* DiscRecording.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A553835D0C825C9A00A1806D /* DiscRecording.framework */; };
-		A555295F0B10B981005EB062 /* EjectPressed.tiff in Resources */ = {isa = PBXBuildFile; fileRef = A555295D0B10B981005EB062 /* EjectPressed.tiff */; };
-		A55529600B10B981005EB062 /* Eject.tiff in Resources */ = {isa = PBXBuildFile; fileRef = A555295E0B10B981005EB062 /* Eject.tiff */; };
 		A5552A140B10C2C9005EB062 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A5552A130B10C2C9005EB062 /* Credits.rtf */; };
 		A5552A460B11058F005EB062 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = A5552A440B11058F005EB062 /* Preferences.nib */; };
 		A5552A4A0B1105B0005EB062 /* SLPrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5552A480B1105B0005EB062 /* SLPrefsController.m */; };
+		A5D982950C8B7F7B002A802F /* EjectWhite.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A5D982930C8B7F7B002A802F /* EjectWhite.pdf */; };
+		A5D982960C8B7F7B002A802F /* Eject.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A5D982940C8B7F7B002A802F /* Eject.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,9 +40,6 @@
 			files = (
 				A54564770AFE8E9F001F61C8 /* Sparkle.framework in Copy Frameworks */,
 				A54561830AFE7201001F61C8 /* Growl.framework in Copy Frameworks */,
-				A5537D780C822E8000A1806D /* UKLoginItemRegistry.h in Copy Frameworks */,
-				A5537D7D0C822E9700A1806D /* LoginItemsAE.h in Copy Frameworks */,
-				A5537F0D0C822FE000A1806D /* SLNSImageAdditions.h in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,14 +70,13 @@
 		A5537F0B0C822FE000A1806D /* SLNSImageAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLNSImageAdditions.h; sourceTree = "<group>"; };
 		A5537F0C0C822FE000A1806D /* SLNSImageAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLNSImageAdditions.m; sourceTree = "<group>"; };
 		A5537F1B0C82312D00A1806D /* SemulovIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SemulovIcon.icns; sourceTree = "<group>"; };
-		A55382A60C82565100A1806D /* DVDPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVDPlayback.framework; path = /System/Library/Frameworks/DVDPlayback.framework; sourceTree = "<absolute>"; };
 		A553835D0C825C9A00A1806D /* DiscRecording.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscRecording.framework; path = /System/Library/Frameworks/DiscRecording.framework; sourceTree = "<absolute>"; };
-		A555295D0B10B981005EB062 /* EjectPressed.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = EjectPressed.tiff; sourceTree = "<group>"; };
-		A555295E0B10B981005EB062 /* Eject.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Eject.tiff; sourceTree = "<group>"; };
 		A5552A130B10C2C9005EB062 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		A5552A450B11058F005EB062 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Preferences.nib; sourceTree = "<group>"; };
 		A5552A470B1105B0005EB062 /* SLPrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPrefsController.h; sourceTree = "<group>"; };
 		A5552A480B1105B0005EB062 /* SLPrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLPrefsController.m; sourceTree = "<group>"; };
+		A5D982930C8B7F7B002A802F /* EjectWhite.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = EjectWhite.pdf; sourceTree = "<group>"; };
+		A5D982940C8B7F7B002A802F /* Eject.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Eject.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +89,6 @@
 				A545639A0AFE8442001F61C8 /* Carbon.framework in Frameworks */,
 				A54564630AFE8E9B001F61C8 /* Sparkle.framework in Frameworks */,
 				A518D7740BB19CC5009EC77B /* DiskArbitration.framework in Frameworks */,
-				A55382AB0C82565100A1806D /* DVDPlayback.framework in Frameworks */,
 				A55383670C825C9A00A1806D /* DiscRecording.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,6 +99,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				32CA4F630368D1EE00C91783 /* Semulov_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
 				A5455F8A0AFE64C6001F61C8 /* SLController.h */,
 				A5455F8B0AFE64C6001F61C8 /* SLController.m */,
 				A5455FE50AFE66A1001F61C8 /* SLVolume.h */,
@@ -127,7 +120,6 @@
 			isa = PBXGroup;
 			children = (
 				A553835D0C825C9A00A1806D /* DiscRecording.framework */,
-				A55382A60C82565100A1806D /* DVDPlayback.framework */,
 				A518D7730BB19CC5009EC77B /* DiskArbitration.framework */,
 				A54563990AFE8442001F61C8 /* Carbon.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
@@ -156,7 +148,6 @@
 			isa = PBXGroup;
 			children = (
 				080E96DDFE201D6D7F000001 /* Classes */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -164,21 +155,12 @@
 			name = Semulov;
 			sourceTree = "<group>";
 		};
-		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				32CA4F630368D1EE00C91783 /* Semulov_Prefix.pch */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
-			);
-			name = "Other Sources";
-			sourceTree = "<group>";
-		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A5D982930C8B7F7B002A802F /* EjectWhite.pdf */,
+				A5D982940C8B7F7B002A802F /* Eject.pdf */,
 				A5537F1B0C82312D00A1806D /* SemulovIcon.icns */,
-				A555295D0B10B981005EB062 /* EjectPressed.tiff */,
-				A555295E0B10B981005EB062 /* Eject.tiff */,
 				A5552A130B10C2C9005EB062 /* Credits.rtf */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
@@ -235,9 +217,11 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Semulov" */;
+			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Semulov */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Semulov */,
 			);
@@ -250,11 +234,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
-				A555295F0B10B981005EB062 /* EjectPressed.tiff in Resources */,
-				A55529600B10B981005EB062 /* Eject.tiff in Resources */,
 				A5552A140B10C2C9005EB062 /* Credits.rtf in Resources */,
 				A5552A460B11058F005EB062 /* Preferences.nib in Resources */,
 				A5537F1C0C82312D00A1806D /* SemulovIcon.icns in Resources */,
+				A5D982950C8B7F7B002A802F /* EjectWhite.pdf in Resources */,
+				A5D982960C8B7F7B002A802F /* Eject.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,7 +330,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -360,7 +344,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};

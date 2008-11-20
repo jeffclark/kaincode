@@ -13,7 +13,6 @@
 @interface SLController : NSObject
 {
 	NSStatusItem *_statusItem;
-	NSMenuItem *_slMenuItem;
 	NSArray *_volumes;
 	SUUpdater *_updater;
 	SLPrefsController *_prefs;
