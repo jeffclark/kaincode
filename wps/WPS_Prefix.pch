@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'WPS' target in the 'WPS' project
-//
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
