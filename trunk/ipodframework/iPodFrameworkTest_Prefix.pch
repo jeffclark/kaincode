@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'iPodFrameworkTest' target in the 'iPodFrameworkTest' project
-//
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
