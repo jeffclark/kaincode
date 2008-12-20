@@ -3,7 +3,7 @@
 //  iTunesCapacityBar
 //
 //  Created by Kevin Wojniak on 11/12/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 __MyCompanyName__. All rights reserved.
 //
 
 #import "Controller.h"
