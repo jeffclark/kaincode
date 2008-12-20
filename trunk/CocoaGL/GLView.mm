@@ -20,6 +20,12 @@
 	return self;
 }
 
+- (void)dealloc
+{
+	delete renderer;
+	[super dealloc];
+}
+
 - (void)prepareOpenGL
 {
 	renderer->InitGL();
