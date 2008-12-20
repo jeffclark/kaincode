@@ -26,7 +26,7 @@
 			return [NSColor blueColor];
 	}
 	
-	return  [NSColor blackColor];
+	return [NSColor blackColor];
 }
 
 @end
