@@ -3,11 +3,10 @@
 //  iTunesCapacityBar
 //
 //  Created by Kevin Wojniak on 11/12/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 __MyCompanyName__. All rights reserved.
 //
 
 #import "CapacityBar.h"
-#import "CTGradient.h"
 
 #define RGB(r,g,b) ([NSColor colorWithCalibratedRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0])
 #define BLUE_COLOR		RGB(102, 138, 252)
@@ -17,23 +16,6 @@
 #define WHITE_COLOR		RGB(252, 252, 252)
 #define	WHITE_DARK_COLOR	RGB(200, 200, 200)
 
-
-@interface NSBezierPath (RoundedRect)
-+ (NSBezierPath *)bezierPathWithRoundRectInRect:(NSRect)rect withRadius:(float)radius;
-@end
-@implementation NSBezierPath (RoundedRect)
-+ (NSBezierPath *)bezierPathWithRoundRectInRect:(NSRect)rect withRadius:(float)radius
-{
-	NSBezierPath *path = [NSBezierPath bezierPath];
-	[path moveToPoint:NSMakePoint(NSMidX(rect), NSMinY(rect))];
-	[path appendBezierPathWithArcFromPoint: NSMakePoint(NSMaxX(rect), NSMinY(rect)) toPoint: NSMakePoint(NSMaxX(rect), NSMaxY(rect)) radius: radius];
-	[path appendBezierPathWithArcFromPoint: NSMakePoint(NSMaxX(rect), NSMaxY(rect)) toPoint: NSMakePoint(NSMidX(rect), NSMaxY(rect)) radius: radius];
-	[path appendBezierPathWithArcFromPoint: NSMakePoint(NSMinX(rect), NSMaxY(rect)) toPoint: NSMakePoint(NSMinX(rect), NSMinY(rect)) radius: radius];	
-	[path appendBezierPathWithArcFromPoint: NSMakePoint(NSMinX(rect), NSMinY(rect)) toPoint: NSMakePoint(NSMidX(rect), NSMinY(rect)) radius: radius];
-	[path closePath];
-	return path;
-}
-@end
 
 @interface NSColor (Darker)
 - (NSColor *)darkerColor;
@@ -126,10 +108,11 @@
 	NSSize barSize = [self bounds].size; //NSMakeSize(455, 20);
 	NSRect centerRect = NSMakeRect((rect.size.width-barSize.width)/2, (rect.size.height-barSize.height)/2, barSize.width, barSize.height);
 	
-	[[NSBezierPath bezierPathWithRoundRectInRect:centerRect withRadius:centerRect.size.height/2] addClip];
+	float radius = centerRect.size.height/2;
+	[[NSBezierPath bezierPathWithRoundedRect:centerRect xRadius:radius yRadius:radius] addClip];
 	
 	// draw white background...
-	[[CTGradient gradientWithBeginningColor:WHITE_DARK_COLOR/*[WHITE_COLOR darkerColor]*/ endingColor:WHITE_COLOR] fillRect:centerRect angle:90.0];
+	[[[[NSGradient alloc] initWithStartingColor:WHITE_DARK_COLOR/*[WHITE_COLOR darkerColor]*/ endingColor:WHITE_COLOR] autorelease] drawInRect:centerRect angle:90.0];
 	
 	// enumerate through each value
 	NSEnumerator *valuesEnum = [_values objectEnumerator];
@@ -142,7 +125,7 @@
 		NSRect valRect = NSMakeRect(centerRect.origin.x + valx, centerRect.origin.y, width, barSize.height);
 		valx += width;
 		
-		[[CTGradient gradientWithBeginningColor:[color darkerColor] endingColor:color] fillRect:valRect angle:90.0];
+		[[[[NSGradient alloc] initWithStartingColor:[color darkerColor] endingColor:color] autorelease] drawInRect:valRect angle:90.0];
 	}
 	
 	if (_drawLines)
