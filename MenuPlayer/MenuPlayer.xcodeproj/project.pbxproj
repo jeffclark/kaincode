@@ -1,0 +1,328 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A559731E0D95AA47006EDDC8 /* KWiTunesLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = A559731D0D95AA47006EDDC8 /* KWiTunesLibrary.m */; };
+		A55973230D95AB79006EDDC8 /* KWiTunesPlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = A55973220D95AB79006EDDC8 /* KWiTunesPlaylist.m */; };
+		A55973260D95ABA4006EDDC8 /* KWiTunesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A55973250D95ABA4006EDDC8 /* KWiTunesObject.m */; };
+		A55973650D95AE0A006EDDC8 /* KWiTunesTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = A55973640D95AE0A006EDDC8 /* KWiTunesTrack.m */; };
+		A55973680D95AF85006EDDC8 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A55973670D95AF85006EDDC8 /* AppController.m */; };
+		A55973D30D95B36A006EDDC8 /* StatusMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = A55973D20D95B36A006EDDC8 /* StatusMenuController.m */; };
+		A55974610D95B956006EDDC8 /* SmartPlaylist.png in Resources */ = {isa = PBXBuildFile; fileRef = A559745F0D95B956006EDDC8 /* SmartPlaylist.png */; };
+		A55974620D95B956006EDDC8 /* NormalPlaylist.png in Resources */ = {isa = PBXBuildFile; fileRef = A55974600D95B956006EDDC8 /* NormalPlaylist.png */; };
+		A559746F0D95B9DF006EDDC8 /* KWMusicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A559746E0D95B9DF006EDDC8 /* KWMusicPlayer.m */; };
+		A55974710D95BA2C006EDDC8 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A55974700D95BA2C006EDDC8 /* QTKit.framework */; };
+		A559747C0D95BBDF006EDDC8 /* PlaylistPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A559747B0D95BBDF006EDDC8 /* PlaylistPlayer.m */; };
+		A55975A50D95CCD6006EDDC8 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97319FDCFA39411CA2CEA /* MainMenu.nib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97319FDCFA39411CA2CEA /* MainMenu.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* MenuPlayer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuPlayer_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* MenuPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A559731C0D95AA47006EDDC8 /* KWiTunesLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWiTunesLibrary.h; sourceTree = "<group>"; };
+		A559731D0D95AA47006EDDC8 /* KWiTunesLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWiTunesLibrary.m; sourceTree = "<group>"; };
+		A55973210D95AB79006EDDC8 /* KWiTunesPlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWiTunesPlaylist.h; sourceTree = "<group>"; };
+		A55973220D95AB79006EDDC8 /* KWiTunesPlaylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWiTunesPlaylist.m; sourceTree = "<group>"; };
+		A55973240D95ABA4006EDDC8 /* KWiTunesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWiTunesObject.h; sourceTree = "<group>"; };
+		A55973250D95ABA4006EDDC8 /* KWiTunesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWiTunesObject.m; sourceTree = "<group>"; };
+		A55973630D95AE0A006EDDC8 /* KWiTunesTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWiTunesTrack.h; sourceTree = "<group>"; };
+		A55973640D95AE0A006EDDC8 /* KWiTunesTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWiTunesTrack.m; sourceTree = "<group>"; };
+		A55973660D95AF85006EDDC8 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		A55973670D95AF85006EDDC8 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		A55973D10D95B36A006EDDC8 /* StatusMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusMenuController.h; sourceTree = "<group>"; };
+		A55973D20D95B36A006EDDC8 /* StatusMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusMenuController.m; sourceTree = "<group>"; };
+		A559745F0D95B956006EDDC8 /* SmartPlaylist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmartPlaylist.png; sourceTree = "<group>"; };
+		A55974600D95B956006EDDC8 /* NormalPlaylist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NormalPlaylist.png; sourceTree = "<group>"; };
+		A559746D0D95B9DF006EDDC8 /* KWMusicPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWMusicPlayer.h; sourceTree = "<group>"; };
+		A559746E0D95B9DF006EDDC8 /* KWMusicPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWMusicPlayer.m; sourceTree = "<group>"; };
+		A55974700D95BA2C006EDDC8 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
+		A559747A0D95BBDF006EDDC8 /* PlaylistPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistPlayer.h; sourceTree = "<group>"; };
+		A559747B0D95BBDF006EDDC8 /* PlaylistPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistPlayer.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				A55974710D95BA2C006EDDC8 /* QTKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A55973660D95AF85006EDDC8 /* AppController.h */,
+				A55973670D95AF85006EDDC8 /* AppController.m */,
+				A55973D10D95B36A006EDDC8 /* StatusMenuController.h */,
+				A55973D20D95B36A006EDDC8 /* StatusMenuController.m */,
+				A559747A0D95BBDF006EDDC8 /* PlaylistPlayer.h */,
+				A559747B0D95BBDF006EDDC8 /* PlaylistPlayer.m */,
+				A559731C0D95AA47006EDDC8 /* KWiTunesLibrary.h */,
+				A559731D0D95AA47006EDDC8 /* KWiTunesLibrary.m */,
+				A55973240D95ABA4006EDDC8 /* KWiTunesObject.h */,
+				A55973250D95ABA4006EDDC8 /* KWiTunesObject.m */,
+				A55973210D95AB79006EDDC8 /* KWiTunesPlaylist.h */,
+				A55973220D95AB79006EDDC8 /* KWiTunesPlaylist.m */,
+				A55973630D95AE0A006EDDC8 /* KWiTunesTrack.h */,
+				A55973640D95AE0A006EDDC8 /* KWiTunesTrack.m */,
+				A559746D0D95B9DF006EDDC8 /* KWMusicPlayer.h */,
+				A559746E0D95B9DF006EDDC8 /* KWMusicPlayer.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A55974700D95BA2C006EDDC8 /* QTKit.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* MenuPlayer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* MenuPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = MenuPlayer;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* MenuPlayer_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A559745F0D95B956006EDDC8 /* SmartPlaylist.png */,
+				A55974600D95B956006EDDC8 /* NormalPlaylist.png */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				29B97319FDCFA39411CA2CEA /* MainMenu.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* MenuPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MenuPlayer" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MenuPlayer;
+			productInstallPath = "$(HOME)/Applications";
+			productName = MenuPlayer;
+			productReference = 8D1107320486CEB800E47090 /* MenuPlayer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MenuPlayer" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* MenuPlayer */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* MenuPlayer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A55975A50D95CCD6006EDDC8 /* MainMenu.nib in Resources */,
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				A55974610D95B956006EDDC8 /* SmartPlaylist.png in Resources */,
+				A55974620D95B956006EDDC8 /* NormalPlaylist.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				A559731E0D95AA47006EDDC8 /* KWiTunesLibrary.m in Sources */,
+				A55973230D95AB79006EDDC8 /* KWiTunesPlaylist.m in Sources */,
+				A55973260D95ABA4006EDDC8 /* KWiTunesObject.m in Sources */,
+				A55973650D95AE0A006EDDC8 /* KWiTunesTrack.m in Sources */,
+				A55973680D95AF85006EDDC8 /* AppController.m in Sources */,
+				A55973D30D95B36A006EDDC8 /* StatusMenuController.m in Sources */,
+				A559746F0D95B9DF006EDDC8 /* KWMusicPlayer.m in Sources */,
+				A559747C0D95BBDF006EDDC8 /* PlaylistPlayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MenuPlayer_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = MenuPlayer;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MenuPlayer_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = MenuPlayer;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MenuPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MenuPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
