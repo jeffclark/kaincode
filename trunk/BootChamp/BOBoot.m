@@ -7,20 +7,14 @@
 //
 
 #import "BOBoot.h"
+#import "BOMedia.h"
+
 #import <Carbon/Carbon.h>
 #import <Security/Security.h>
 #import <sys/mount.h>
 #import <DiskArbitration/DiskArbitration.h>
 
-enum {
-	switchSuccessError = 0,
-	noWindowsVolumeError,
-	authFailedOrBlessFailedError,
-	authCancelled,
-	bcblessError,
-	restartFailedError,
-};
-
+static int err;
 
 BOOL restartComputer()
 {
@@ -50,7 +44,7 @@ BOOL restartComputer()
 	return (error == noErr);
 }
 
-NSDictionary *windowsVolume()
+BOMedia *windowsMedia()
 {
 	struct statfs *buf = NULL;
 	unsigned i, count = 0;
@@ -58,6 +52,8 @@ NSDictionary *windowsVolume()
 	count = getmntinfo(&buf, 0);
 	for (i=0; i<count; i++)
 	{
+		BOMedia *media = [[[BOMedia alloc] init] autorelease];
+
 		BOOL isValidBootCampVolume = NO;
 		char *volType = buf[i].f_fstypename;
 		char *volPath = buf[i].f_mntonname;
@@ -85,6 +81,10 @@ NSDictionary *windowsVolume()
 						NSDictionary *dict = (NSDictionary *)desc;
 						volKind = [dict objectForKey:(NSString *)kDADiskDescriptionVolumeKindKey];
 						if ((volKind != nil) && [(NSString *)volKind rangeOfString:@"ntfs-3g" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+							// When NTFS-3G/MacFUSE is installed we need to use
+							// bless's --device option instead of --folder
+							// for some reason --folder doesn't work in this situation.
+							media.deviceName = bsdName;
 							isValidBootCampVolume = YES;
 						}
 						
@@ -98,17 +98,17 @@ NSDictionary *windowsVolume()
 
 		NSLog(@"%s: %s (%@, %@, %d)", volPath, volType, volKind, bsdName, isLocal);
 
-		if (isValidBootCampVolume)
-			return [NSDictionary dictionaryWithObjectsAndKeys:
-					bsdName, @"bsdName",
-					[[NSString stringWithUTF8String:volPath] lastPathComponent], @"name",
-					nil];
+		if (isValidBootCampVolume) {
+			media.mountPoint = [NSString stringWithCString:volPath encoding:NSUTF8StringEncoding];
+			media.name = [media.mountPoint lastPathComponent];
+			return media;
+		}
 	}
 	
 	return nil;
 }
 
-BOOL setStartupDisk(NSString *bsdName, NSString *name, BOOL *userCancelled, NSDictionary **outputDict)
+BOOL setStartupDisk(BOMedia *media, BOOL *userCancelled, NSDictionary **outputDict)
 {
 	OSStatus status;
 	AuthorizationRef authorizationRef;
@@ -119,7 +119,7 @@ BOOL setStartupDisk(NSString *bsdName, NSString *name, BOOL *userCancelled, NSDi
 		return NO;
 	}
 	
-	NSString *prompt = [NSString stringWithFormat:NSLocalizedString(@"Administrative access is needed to temporarily change your startup disk to \"%@\".", ""), name];
+	NSString *prompt = [NSString stringWithFormat:NSLocalizedString(@"Administrative access is needed to temporarily change your startup disk to \"%@\".", ""), media.name];
 	const char *promptUTF8 = [prompt UTF8String];
 	AuthorizationItem envItems = {kAuthorizationEnvironmentPrompt, strlen(promptUTF8), (void *)promptUTF8, 0};
 	AuthorizationEnvironment env = {1, &envItems};
@@ -134,12 +134,18 @@ BOOL setStartupDisk(NSString *bsdName, NSString *name, BOOL *userCancelled, NSDi
 	}
 	
 	char *args[3];
-	args[0] = "-device";
-	args[1] = (char *)[bsdName UTF8String];
+	if (media.deviceName) {
+		args[0] = "-device";
+		args[1] = (char *)[media.deviceName UTF8String];
+	}
+	else {
+		args[0] = "-folder";
+		args[1] = (char *)[media.mountPoint UTF8String];
+	}
 	args[2] = NULL;
 	
 	FILE *file = NULL;
-	NSString *toolPath = [[NSBundle mainBundle] pathForResource:@"bcbless" ofType:nil];
+	NSString *toolPath = [[[[NSBundle mainBundle] executablePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"bcbless"];
 	status = AuthorizationExecuteWithPrivileges(authorizationRef, [toolPath fileSystemRepresentation], kAuthorizationFlagDefaults, args, &file);
 	if (status != errAuthorizationSuccess) {
 		*userCancelled = (status == errAuthorizationCanceled);
@@ -160,13 +166,13 @@ BOOL setStartupDisk(NSString *bsdName, NSString *name, BOOL *userCancelled, NSDi
 
 int switchToWindowsAndRestart(NSString **bcblessErrorMessage)
 {
-	NSDictionary *dict = windowsVolume();
-	if (dict == nil || [dict count] < 2)
+	BOMedia *media = windowsMedia();
+	if (media == nil)
 		return noWindowsVolumeError;
 	
 	NSDictionary *outputDict = nil;
 	BOOL userCancelledAuthentication = NO;
-	if (!setStartupDisk([dict objectForKey:@"bsdName"], [dict objectForKey:@"name"], &userCancelledAuthentication, &outputDict))
+	if (!setStartupDisk(media, &userCancelledAuthentication, &outputDict))
 	{
 		if (userCancelledAuthentication)
 			return authCancelled;
@@ -181,12 +187,23 @@ int switchToWindowsAndRestart(NSString **bcblessErrorMessage)
 			*bcblessErrorMessage = error;
 			return bcblessError;
 		}
+		
+#if 0
+		NSString *successMsg = [outputDict objectForKey:@"Success"];
+		*bcblessErrorMessage = successMsg;
+		return bcblessError;
+#endif
 	}
 	
 	if (!restartComputer())
 		return restartFailedError;
 	
 	return switchSuccessError;
+}
+
+int lastError()
+{
+	return err;
 }
 
 int bootIntoWindows()
@@ -197,8 +214,9 @@ int bootIntoWindows()
 
 	NSLog(@"switchToWindowsAndRestart: %d", status);
 	
-	[NSApp activateIgnoringOtherApps:YES]; // app may have gone unactive from auth dialog
+	[NSApp activateIgnoringOtherApps:YES]; // app may have gone inactive from auth dialog
 	
+	err = status;
 	switch (status)
 	{
 		case noWindowsVolumeError:
@@ -212,10 +230,10 @@ int bootIntoWindows()
 							NSLocalizedString(@"Authentication may have failed.", nil),
 							nil,nil,nil);
 			break;
-			
+		
 		case bcblessError:
 			NSRunAlertPanel(NSLocalizedString(@"BootChamp was unable to set your Windows volume as the temporary startup disk", nil),
-							bcblessErrorMessage,
+							(bcblessErrorMessage ? bcblessErrorMessage : @""),
 							nil,nil,nil);
 			break;
 			
