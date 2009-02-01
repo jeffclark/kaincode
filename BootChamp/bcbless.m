@@ -93,7 +93,7 @@ void outputError(NSString *message)
 	outputDict([NSDictionary dictionaryWithObject:message forKey:@"Error"]);
 }
 
-int blessDevice(NSString *device, NSString **output)
+int blessMedia(NSString *media, BOOL isDevice, NSString **output)
 {
 	NSData *outputData = nil;
 	NSArray *args = [NSArray arrayWithObjects:
@@ -101,8 +101,8 @@ int blessDevice(NSString *device, NSString **output)
 					 @"--legacy",		// support for BIOS-based operating systems
 					 @"--setBoot",		// boot it up
 					 @"--nextonly",		// only change the boot disk for next boot
-					 @"--device",
-					 device,
+					 (isDevice ? @"--device" : @"--folder"),
+					 media,
 					 nil];
 	int status = noErr;
 	
@@ -116,20 +116,32 @@ int blessDevice(NSString *device, NSString **output)
 int main(int argc, char *argv[])
 {
 	// bcbless -device <device>
+	// bcbless -folder <folder>
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	// NSUserDefaults can be used to read command line arguments in the format -option
+	BOOL isDevice = NO;
+	NSString *media = nil;
+	
 	NSString *deviceToBless = [[NSUserDefaults standardUserDefaults] objectForKey:@"device"];
-	if (!deviceToBless)
+	NSString *folderToBless = [[NSUserDefaults standardUserDefaults] objectForKey:@"folder"];
+	if (!deviceToBless && !folderToBless)
 	{
-		outputError(@"Missing device!");
+		outputError(@"Missing device/folder!");
 		[pool release];
 		exit(1);
 	}
 	
+	if (deviceToBless) {
+		isDevice = YES;
+		media = deviceToBless;
+	}
+	else
+		media = folderToBless;
+	
 	NSString *blessOutput = nil;
-	int status = blessDevice(deviceToBless, &blessOutput);
+	int status = blessMedia(media, isDevice, &blessOutput);
 	if (status != noErr) {
 		outputError(blessOutput);
 		[pool release];

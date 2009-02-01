@@ -8,5 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+enum {
+	switchSuccessError = 0,
+	noWindowsVolumeError,
+	authFailedOrBlessFailedError,
+	authCancelled,
+	bcblessError,
+	restartFailedError,
+};
 
 int bootIntoWindows();

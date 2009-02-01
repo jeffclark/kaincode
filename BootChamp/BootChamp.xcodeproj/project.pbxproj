@@ -16,10 +16,11 @@
 		A58EA4350E719AF0008837F3 /* bcbless.m in Sources */ = {isa = PBXBuildFile; fileRef = A58EA4330E719ADE008837F3 /* bcbless.m */; };
 		A58EA4360E719AF9008837F3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5A1083F0C3C8DBC006A3862 /* Security.framework */; };
 		A58EA4750E719B30008837F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
-		A58EA4820E719BE0008837F3 /* bcbless in Resources */ = {isa = PBXBuildFile; fileRef = A58EA42E0E719AA0008837F3 /* bcbless */; };
 		A5A106DE0C3C83AA006A3862 /* BOBoot.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A106DD0C3C83AA006A3862 /* BOBoot.m */; };
 		A5A108400C3C8DBC006A3862 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5A1083F0C3C8DBC006A3862 /* Security.framework */; };
-		A5A108600C3C8E45006A3862 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5A1085F0C3C8E45006A3862 /* Carbon.framework */; };
+		A5C5CF070E766EA300F53F5A /* BOMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = A5C5CF060E766EA300F53F5A /* BOMedia.m */; };
+		A5C5CF410E76734800F53F5A /* bcbless in Copy Executables */ = {isa = PBXBuildFile; fileRef = A58EA42E0E719AA0008837F3 /* bcbless */; };
+		A5C5CF5D0E76772700F53F5A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5A1085F0C3C8E45006A3862 /* Carbon.framework */; };
 		A5D8A6490E21C3CA00F9756E /* BOStatusMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D8A6480E21C3CA00F9756E /* BOStatusMenuController.m */; };
 		A5DA47FF0E64938F001C5148 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5DA47FE0E64938F001C5148 /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -33,6 +34,20 @@
 			remoteInfo = bcbless;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A5C5CF430E76736600F53F5A /* Copy Executables */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				A5C5CF410E76734800F53F5A /* bcbless in Copy Executables */,
+			);
+			name = "Copy Executables";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -55,6 +70,8 @@
 		A5A106DD0C3C83AA006A3862 /* BOBoot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOBoot.m; sourceTree = "<group>"; };
 		A5A1083F0C3C8DBC006A3862 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		A5A1085F0C3C8E45006A3862 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		A5C5CF050E766EA300F53F5A /* BOMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOMedia.h; sourceTree = "<group>"; };
+		A5C5CF060E766EA300F53F5A /* BOMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOMedia.m; sourceTree = "<group>"; };
 		A5D8A6470E21C3CA00F9756E /* BOStatusMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOStatusMenuController.h; sourceTree = "<group>"; };
 		A5D8A6480E21C3CA00F9756E /* BOStatusMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOStatusMenuController.m; sourceTree = "<group>"; };
 		A5D8A6580E21C4AA00F9756E /* BODefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BODefines.h; sourceTree = "<group>"; };
@@ -69,8 +86,8 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				A5A108400C3C8DBC006A3862 /* Security.framework in Frameworks */,
-				A5A108600C3C8E45006A3862 /* Carbon.framework in Frameworks */,
 				A58D8D6E0E6483160073F663 /* DiskArbitration.framework in Frameworks */,
+				A5C5CF5D0E76772700F53F5A /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +113,8 @@
 				A5D8A6480E21C3CA00F9756E /* BOStatusMenuController.m */,
 				A5A106DC0C3C83AA006A3862 /* BOBoot.h */,
 				A5A106DD0C3C83AA006A3862 /* BOBoot.m */,
+				A5C5CF050E766EA300F53F5A /* BOMedia.h */,
+				A5C5CF060E766EA300F53F5A /* BOMedia.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -190,6 +209,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				A5C5CF430E76736600F53F5A /* Copy Executables */,
 			);
 			buildRules = (
 			);
@@ -249,7 +269,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A58EA4820E719BE0008837F3 /* bcbless in Resources */,
 				A5DA47FF0E64938F001C5148 /* Localizable.strings in Resources */,
 				A58EA2BE0E7191BF008837F3 /* Credits.rtf in Resources */,
 				A58EA2C20E7191DE008837F3 /* appicon.icns in Resources */,
@@ -267,6 +286,7 @@
 				A5A106DE0C3C83AA006A3862 /* BOBoot.m in Sources */,
 				A5696EA80E21B7CC0063130E /* BOAppController.m in Sources */,
 				A5D8A6490E21C3CA00F9756E /* BOStatusMenuController.m in Sources */,
+				A5C5CF070E766EA300F53F5A /* BOMedia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,10 +356,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					x86_64,
-					i386,
-				);
+				ARCHS = i386;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -377,14 +394,12 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
+				ARCHS = i386;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = BootChamp;
 				WRAPPER_EXTENSION = app;
 			};
