@@ -11,44 +11,45 @@
 #import "TSPeriodDay.h"
 #import "TSPeriod.h"
 #import "ImageAndTextCell.h"
-
-#include <CoreFoundation/CoreFoundation.h>
-#include <CoreServices/CoreServices.h>
-#include <IOKit/IOKitLib.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+#import "TSDataController.h"
 #import "NSStringXtras.h"
+#import "TSUserDefaultKeys.h"
 
 
-@interface NSCalendarDate (TSFormats)
+@interface NSDate (TSFormats)
 - (NSString *)timeDescription;
 - (NSString *)dateDescription;
 @end
-@implementation NSCalendarDate (TSFormats)
+@implementation NSDate (TSFormats)
 - (NSString *)timeDescription
 {
-	return [self descriptionWithCalendarFormat:@"%I:%M:%S %p"];
+	[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
+	
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setDateStyle:kCFDateFormatterNoStyle];
+	[dateFormatter setTimeStyle:kCFDateFormatterShortStyle];
+	NSString *formattedString = [dateFormatter stringFromDate:self];
+	[dateFormatter release];
+	return formattedString;
+	
+	//return [[self dateWithCalendarFormat:nil timeZone:nil] descriptionWithCalendarFormat:@"%I:%M:%S %p"];
 }
 
 - (NSString *)dateDescription
 {
-	return [self descriptionWithCalendarFormat:@"%A, %B %e"];
+	return [[self dateWithCalendarFormat:nil timeZone:nil] descriptionWithCalendarFormat:@"%A, %B %e"];
 }
 @end
 
 
 @implementation TSProjectController
 
-- (id)init
+- (id)initWithProject:(TSProject *)project
 {
 	if (self = [super init])
 	{
-		[self setProject:[[[TSProject alloc] init] autorelease]];
-		
-		[[self project] setRate:[[NSUserDefaults standardUserDefaults] floatForKey:@"TSDefaultRate"]];
+		[self setDataController:nil];
+		[self setProject:project];
 		
 		_objectController = [[NSObjectController alloc] initWithContent:self];
 		_icon = nil;
@@ -61,6 +62,8 @@
 
 - (void)dealloc
 {
+	[self setDataController:nil];
+
 	[_project release];
 	[_periodTimer release];
 	
@@ -76,7 +79,27 @@
 	ImageAndTextCell *cell = [[[ImageAndTextCell alloc] init] autorelease];
 	[cell setFont:[[tc dataCell] font]];
 	[tc setDataCell:cell];
-}	
+	
+	[periodsOutlineView setAutosaveTableColumns:YES];
+	[periodsOutlineView setAutosaveName:[[self project] valueForKey:TSProjectNameValue]];
+	
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"values.%@", TS_USE_HHMMSS_FORMAT] options:0 context:NULL];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	[periodsOutlineView reloadData];
+}
+
+- (void)setDataController:(TSDataController *)dataController
+{
+	_dataController = dataController;
+}
+
+- (TSDataController *)dataController
+{
+	return _dataController;
+}
 
 - (TSProject *)project
 {
@@ -90,9 +113,6 @@
 		[_project release];
 		_project = [project retain];
 	}
-
-	[periodsOutlineView setAutosaveName:[NSString stringWithFormat:@"TSPeriodsColumns %d", [project uid]]];
-	[periodsOutlineView setAutosaveTableColumns:YES];
 }
 
 - (NSOutlineView *)periodsOutlineView
@@ -106,9 +126,9 @@
 	[self updateEarningsField];
 
 	// expand last item..
-	int c = [[_project days] count];
+	int c = [[_project periodDays] count];
 	if (c > 0)
-		[periodsOutlineView expandItem:[[_project days] objectAtIndex:c-1]];
+		[periodsOutlineView expandItem:[[_project periodDays] objectAtIndex:c-1]];
 }
 
 - (NSView *)contentView
@@ -146,108 +166,30 @@
 
 - (void)updateEarningsField
 {
-	[earningsField setStringValue:[NSString stringWithFormat:@"%@: %@",
-		[NSString stringByFormattingSeconds:[_project totalSeconds]],
-		[NSString stringByFormattingSeconds:[_project totalSeconds] atRate:[_project rate] withTax:[_project tax]]]];
-}
-
-/* 10^9 --  number of ns in a second */
-#define NS_SECONDS 1000000000
-
-- (uint64_t)idleTime
-{
-	uint64_t ret = 0;
-	
-	mach_port_t masterPort;
-	io_iterator_t iter;
-	io_registry_entry_t curObj;
-	
-	IOMasterPort(MACH_PORT_NULL, &masterPort);
-	
-	/* Get IOHIDSystem */
-	IOServiceGetMatchingServices(masterPort,
-								 IOServiceMatching("IOHIDSystem"),
-								 &iter);
-	if (iter == 0) {
-		printf("Error accessing IOHIDSystem\n");
-		exit(1);
+	if ([_project totalSeconds] == 0)
+	{
+		[earningsField setStringValue:[NSString stringByFormattingSeconds:[_project totalSeconds]]];
 	}
-	
-	curObj = IOIteratorNext(iter);
-	
-	if (curObj == 0) {
-		printf("Iterator's empty!\n");
-		exit(1);
+	else
+	{
+		NSString *formattedSecs = [NSString stringByFormattingSeconds:[_project totalSeconds]
+															   atRate:[[_project valueForKey:TSProjectRateValue] floatValue]
+															  withTax:[[_project valueForKey:TSProjectTaxValue] floatValue]];
+		[earningsField setStringValue:[NSString stringWithFormat:@"%@: %@",
+									   [NSString stringByFormattingSeconds:[_project totalSeconds]], formattedSecs]];
 	}
-	
-	CFMutableDictionaryRef properties = 0;
-	CFTypeRef obj;
-	
-	if (IORegistryEntryCreateCFProperties(curObj, &properties,
-										  kCFAllocatorDefault, 0) ==
-		KERN_SUCCESS && properties != NULL) {
-		
-		obj = CFDictionaryGetValue(properties, CFSTR("HIDIdleTime"));
-		CFRetain(obj);
-	} else {
-		printf("Couldn't grab properties of system\n");
-		obj = NULL;
-	}
-	
-	if (obj) {
-		uint64_t tHandle;
-		
-		CFTypeID type = CFGetTypeID(obj);
-		
-		if (type == CFDataGetTypeID()) {
-			CFDataGetBytes((CFDataRef) obj,
-						   CFRangeMake(0, sizeof(tHandle)),
-						   (UInt8*) &tHandle);
-		}  else if (type == CFNumberGetTypeID()) {
-			CFNumberGetValue((CFNumberRef)obj,
-							 kCFNumberSInt64Type,
-							 &tHandle);
-		} else {
-			printf("%d: unsupported type\n", (int)type);
-			exit(1);
-		}
-		
-		CFRelease(obj);
-		
-		// essentially divides by 10^9
-		tHandle >>= 30;
-		//printf("%qi\n", tHandle);
-		ret = tHandle;
-		goto funEnd;
-	} else {
-		printf("Can't find idle time\n");
-	}
-	
-funEnd:
-		
-		/* Release our resources */
-		IOObjectRelease(curObj);
-	IOObjectRelease(iter);
-	CFRelease((CFTypeRef)properties);
-	
-	return ret;
 }
 
 - (void)timerAction
 {
-	[[_project currentPeriod] setEnd:[NSCalendarDate calendarDate]];
+	[[_project currentPeriod] setEnd:[NSDate date]];
 	if ([periodsOutlineView editedRow] == -1)
 		[periodsOutlineView reloadData];
 	[self updateEarningsField];
-	
-	//[self saveData];
-	
-	//NSLog(@"idleTime: %qi", [self idleTime]);
 }
 
 - (void)startTimer
 {
-	[_periodTimer release];
 	_periodTimer = [[NSTimer scheduledTimerWithTimeInterval:0.5
 													 target:self
 												   selector:@selector(timerAction)
@@ -259,13 +201,15 @@ funEnd:
 - (void)stopTimer
 {
 	[_periodTimer invalidate];
+	[_periodTimer release];
+	_periodTimer = nil;
 	
-	//[self saveData];
+	[[self dataController] saveData];
 }
 
 - (BOOL)timerIsActive
 {
-	return ([_periodTimer isValid]);
+	return ((_periodTimer != nil) && ([_periodTimer isValid]));
 }
 
 #pragma mark -
@@ -273,14 +217,14 @@ funEnd:
 - (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	if (item == nil)
-		return [[_project days] count];
+		return [[_project periodDays] count];
 	return [item numberOfItems];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
 {
 	if (item == nil)
-		return [[_project days] objectAtIndex:index];
+		return [[_project periodDays] objectAtIndex:index];
 	return [[(TSPeriodDay *)item periods] objectAtIndex:index];
 }
 
@@ -295,8 +239,8 @@ funEnd:
 	if ([identifier isEqualToString:@"Start"])
 	{
 		if ([item isKindOfClass:[TSPeriodDay class]])
-			return [[item start] dateDescription];
-		return [[item start] timeDescription];
+			return [[(TSPeriodDay *)item start] dateDescription];
+		return [[(TSPeriod *)item start] timeDescription];
 	}
 	else if ([identifier isEqualToString:@"End"])
 	{
@@ -305,7 +249,13 @@ funEnd:
 	}
 	else if ([identifier isEqualToString:@"Time"])
 	{
-		NSString *s = [NSString stringByFormattingSeconds:[item totalSeconds]];
+		NSString *s = nil;
+		
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:TS_USE_HHMMSS_FORMAT])
+			s = [NSString stringByFormattingSeconds2:[item totalSeconds]];
+		else
+			s = [NSString stringByFormattingSeconds:[item totalSeconds]];
+		
 		if ((TSPeriod *)item == [_project currentPeriod])
 		{
 			NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -329,7 +279,11 @@ funEnd:
 {
 	NSString *identifier = [tableColumn identifier];
 	if ([identifier isEqualToString:@"Notes"])
+	{
 		[item setNotes:object];
+		
+		[[self dataController] saveData];
+	}
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item

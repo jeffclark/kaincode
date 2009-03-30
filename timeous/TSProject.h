@@ -10,36 +10,34 @@
 
 @class TSPeriod, TSPeriodDay;
 
-@interface TSProject : NSObject
+extern NSString *const TSProjectNameValue;
+extern NSString *const TSProjectRateValue;
+extern NSString *const TSProjectTaxValue;
+extern NSString *const TSProjectPeriodsValue;
+extern NSString *const TSProjectSortIDValue;
+
+
+@interface TSProject : NSManagedObject
 {
 	NSMutableArray *_periodDays;
 	TSPeriod *_currentPeriod;
-	NSString *_name;
-
-	float _rate, _tax;
-	
-	int _uid;
 }
 
-- (NSMutableArray *)days;
+- (NSMutableArray *)periodDays;
+- (void)setPeriodDays:(NSMutableArray *)periodDays;
+
 - (TSPeriod *)currentPeriod;
 - (void)setCurrentPeriod:(TSPeriod *)period;
-
-- (NSString *)name;
-- (void)setName:(NSString *)name;
-
-- (float)rate;
-- (void)setRate:(float)rate;
-- (float)tax;
-- (void)setTax:(float)tax;
 
 - (unsigned long long)totalSeconds;
 
 - (TSPeriodDay *)periodDayForToday;
-- (TSPeriodDay *)periodDayForDate:(NSCalendarDate *)date;
-- (TSPeriod *)startPeriodForDay:(TSPeriodDay *)day;
+- (TSPeriodDay *)periodDayForDate:(NSDate *)date;
+- (void)addPeriod:(TSPeriod *)period toDay:(TSPeriodDay *)day;
 
-- (int)uid;
-- (void)setUID:(int)uid;
+@end
 
+
+@interface TSProject (Sorting)
+- (NSComparisonResult)compare:(id)aProject;
 @end

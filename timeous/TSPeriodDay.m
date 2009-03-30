@@ -11,11 +11,12 @@
 
 @implementation TSPeriodDay
 
-- (id)init
+- (id)initWithProject:(TSProject *)project
 {
 	if (self = [super init])
 	{
-		_periods = [[NSMutableArray alloc] init];
+		_project = [project retain];
+		[self setPeriods:[NSMutableArray array]];
 	}
 	
 	return self;
@@ -23,8 +24,27 @@
 
 - (void)dealloc
 {
-	[_periods release];
+	[self setPeriods:nil];
+	[_project release];
+
 	[super dealloc];
+}
+
+#pragma mark -
+#pragma mark Accessors
+
+- (TSProject *)project
+{
+	return _project;
+}
+
+- (void)setPeriods:(NSMutableArray *)periods
+{
+	if (_periods != periods)
+	{
+		[_periods release];
+		_periods = [periods retain];
+	}
 }
 
 - (NSMutableArray *)periods
@@ -32,20 +52,32 @@
 	return _periods;
 }
 
-- (NSCalendarDate *)start
+- (NSDate *)start
 {
-	NSCalendarDate *date = ([[self periods] count] == 0 ? nil : [[[self periods] objectAtIndex:0] start]);
+	NSDate *date = nil;
+	
+	NSArray *periods = [self periods];
+	if ([periods count])
+	{
+		TSPeriod *period = [periods objectAtIndex:0];
+		date = [period start];
+	}
+	
 	if (date == nil)
 		return nil;
 	
-	return [NSCalendarDate dateWithYear:[date yearOfCommonEra]
-								  month:[date monthOfYear]
-									day:[date dayOfMonth]
-								   hour:0
-								 minute:0
-								 second:0
-							   timeZone:[date timeZone]];
+	NSCalendarDate *calDate = [date dateWithCalendarFormat:nil timeZone:nil];
+	return (NSDate *)[NSCalendarDate dateWithYear:[calDate yearOfCommonEra]
+											month:[calDate monthOfYear]
+											  day:[calDate dayOfMonth]
+											 hour:0
+										   minute:0
+										   second:0
+										 timeZone:[calDate timeZone]];
 }
+
+#pragma mark -
+#pragma mark Utilities
 
 - (int)numberOfItems
 {
@@ -55,15 +87,32 @@
 - (unsigned long long)totalSeconds
 {
 	unsigned long long total = 0;
-	int i;
-	for (i=0; i<[[self periods] count]; i++)
-		total += [[[self periods] objectAtIndex:i] totalSeconds];
+	NSEnumerator *periodsEnum = [[self periods] objectEnumerator];
+	TSPeriod *period = nil;
+	while (period = [periodsEnum nextObject])
+		total += [period totalSeconds];
 	return total;
 }
 
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"%d periods", [[self periods] count]];
+}
+
+@end
+
+
+@implementation TSPeriodDay (Sorting)
+
+- (NSComparisonResult)compare:(TSPeriodDay *)anotherPeriodDay
+{
+	NSDate *val1 = [self start];
+	NSDate *val2 = [anotherPeriodDay start];
+	if (val1 == nil)
+		return NSOrderedDescending;
+	else if (val2 == nil)
+		return NSOrderedAscending;
+	return [val1 compare:val2];	
 }
 
 @end
