@@ -58,7 +58,7 @@
 
 + (NSString *)stringByFormattingSeconds2:(unsigned long long)secondsValue
 {
-	int second = 1;
+	/*int second = 1;
 	int minute = second * 60;
 	int hour = minute * 60;
 	
@@ -82,16 +82,37 @@
 		useIt = YES;
 	}
 	
-	/*
 	int seconds = (leftover / second);
 	if (seconds >= 0 || useIt)
 	{
 		[output appendFormat:@"%d second%@ ", seconds, (seconds == 1 ? @"" : @"s")];
 		leftover = (leftover % second);
 		useIt = YES;
-	}*/
+	}
 	
-	return [output stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	
+	return [output stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];*/
+	
+	unsigned long long seconds = secondsValue;
+	//float second = 1.0;
+	//float minute = second * 60;
+	//float hour = minute * 60;
+	//float day = hour * 24;
+	
+	/*if (seconds < minute)
+	{
+		return [NSString stringWithFormat:@"0:%02d", (long)seconds];
+	}
+	else if (seconds < hour)
+	{
+		return [NSString stringWithFormat:@"%d:%02d", (long)seconds/60, (long)seconds%60];
+	}
+	else
+	{*/
+		return [NSString stringWithFormat:@"%02d:%02d:%02d", (long)seconds/(60*60), (long)seconds/60%60, (long)seconds%60];
+	//}
+	
+	return nil;
 }
 
 + (NSString *)stringByFormattingSeconds3:(unsigned long long)secondsValue

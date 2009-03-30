@@ -11,14 +11,15 @@
 
 @implementation TSPeriod
 
-- (id)init
+/*- (id)init
 {
 	if (self = [super init])
 	{
 		[self setStart:[NSCalendarDate calendarDate]];
 		[self setEnd:nil];
+		[self setNotes:nil];
+
 		[self setDay:nil];
-		_notes = nil;
 	}
 	
 	return self;
@@ -28,52 +29,105 @@
 {
 	[self setStart:nil];
 	[self setEnd:nil];
+	[self setNotes:nil];
+
 	[self setDay:nil];
-	[_notes release];
+
 	[super dealloc];
+}*/
+
+- (void)awakeFromInsert
+{
+	[super awakeFromInsert];
+	
+	[self setStart:[NSDate date]];
+	[self setDay:nil];
 }
 
-- (NSCalendarDate *)start
+- (void)awakeFromFetch
 {
-	return _start;
+	[super awakeFromFetch];
+	
+	[self setDay:nil];
 }
 
-- (void)setStart:(NSCalendarDate *)date
+- (void)didTurnIntoFault
 {
-	if (_start != date)
+	[self setDay:nil];
+}
+
+#pragma mark -
+#pragma mark Accessors
+
+- (NSDate *)start
+{
+	NSDate *ret = nil;
+	[self willAccessValueForKey:@"start"];
+	ret = [self primitiveValueForKey:@"start"];
+	[self didAccessValueForKey:@"start"];
+	return ret;
+	//return _start;
+}
+
+- (void)setStart:(NSDate *)date
+{
+	[self willChangeValueForKey:@"start"];
+	[self setPrimitiveValue:date forKey:@"start"];
+	[self didChangeValueForKey:@"start"];
+	/*if (_start != date)
 	{
 		[_start release];
 		_start = [date copy];
-	}
+	}*/
 }
 
-- (NSCalendarDate *)end
+- (NSDate *)end
 {
-	return _end;
+	NSDate *ret = nil;
+	[self willAccessValueForKey:@"end"];
+	ret = [self primitiveValueForKey:@"end"];
+	[self didAccessValueForKey:@"end"];
+	return ret;
+	//return _end;
 }
 
-- (void)setEnd:(NSCalendarDate *)date
+- (void)setEnd:(NSDate *)date
 {
-	if (_end != date)
+	[self willChangeValueForKey:@"end"];
+	[self setPrimitiveValue:date forKey:@"end"];
+	[self didChangeValueForKey:@"end"];
+	
+	/*if (_end != date)
 	{
 		[_end release];
 		_end = [date copy];
-	}
+	}*/
 }
 
 - (NSString *)notes
 {
-	return _notes;
+	NSString *ret = nil;
+	[self willAccessValueForKey:@"notes"];
+	ret = [self primitiveValueForKey:@"notes"];
+	[self didAccessValueForKey:@"notes"];
+	return ret;
+	//return _notes;
 }
 
 - (void)setNotes:(NSString *)notes
 {
-	if (_notes != notes)
+	[self willChangeValueForKey:@"notes"];
+	[self setPrimitiveValue:notes forKey:@"notes"];
+	[self didChangeValueForKey:@"notes"];
+	/*if (_notes != notes)
 	{
 		[_notes release];
-		_notes = [notes retain];
-	}
+		_notes = [notes copy];
+	}*/
 }
+
+#pragma mark -
+#pragma mark Utilities
 
 - (int)numberOfItems
 {
@@ -92,6 +146,7 @@
 
 - (void)setDay:(TSPeriodDay *)day
 {
+	// weak link
 	_day = day;
 }
 

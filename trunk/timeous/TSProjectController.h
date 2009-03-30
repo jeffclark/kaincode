@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class TSProject;
+@class TSDataController, TSProject;
 
 @interface TSProjectController : NSObject
 {
@@ -16,12 +16,19 @@
 	IBOutlet NSOutlineView *periodsOutlineView;
 	IBOutlet NSTextField *earningsField;
 	
+	TSDataController *_dataController;
+
 	TSProject *_project;
 	NSTimer *_periodTimer;
 	
 	NSObjectController *_objectController;
 	NSImage *_icon;
 }
+
+- (id)initWithProject:(TSProject *)project;
+
+- (void)setDataController:(TSDataController *)dataController;
+- (TSDataController *)dataController;
 
 - (TSProject *)project;
 - (void)setProject:(TSProject *)project;

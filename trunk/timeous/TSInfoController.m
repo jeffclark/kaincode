@@ -9,14 +9,14 @@
 #import "TSInfoController.h"
 #import "TSProject.h"
 
+
 @implementation TSInfoController
 
 - (id)init
 {
 	if (self = [super initWithWindowNibName:@"ProjectInfo" owner:self])
 	{
-		_project = nil;
-		
+		_project = nil;		
 	}
 	
 	return self;
@@ -24,27 +24,28 @@
 
 - (void)dealloc
 {
-	_project = nil;
+	[_project release];
 	[super dealloc];
 }
 
 - (void)setProject:(TSProject *)project
 {
-	// weak link
-	_project = project;
+	if (_project != project)
+	{
+		[_project release];
+		_project = [project retain];
+	}
 
-	[nameField setStringValue:[_project name]];
-	[rateField setFloatValue:[_project rate]];
-	[taxField setFloatValue:[_project tax]];
+	[nameField setStringValue:[_project valueForKey:TSProjectNameValue]];
+	[rateField setFloatValue:[[_project valueForKey:TSProjectRateValue] floatValue]];
+	[taxField setFloatValue:[[_project valueForKey:TSProjectTaxValue] floatValue]];
 }
 
 - (IBAction)close:(id)sender
 {
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:[rateField floatValue]] forKey:@"TSDefaultRate"];
-	
-	[_project setName:[nameField stringValue]];
-	[_project setRate:[rateField floatValue]];
-	[_project setTax:[taxField floatValue]];
+	[_project setValue:[nameField stringValue] forKey:TSProjectNameValue];
+	[_project setValue:[NSNumber numberWithFloat:[rateField floatValue]] forKey:TSProjectRateValue];
+	[_project setValue:[NSNumber numberWithFloat:[taxField floatValue]] forKey:TSProjectTaxValue];
 	[NSApp endSheet:[self window]];
 	[self close];
 }

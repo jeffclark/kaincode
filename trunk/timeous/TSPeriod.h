@@ -10,25 +10,23 @@
 
 @class TSPeriodDay;
 
-@interface TSPeriod : NSObject
+@interface TSPeriod : NSManagedObject
 {
-	NSCalendarDate *_start, *_end;
+	//NSCalendarDate *_start, *_end;
+	//NSString *_notes;
+	
 	TSPeriodDay *_day;
-	NSString *_notes;
 }
 
-- (NSCalendarDate *)start;
-- (void)setStart:(NSCalendarDate *)date;
-
-- (NSCalendarDate *)end;
-- (void)setEnd:(NSCalendarDate *)date;
-
+- (NSDate *)start;
+- (void)setStart:(NSDate *)date;
+- (NSDate *)end;
+- (void)setEnd:(NSDate *)date;
 - (NSString *)notes;
 - (void)setNotes:(NSString *)notes;
 
 
 - (int)numberOfItems;
-
 - (unsigned long long)totalSeconds;
 
 - (TSPeriodDay *)day;

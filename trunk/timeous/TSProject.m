@@ -10,35 +10,65 @@
 #import "TSPeriodDay.h"
 #import "TSPeriod.h"
 
+NSString *const TSProjectNameValue		= @"name";
+NSString *const TSProjectRateValue		= @"rate";
+NSString *const TSProjectTaxValue		= @"tax";
+NSString *const TSProjectPeriodsValue	= @"periods";
+NSString *const TSProjectSortIDValue	= @"sortID";
+
 
 @implementation TSProject
 
-- (id)init
+- (void)didTurnIntoFault
 {
-	if (self = [super init])
+	[self setCurrentPeriod:nil];
+	[self setPeriodDays:nil];
+}
+
+- (void)awakeFromInsert
+{
+	[super awakeFromInsert];
+	
+	[self setCurrentPeriod:nil];
+	[self setPeriodDays:[NSMutableArray array]];
+}
+
+- (void)awakeFromFetch
+{
+	[super awakeFromFetch];
+	
+	[self setCurrentPeriod:nil];
+	[self setPeriodDays:[NSMutableArray array]];
+	
+	NSEnumerator *periodsEnum = [[self valueForKey:TSProjectPeriodsValue] objectEnumerator];
+	TSPeriod *period = nil;
+	while (period = [periodsEnum nextObject])
 	{
-		_periodDays = [[NSMutableArray alloc] init];
-		_name = [@"Untitled" retain];
-		_rate = 0.0;
-		_tax = 0.0;
-		_uid = -1;
+		TSPeriodDay *day = [self periodDayForDate:[period start]];
+		[period setDay:day];
+		[[day periods] addObject:period];
+
+		// sort periods within day
+		NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:YES];
+		[[day periods] sortUsingDescriptors:[NSArray arrayWithObject:sort]];
+		[sort release];
 	}
 	
-	return self;
+	[[self periodDays] sortUsingSelector:@selector(compare:)];
 }
 
-- (void)dealloc
-{
-	[_periodDays release];
-	[_currentPeriod release];
-	[_name release];
-
-	[super dealloc];
-}
-
-- (NSMutableArray *)days
+- (NSMutableArray *)periodDays
 {
 	return _periodDays;
+}
+
+- (void)setPeriodDays:(NSMutableArray *)periodDays
+{
+	if (_periodDays != periodDays)
+	{
+		[_periodDays release];
+		_periodDays = [periodDays retain];
+	}
 }
 
 - (TSPeriod *)currentPeriod
@@ -55,97 +85,68 @@
 	}
 }
 
-- (NSString *)name
-{
-	return _name;
-}
-
-- (void)setName:(NSString *)name
-{
-	if (_name != name)
-	{
-		[_name release];
-		_name = [name copy];
-	}
-}
-
-- (float)rate
-{
-	return _rate;
-}
-
-- (void)setRate:(float)rate
-{
-	_rate = rate;
-}
-
-- (float)tax
-{
-	return _tax;
-}
-
-- (void)setTax:(float)tax
-{
-	_tax = tax;
-}
-
 - (unsigned long long)totalSeconds
 {
 	unsigned long long total = 0;
-	int i;
-	for (i=0; i<[[self days] count]; i++)
-		total += [[[self days] objectAtIndex:i] totalSeconds];
+	NSEnumerator *periodsEnum = [[self periodDays] objectEnumerator];
+	TSPeriod *day = nil;
+	while (day = [periodsEnum nextObject])
+		total += [day totalSeconds];
 	return total;
 }
 
 - (TSPeriodDay *)periodDayForToday
 {
-	return [self periodDayForDate:[[NSDate date] dateWithCalendarFormat:nil timeZone:nil]]; //[NSCalendarDate calendarDate]];
+	return [self periodDayForDate:[[NSDate date] dateWithCalendarFormat:nil timeZone:nil]];
 }
 
-- (TSPeriodDay *)periodDayForDate:(NSCalendarDate *)date
+- (TSPeriodDay *)periodDayForDate:(NSDate *)date
 {
-	NSCalendarDate *today = [NSCalendarDate dateWithYear:[date yearOfCommonEra]
-												   month:[date monthOfYear]
-													 day:[date dayOfMonth]
+	NSCalendarDate *calDate = [date dateWithCalendarFormat:nil timeZone:nil];
+	NSCalendarDate *today = [NSCalendarDate dateWithYear:[calDate yearOfCommonEra]
+												   month:[calDate monthOfYear]
+													 day:[calDate dayOfMonth]
 													hour:0
 												  minute:0
 												  second:0
-												timeZone:[date timeZone]];
-	NSEnumerator *daysEnum = [[self days] objectEnumerator];
-	TSPeriodDay *day;
+												timeZone:[calDate timeZone]];
+	NSEnumerator *daysEnum = [[self periodDays] objectEnumerator];
+	TSPeriodDay *day = nil;
+
 	while (day = [daysEnum nextObject])
 	{
-		NSCalendarDate *start = [day start];
-		if ([start dayOfMonth] == [today dayOfMonth] && 
-			[start monthOfYear] == [today monthOfYear] && 
-			[start yearOfCommonEra] == [today yearOfCommonEra])
+		NSCalendarDate *calStart = [[day start] dateWithCalendarFormat:nil timeZone:nil];
+		if ([calStart dayOfMonth] == [today dayOfMonth] && 
+			[calStart monthOfYear] == [today monthOfYear] && 
+			[calStart yearOfCommonEra] == [today yearOfCommonEra])
 			return day;
 	}
 	
-	// got here because no new date exists, so create one
-	day = [[TSPeriodDay alloc] init];
-	[[self days] addObject:day];
-	return [day autorelease];
+	// got here because no new day exists, so create one
+	day = [[TSPeriodDay alloc] initWithProject:self];
+	[[self periodDays] addObject:day];
+	[day release];
+	return day;
 }
 
-- (TSPeriod *)startPeriodForDay:(TSPeriodDay *)day
+- (void)addPeriod:(TSPeriod *)period toDay:(TSPeriodDay *)day
 {
-	TSPeriod *period = [[TSPeriod alloc] init];
-	[period setDay:day];
 	[[day periods] addObject:period];
-	
-	return [period autorelease];
+	[[self valueForKey:TSProjectPeriodsValue] addObject:period];
 }
 
-- (int)uid
+@end
+
+
+@implementation TSProject (Sorting)
+- (NSComparisonResult)compare:(id)aProject
 {
-	return _uid;
+	NSNumber *num1 = [self valueForKey:TSProjectSortIDValue];
+	NSNumber *num2 = [aProject valueForKey:TSProjectSortIDValue];
+	if (num1 == nil)
+		return NSOrderedDescending;
+	else if (num2 == nil)
+		return NSOrderedAscending;
+	return [num1 compare:num2];
 }
-
-- (void)setUID:(int)uid
-{
-	_uid = uid;
-}
-
 @end
