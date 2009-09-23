@@ -3,23 +3,27 @@
 //  BootChamp
 //
 //  Created by Kevin Wojniak on 7/4/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+//  Copyright 2007-2009 Kainjow LLC. All rights reserved.
 //
 
 #import "BOBoot.h"
 #import "BOMedia.h"
-
 #import <Carbon/Carbon.h>
 #import <Security/Security.h>
-#import <sys/mount.h>
-#import <DiskArbitration/DiskArbitration.h>
 
-static int err;
 
-BOOL restartComputer()
+@implementation BOBoot
+
+@synthesize nextonly, media;
+
+- (void)dealloc
 {
-	AEEventID eventToSend = kAERestart;
-	
+	self.media = nil;
+	[super dealloc];
+}
+
+- (BOOL)restartComputer
+{
     AEAddressDesc targetDesc;
     static const ProcessSerialNumber kPSNOfSystemProcess = { 0, kSystemProcess };
     AppleEvent eventReply = {typeNull, NULL};
@@ -30,7 +34,7 @@ BOOL restartComputer()
     if (error != noErr)
         return NO;
 	
-    error = AECreateAppleEvent(kCoreEventClass, eventToSend, &targetDesc, kAutoGenerateReturnID, kAnyTransactionID, &appleEventToSend);
+    error = AECreateAppleEvent(kCoreEventClass, kAERestart, &targetDesc, kAutoGenerateReturnID, kAnyTransactionID, &appleEventToSend);
     AEDisposeDesc(&targetDesc);
     if (error != noErr)
         return NO;
@@ -44,82 +48,18 @@ BOOL restartComputer()
 	return (error == noErr);
 }
 
-BOMedia *windowsMedia()
-{
-	struct statfs *buf = NULL;
-	unsigned i, count = 0;
-	
-	count = getmntinfo(&buf, 0);
-	for (i=0; i<count; i++)
-	{
-		BOMedia *media = [[[BOMedia alloc] init] autorelease];
 
-		BOOL isValidBootCampVolume = NO;
-		char *volType = buf[i].f_fstypename;
-		char *volPath = buf[i].f_mntonname;
-		NSString *volKind = nil;
-		NSString *bsdName = [NSString stringWithCString:buf[i].f_mntfromname encoding:NSUTF8StringEncoding];
-		
-		BOOL isLocal = ((buf[i].f_flags & MNT_LOCAL) == MNT_LOCAL);
-		
-		// use normal statfs to check for FAT32 (msdos), or NTFS (ufsd, ntfs)
-		if ((strcmp(volType, "ntfs") == 0) || (strcmp(volType, "msdos") == 0) || (strcmp(volType, "ufsd") == 0))
-			isValidBootCampVolume = YES;
-		
-		// When MacFUSE and NTFS-3G are installed, statfs shows "fusefs" for the type name, so we need to use
-		// the DiskArbitration framework to get the "kind", and check that specifically.
-		if (!isValidBootCampVolume && (strcmp(volType, "fusefs") == 0))
-		{
-			DASessionRef session = DASessionCreate(kCFAllocatorDefault);
-			if (session)
-			{
-				DADiskRef disk = DADiskCreateFromBSDName(kCFAllocatorDefault, session, [bsdName UTF8String]);
-				if (disk)
-				{
-					CFDictionaryRef desc = DADiskCopyDescription(disk);
-					if (desc) {
-						NSDictionary *dict = (NSDictionary *)desc;
-						volKind = [dict objectForKey:(NSString *)kDADiskDescriptionVolumeKindKey];
-						if ((volKind != nil) && [(NSString *)volKind rangeOfString:@"ntfs-3g" options:NSCaseInsensitiveSearch].location != NSNotFound) {
-							// When NTFS-3G/MacFUSE is installed we need to use
-							// bless's --device option instead of --folder
-							// for some reason --folder doesn't work in this situation.
-							media.deviceName = bsdName;
-							isValidBootCampVolume = YES;
-						}
-						
-						CFRelease(desc);
-					}
-					CFRelease(disk);
-				}
-				CFRelease(session);
-			}
-		}
-
-		NSLog(@"%s: %s (%@, %@, %d)", volPath, volType, volKind, bsdName, isLocal);
-
-		if (isValidBootCampVolume) {
-			media.mountPoint = [NSString stringWithCString:volPath encoding:NSUTF8StringEncoding];
-			media.name = [media.mountPoint lastPathComponent];
-			return media;
-		}
-	}
-	
-	return nil;
-}
-
-BOOL setStartupDisk(BOMedia *media, BOOL *userCancelled, NSDictionary **outputDict)
+- (OSStatus)blessMedia:(NSDictionary **)outputDict
 {
 	OSStatus status;
 	AuthorizationRef authorizationRef;
 	
 	status = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment, kAuthorizationFlagDefaults, &authorizationRef);
 	if (status != errAuthorizationSuccess) {
-		NSLog(@"AuthorizationCreate error %d", status);
-		return NO;
+		return status;
 	}
 	
-	NSString *prompt = [NSString stringWithFormat:NSLocalizedString(@"Administrative access is needed to temporarily change your startup disk to \"%@\".", ""), media.name];
+	NSString *prompt = [NSString stringWithFormat:NSLocalizedString(@"Administrative access is needed to change your startup disk to \"%@\".", ""), media.name];
 	const char *promptUTF8 = [prompt UTF8String];
 	AuthorizationItem envItems = {kAuthorizationEnvironmentPrompt, strlen(promptUTF8), (void *)promptUTF8, 0};
 	AuthorizationEnvironment env = {1, &envItems};
@@ -127,13 +67,11 @@ BOOL setStartupDisk(BOMedia *media, BOOL *userCancelled, NSDictionary **outputDi
 	AuthorizationRights rights = {1, &rightsItems};
 	status = AuthorizationCopyRights(authorizationRef, &rights, &env, kAuthorizationFlagInteractionAllowed | kAuthorizationFlagExtendRights, NULL);
 	if (status != errAuthorizationSuccess) {
-		NSLog(@"AuthorizationCopyRights error %d", status);
 		AuthorizationFree(authorizationRef, kAuthorizationFlagDefaults);
-		*userCancelled = (status == errAuthorizationCanceled);
-		return NO;
+		return status;
 	}
 	
-	char *args[3];
+	char *args[5];
 	if (media.deviceName) {
 		args[0] = "-device";
 		args[1] = (char *)[media.deviceName UTF8String];
@@ -142,43 +80,42 @@ BOOL setStartupDisk(BOMedia *media, BOOL *userCancelled, NSDictionary **outputDi
 		args[0] = "-folder";
 		args[1] = (char *)[media.mountPoint UTF8String];
 	}
-	args[2] = NULL;
+	args[2] = "-nextonly";
+	args[3] = (self.nextonly ? "yes" : "no");
+	args[4] = NULL;
 	
 	FILE *file = NULL;
 	NSString *toolPath = [[[[NSBundle mainBundle] executablePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"bcbless"];
 	status = AuthorizationExecuteWithPrivileges(authorizationRef, [toolPath fileSystemRepresentation], kAuthorizationFlagDefaults, args, &file);
 	if (status != errAuthorizationSuccess) {
-		*userCancelled = (status == errAuthorizationCanceled);
-		NSLog(@"AuthorizationExecuteWithPrivileges error %d", status);
+		return status;
 	}
 	
-	NSMutableString *str = [NSMutableString string];
-	char line[512];
-	while (fgets(line, 512, file) != NULL)
-		[str appendFormat:@"%s", line];
-	*outputDict = [NSPropertyListSerialization propertyListFromData:[str dataUsingEncoding:NSUTF8StringEncoding] mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:nil];
 	if (file)
+	{
+		NSMutableString *str = [NSMutableString string];
+		char line[512];
+		while (fgets(line, 512, file) != NULL)
+			[str appendFormat:@"%s", line];
+		*outputDict = [NSPropertyListSerialization propertyListFromData:[str dataUsingEncoding:NSUTF8StringEncoding] mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:nil];
 		fclose(file);
+	}
 
 	AuthorizationFree(authorizationRef, kAuthorizationFlagDefaults);
-	return (status == errAuthorizationSuccess);
+	return status;
 }
 
-int switchToWindowsAndRestart(NSString **bcblessErrorMessage)
+- (int)switchToWindowsAndRestart:(NSString **)bcblessErrorMessage
 {
-	BOMedia *media = windowsMedia();
 	if (media == nil)
 		return noWindowsVolumeError;
 	
 	NSDictionary *outputDict = nil;
-	BOOL userCancelledAuthentication = NO;
-	if (!setStartupDisk(media, &userCancelledAuthentication, &outputDict))
-	{
-		if (userCancelledAuthentication)
-			return authCancelled;
-
+	OSStatus status = [self blessMedia:&outputDict];
+	if (status == errAuthorizationCanceled)
+		return authCancelled;
+	else if (status != errAuthorizationSuccess)
 		return authFailedOrBlessFailedError;
-	}
 
 	if (outputDict && [outputDict isKindOfClass:[NSDictionary class]])
 	{
@@ -195,28 +132,20 @@ int switchToWindowsAndRestart(NSString **bcblessErrorMessage)
 #endif
 	}
 	
-	if (!restartComputer())
+	if (![self restartComputer])
 		return restartFailedError;
 	
 	return switchSuccessError;
 }
 
-int lastError()
-{
-	return err;
-}
-
-int bootIntoWindows()
+- (NSInteger)bootIntoWindows
 {
 	BOOL quit = NO;
 	NSString *bcblessErrorMessage = nil;
-	int status = switchToWindowsAndRestart(&bcblessErrorMessage);
+	int status = [self switchToWindowsAndRestart:&bcblessErrorMessage];
 
-	NSLog(@"switchToWindowsAndRestart: %d", status);
-	
 	[NSApp activateIgnoringOtherApps:YES]; // app may have gone inactive from auth dialog
-	
-	err = status;
+
 	switch (status)
 	{
 		case noWindowsVolumeError:
@@ -253,3 +182,5 @@ int bootIntoWindows()
 	
 	return quit;
 }
+
+@end

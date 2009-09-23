@@ -3,7 +3,7 @@
  *  BootChamp
  *
  *  Created by Kevin Wojniak on 9/5/08.
- *  Copyright 2008 Kainjow LLC. All rights reserved.
+ *  Copyright 2008-2009 Kainjow LLC. All rights reserved.
  *
  */
 
@@ -93,19 +93,20 @@ void outputError(NSString *message)
 	outputDict([NSDictionary dictionaryWithObject:message forKey:@"Error"]);
 }
 
-int blessMedia(NSString *media, BOOL isDevice, NSString **output)
+int blessMedia(NSString *media, BOOL isDevice, BOOL nextonly, NSString **output)
 {
 	NSData *outputData = nil;
-	NSArray *args = [NSArray arrayWithObjects:
+	NSMutableArray *args = [NSMutableArray arrayWithObjects:
 					 @"--verbose",		// extra debug info in Console
 					 @"--legacy",		// support for BIOS-based operating systems
 					 @"--setBoot",		// boot it up
-					 @"--nextonly",		// only change the boot disk for next boot
 					 (isDevice ? @"--device" : @"--folder"),
 					 media,
 					 nil];
 	int status = noErr;
 	
+	if (nextonly)
+		[args insertObject:@"--nextonly" atIndex:[args count]-2];
 	status = executeTask(@"/usr/sbin/bless", args, &outputData);
 	
 	*output = [[[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding] autorelease];
@@ -126,6 +127,7 @@ int main(int argc, char *argv[])
 	
 	NSString *deviceToBless = [[NSUserDefaults standardUserDefaults] objectForKey:@"device"];
 	NSString *folderToBless = [[NSUserDefaults standardUserDefaults] objectForKey:@"folder"];
+	NSString *nextonly		= [[NSUserDefaults standardUserDefaults] objectForKey:@"nextonly"];
 	if (!deviceToBless && !folderToBless)
 	{
 		outputError(@"Missing device/folder!");
@@ -141,7 +143,7 @@ int main(int argc, char *argv[])
 		media = folderToBless;
 	
 	NSString *blessOutput = nil;
-	int status = blessMedia(media, isDevice, &blessOutput);
+	int status = blessMedia(media, isDevice, ([nextonly isEqualToString:@"yes"]), &blessOutput);
 	if (status != noErr) {
 		outputError(blessOutput);
 		[pool release];
