@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>BootChamp Help</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0;" />
+	<style type="text/css">
+	body {
+		font-family: "lucida grande";
+		font-size: 10pt;
+	}
+	#important {
+		color: red;
+	}
+	</style>
+</head>
+
+<body>
+
+<h2><a name="main">BootChamp Help</a></h2>
+
+<p>BootChamp is a small utility for quickly booting into Windows.</p>
+
+<p>How is this different than selecting your Windows volume from within Startup Disk in System Preferences? Using Startup Disk actually changes your startup disk permanently so that each time you restart, it boots into whatever you have selected. What this program is doing is the same thing that happens when you hold down Option at startup and select Windows. However, the app only requires a single click and your admin password, and then it restarts your computer into Windows without further input from you. It will not actually change your startup disk.</p>
+
+<p><strong>Release Notes:</strong><br/>
+<ul>
+	<li>Version 1.1
+		<ul>
+			<li><span id="important">Please note:</span> BootChamp's abilitiy to temporarily set the startup disk does not work with the unibody family of MacBooks, which includes the Air and Pro (and possibly newer Mac Pros). As far as I'm aware, this is an Apple bug. Previous versions of BootChamp would restart but would not boot into Windows. This new version adds a workaround preference "Next restart only" which is enabled by default. In order for the app to work on these newer computers, you <em>must</em> disable this preference.
+			</li>
+	
+			<li>Added a preference "Launch at startup" enabled by default.</li>
+
+			<li>If BootChamp finds more than one potentially bootable drive, it will list them in the menu to choose from. When a bootable drive is mounted or unmounted, BootChamp will update appropriately.</li>
+			
+			<li>Grand Central Dispatch is used when scanning drives to improve responsiveness of the application. As a result, minimum requirements are now 10.6 or greater. BootChamp is also now a combined 32-bit/64-bit application.</li>
+		</ul>
+	</li>
+</ul>
+
+<p><strong>Credits</strong><br/>
+	Localizations:
+		<blockquote>Polish - Grzegorz Pawlik<br/>
+		Swedish - Pär Boberg<br/>
+		French - sly</blockquote>
+
+	Application Icon:
+		<blockquote>Tobiasz Usewicz</blockquote>
+</p>
+
+<p><strong>Send Feedback</strong><br/>
+	Email <a href="mailto:kainjow@kainjow.com">kainjow@kainjow.com</a>
+</p>
+
+<p><strong>Website</strong><br/>
+	<a href="http://kainjow.com">http://kainjow.com</a>
+</p>
+
+
+</body>
+</html>
