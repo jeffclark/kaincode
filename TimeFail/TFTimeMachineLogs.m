@@ -21,7 +21,7 @@
 	NSString *line = nil;
 	while (line = [linesEnum nextObject])
 	{
-		if ([line containsString:@"/System/Library/CoreServices/backupd"] && ![line containsString:@"TimeFail"])
+		if ([line containsString:@"backupd"] && ![line containsString:@"TimeFail"])
 		{
 			NSRange dividerRange = [line rangeOfString:@": "];
 			NSString *msg = [line substringFromIndex:(dividerRange.location + dividerRange.length)];

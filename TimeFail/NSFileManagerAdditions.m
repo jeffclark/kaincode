@@ -13,7 +13,8 @@
 
 - (NSEnumerator *)lineEnumeratorWithContentsOfFile:(NSString *)path
 {
-	NSString *str = [NSString stringWithContentsOfFile:path];
+	NSError *error = nil;
+	NSString *str = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
 	return [[str componentsSeparatedByString:@"\n"] objectEnumerator];
 }
 
