@@ -57,6 +57,7 @@
 				CFArrayAppendValue(windowIDs, CFArrayGetValueAtIndex(allWindowIDs, idx));
 		}
 		CFRelease(windowDescs);
+		CFRelease(allWindowIDs);
 		
 		screen = CGWindowListCreateImageFromArray(CGRectInfinite, windowIDs, kCGWindowImageDefault);
 		CFRelease(windowIDs);
