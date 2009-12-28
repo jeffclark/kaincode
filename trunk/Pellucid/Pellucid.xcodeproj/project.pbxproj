@@ -3,22 +3,24 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		8D255AC70486D3F9007BF209 /* Pellucid_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32DBCFA80370C50100C91783 /* Pellucid_Prefix.pch */; };
 		A5332EAF10E8376800E4B0E5 /* PellucidView.m in Sources */ = {isa = PBXBuildFile; fileRef = F500797A0118B23001CA0E54 /* PellucidView.m */; };
-		A5332EBC10E8379400E4B0E5 /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F27B2DFFEEEFEF11CA0E56 /* ScreenSaver.framework */; };
-		A5332EBF10E8379900E4B0E5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		A57F68A110E95763004C879F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A57F68A010E95763004C879F /* AppKit.framework */; };
+		A57F68A310E95763004C879F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A57F68A210E95763004C879F /* Foundation.framework */; };
+		A57F69E910E957A7004C879F /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A57F69E810E957A7004C879F /* ScreenSaver.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		06F27B2DFFEEEFEF11CA0E56 /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
-		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCFA80370C50100C91783 /* Pellucid_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pellucid_Prefix.pch; sourceTree = "<group>"; };
 		8D255AD20486D3F9007BF209 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D255AD30486D3F9007BF209 /* Pellucid.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Pellucid.saver; sourceTree = BUILT_PRODUCTS_DIR; };
+		A57F68A010E95763004C879F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		A57F68A210E95763004C879F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A57F69E810E957A7004C879F /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = System/Library/Frameworks/ScreenSaver.framework; sourceTree = SDKROOT; };
 		F50079790118B23001CA0E54 /* PellucidView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PellucidView.h; sourceTree = "<group>"; };
 		F500797A0118B23001CA0E54 /* PellucidView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PellucidView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -28,8 +30,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5332EBC10E8379400E4B0E5 /* ScreenSaver.framework in Frameworks */,
-				A5332EBF10E8379900E4B0E5 /* Cocoa.framework in Frameworks */,
+				A57F68A110E95763004C879F /* AppKit.framework in Frameworks */,
+				A57F68A310E95763004C879F /* Foundation.framework in Frameworks */,
+				A57F69E910E957A7004C879F /* ScreenSaver.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +54,9 @@
 		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
-				06F27B2DFFEEEFEF11CA0E56 /* ScreenSaver.framework */,
+				A57F68A210E95763004C879F /* Foundation.framework */,
+				A57F68A010E95763004C879F /* AppKit.framework */,
+				A57F69E810E957A7004C879F /* ScreenSaver.framework */,
 			);
 			name = "Frameworks and Libraries";
 			sourceTree = "<group>";
@@ -124,7 +128,7 @@
 				ORGANIZATIONNAME = "Kevin Wojniak";
 			};
 			buildConfigurationList = EF7AD73108BB986600CE4634 /* Build configuration list for PBXProject "Pellucid" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 089C166AFE841209C02AAC07 /* Pellucid */;
 			projectDirPath = "";
@@ -178,12 +182,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_LOCATION = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Pellucid_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
 				PRODUCT_NAME = Pellucid;
 				WRAPPER_EXTENSION = saver;
 			};
@@ -199,7 +201,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -211,9 +213,11 @@
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.6][arch=*]" = 10.6;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
-				VALID_ARCHS = "i386 x86_64";
+				SDKROOT = macosx10.5;
+				"SDKROOT[arch=x86_64]" = macosx10.6;
+				VALID_ARCHS = "i386 x86_64 ppc";
 			};
 			name = Release;
 		};
