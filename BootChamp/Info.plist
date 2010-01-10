@@ -4,10 +4,6 @@
 <dict>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleHelpBookFolder</key>
-	<string>Help</string>
-	<key>CFBundleHelpBookName</key>
-	<string>com.kainjow.BootChamp.help</string>
 	<key>CFBundleIconFile</key>
 	<string>appicon</string>
 	<key>CFBundleIdentifier</key>
@@ -22,14 +18,12 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.1</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.6</string>
 	<key>LSUIElement</key>
 	<string>1</string>
-	<key>NSAppleScriptEnabled</key>
-	<true/>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.6.0</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>© Kainjow LLC, 2007-2009</string>
+	<string>© Kevin Wojniak, 2007-2010</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

@@ -3,7 +3,7 @@
 //  BootChamp
 //
 //  Created by Kevin Wojniak on 7/6/08.
-//  Copyright 2008-2009 Kainjow LLC. All rights reserved.
+//  Copyright 2008-2010 Kevin Wojniak. All rights reserved.
 //
 
 #import "BOStatusMenuController.h"
@@ -14,7 +14,6 @@
 
 #define BOPrefsLaunchAtStartup	@"LaunchAtStartup"
 #define BOPrefsNextOnly		@"NextOnly"
-
 
 @implementation BOStatusMenuController
 
@@ -222,7 +221,7 @@
 - (void)showHelp:(id)sender
 {
 	[NSApp activateIgnoringOtherApps:YES];
-	NSURL *helpURL= [[NSBundle mainBundle] URLForResource:@"help.htm" withExtension:nil];
+	NSURL *helpURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"help.htm" ofType:nil]];
 	[[NSWorkspace sharedWorkspace] openURLs:[NSArray arrayWithObject:helpURL] withAppBundleIdentifier:@"com.apple.helpviewer" options:NSWorkspaceLaunchDefault additionalEventParamDescriptor:nil launchIdentifiers:NULL];
 }
 

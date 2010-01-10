@@ -3,7 +3,7 @@
 //  BootChamp
 //
 //  Created by Kevin Wojniak on 9/3/09.
-//  Copyright 2009 Kainjow LLC. All rights reserved.
+//  Copyright 2009-2010 Kevin Wojniak. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
