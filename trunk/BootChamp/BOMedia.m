@@ -3,12 +3,18 @@
 //  BootChamp
 //
 //  Created by Kevin Wojniak on 9/9/08.
-//  Copyright 2008-2009 Kainjow LLC. All rights reserved.
+//  Copyright 2008-2010 Kevin Wojniak. All rights reserved.
 //
 
 #import "BOMedia.h"
 #import <sys/mount.h>
 #import <DiskArbitration/DiskArbitration.h>
+
+
+// See http://macntfs-3g.blogspot.com/
+#define KIND_NTFS_3G		@"ntfs-3g"
+// See http://www.paragon-software.com/home/ntfs-mac/
+#define	KIND_PARAGON_NTFS	@"ufsd_NTFS"
 
 
 @implementation BOMedia
@@ -24,8 +30,7 @@
 		return nil;
 	}
 	
-#define NTFS_3G_KIND @"ntfs-3g"
-	NSArray *allowedKinds = [NSArray arrayWithObjects:@"ntfs", @"msdos", @"ufsd", @"cd9660", NTFS_3G_KIND, nil];
+	NSArray *allowedKinds = [NSArray arrayWithObjects:@"ntfs", @"msdos", @"ufsd", @"cd9660", KIND_NTFS_3G, KIND_PARAGON_NTFS, nil];
 	
 	NSMutableArray *array = [NSMutableArray array];
 	struct statfs *buf = NULL;
@@ -53,14 +58,14 @@
 		
 		NSString *volKind = (NSString *)CFDictionaryGetValue(desc, kDADiskDescriptionVolumeKindKey);
 		NSURL *mountURL = (NSURL *)CFDictionaryGetValue(desc, kDADiskDescriptionVolumePathKey);
-
+		
 		for (NSString *kind in allowedKinds)
 		{
 			if ([kind rangeOfString:volKind options:NSCaseInsensitiveSearch].location != NSNotFound)
 			{
 				isValidBootCampVolume = YES;
 				
-				if ([kind isEqualToString:NTFS_3G_KIND])
+				if ([kind isEqualToString:KIND_NTFS_3G])
 				{
 					// When NTFS-3G/MacFUSE is installed we need to use
 					// bless's --device option instead of --folder

@@ -26,16 +26,39 @@
 
 <p><strong>Release Notes:</strong><br/>
 <ul>
-	<li>Version 1.1
+	<li>1.1
 		<ul>
-			<li><span id="important">Please note:</span> BootChamp's abilitiy to temporarily set the startup disk does not work with the unibody family of MacBooks, which includes the Air and Pro (and possibly newer Mac Pros). As far as I'm aware, this is an Apple bug. Previous versions of BootChamp would restart but would not boot into Windows. This new version adds a workaround preference "Next restart only" which is enabled by default. In order for the app to work on these newer computers, you <em>must</em> disable this preference.
+			<li>Requires 10.6 or greater. Built as a 32/64-bit binary.</li>
+			<li><span id="important">Important:</span> BootChamp's abilitiy to temporarily set the startup disk does not work with the unibody family of MacBooks, which includes the Air and Pro (and possibly newer Mac Pros). As far as I'm aware, this is an Apple bug. Previous versions of BootChamp would restart but would not boot into Windows. This new version adds a workaround preference "Next restart only" which is enabled by default. In order for the app to work on these newer computers, you <em>must</em> disable this preference. Unfortunatey, this workaround will set the start disk for all future restarts, so you must change it back when restarting back into Mac OS X.
 			</li>
 	
 			<li>Added a preference "Launch at startup" enabled by default.</li>
 
 			<li>If BootChamp finds more than one potentially bootable drive, it will list them in the menu to choose from. When a bootable drive is mounted or unmounted, BootChamp will update appropriately.</li>
 			
-			<li>Grand Central Dispatch is used when scanning drives to improve responsiveness of the application. As a result, minimum requirements are now 10.6 or greater. BootChamp is also now a combined 32-bit/64-bit application.</li>
+			<li>Grand Central Dispatch is used when scanning drives to improve responsiveness of the application.</li>
+			
+			<li>Added Italian localization</li>
+			
+			<li>Added support for Paragon NTFS drivers</li>
+		</ul>
+	</li>
+	<li>1.0.2
+		<ul>
+			<li>Fixed bug where BootChamp wouldn't recognize an NTFS drive if the MacFUSE NTFS-3G driver was installed</li>
+			<li>Cleaned up authentication dialog text to be clearer.</li>
+			<li>Properly localized the application. Polish now included.</li>
+		</ul>
+	</li>
+	<li>1.0.1
+		<ul>
+			<li>Fixed bug where some NTFS partitions weren't detected</li>
+			<li>Fixed bug where the app would quit if you cancelled the authentication</li>
+		</ul>
+	</li>
+	<li>1.0
+		<ul>
+			<li>Initial release for 10.5</li>
 		</ul>
 	</li>
 </ul>
@@ -44,7 +67,8 @@
 	Localizations:
 		<blockquote>Polish - Grzegorz Pawlik<br/>
 		Swedish - Pär Boberg<br/>
-		French - sly</blockquote>
+		French - sly<br/>
+		Italian - Vincenzo Boiano</blockquote>
 
 	Application Icon:
 		<blockquote>Tobiasz Usewicz</blockquote>

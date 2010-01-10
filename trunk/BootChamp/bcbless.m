@@ -3,7 +3,7 @@
  *  BootChamp
  *
  *  Created by Kevin Wojniak on 9/5/08.
- *  Copyright 2008-2009 Kainjow LLC. All rights reserved.
+ *  Copyright 2008-2010 Kevin Wojniak. All rights reserved.
  *
  */
 
