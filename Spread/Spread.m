@@ -133,6 +133,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 		CGContextStrokePath(ctx);
 		
 		if (branch.radius < branch.originalRadius / 2) {
+			[[branch retain] autorelease]; // removeObjectAtIndex: will cause branch to deallocate, so retain/autorelease
 			[branches removeObjectAtIndex:i];
 			CGFloat newRadius = branch.originalRadius / 2;
 			if (newRadius > 1) {
