@@ -26,10 +26,18 @@
 
 <p><strong>Release Notes:</strong><br/>
 <ul>
+	<li>1.2
+		<ul>
+			<li>BootChamp now only requires entering the administrative password once, instead of before each restart (the most requested feature!). This works by installing a helper tool into /Library/Application Support/BootChamp and giving it special permissions. If this file goes bad/missing, administrative access will be required to re-install.</li>
+			<li>Added support for Tuxera NTFS drivers.</li>
+			<li>Fixed a crash when reading certain volumes.</li>
+			<li>Fixed a bug where an error would display when selecting the Restart into Windows menu when there were multiple volumes to choose.</li>
+		</ul>
+	</li>
 	<li>1.1
 		<ul>
 			<li>Requires 10.6 or greater. Built as a 32/64-bit binary.</li>
-			<li><span id="important">Important:</span> BootChamp's abilitiy to temporarily set the startup disk does not work with the unibody family of MacBooks, which includes the Air and Pro (and possibly newer Mac Pros). As far as I'm aware, this is an Apple bug. Previous versions of BootChamp would restart but would not boot into Windows. This new version adds a workaround preference "Next restart only" which is enabled by default. In order for the app to work on these newer computers, you <em>must</em> disable this preference. Unfortunatey, this workaround will set the start disk for all future restarts, so you must change it back when restarting back into Mac OS X.
+			<li><span id="important">Important:</span> BootChamp's abilitiy to temporarily set the startup disk does not work with the unibody family of MacBooks, which includes the Air and Pro (and possibly newer Mac Pros). As far as I'm aware, this is an Apple bug. Previous versions of BootChamp would restart but would not boot into Windows. This new version adds a workaround preference "Next restart only" which is enabled by default. In order for the app to work on these newer computers, you <em>must</em> disable this preference. Unfortunatey, this workaround will set the start disk for all future restarts, so you must change it back when restarting back into Mac OS X. <b><u>Note: this appears to be fixed in 10.6.3.</u></b>
 			</li>
 	
 			<li>Added a preference "Launch at startup" enabled by default.</li>

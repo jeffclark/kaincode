@@ -10,10 +10,11 @@
 #import "BOBoot.h"
 #import "BOApplicationAdditions.h"
 #import "BOMedia.h"
+#import "BOHelperInstaller.h"
 
 
 #define BOPrefsLaunchAtStartup	@"LaunchAtStartup"
-#define BOPrefsNextOnly		@"NextOnly"
+#define BOPrefsNextOnly			@"NextOnly"
 
 @implementation BOStatusMenuController
 
@@ -96,25 +97,31 @@
 		[NSApp removeFromLoginItems];
 }
 
+- (void)updateBootMenuTitle
+{
+	if (BOAuthorizationRequired() && ([bootMenuItem target] || [bootMenuItem submenu]))
+		[bootMenuItem setTitle:NSLocalizedString(@"Restart into Windows\u2026", "restart into windows menu item, installation required")];
+	else
+		[bootMenuItem setTitle:NSLocalizedString(@"Restart into Windows", "restart into windows menu item")];
+}
+
 - (void)updateBootMenuWithMedia:(NSArray *)media
 {
-	[bootMenuItem setTitle:NSLocalizedString(@"Restart into Windows...", "restart into windows menu item")];
+	[self updateBootMenuTitle];
 	if (![media count])
 	{
 		// no media
 		[bootMenuItem setTarget:nil];
-		[bootMenuItem setAction:nil];
+		[bootMenuItem setAction:NULL];
 		[bootMenuItem setSubmenu:nil];
 		[bootMenuItem setRepresentedObject:nil];
 	}
 	else
 	{
-		[bootMenuItem setTarget:self];
-		[bootMenuItem setAction:@selector(bootWindows:)];
-		
 		if ([media count] == 1)
 		{
-			// only 1 media
+			[bootMenuItem setTarget:self];
+			[bootMenuItem setAction:@selector(bootWindows:)];
 			[bootMenuItem setSubmenu:nil];
 			[bootMenuItem setRepresentedObject:[media lastObject]];
 		}
@@ -127,8 +134,13 @@
 				NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:m.name action:@selector(bootWindows:) keyEquivalent:@""] autorelease];
 				[item setTarget:self];
 				[item setRepresentedObject:m];
+				NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:m.mountPoint];
+				[icon setSize:NSMakeSize(16.0, 16.0)];
+				[item setImage:icon];
 				[submenu addItem:item];
 			}
+			[bootMenuItem setTarget:nil];
+			[bootMenuItem setAction:NULL];
 			[bootMenuItem setSubmenu:submenu];
 			[bootMenuItem setRepresentedObject:nil];
 		}
@@ -137,13 +149,14 @@
 
 - (void)updateBootMenu
 {
-	[bootMenuItem setTitle:NSLocalizedString(@"Updating...", "updating drives menu item")];
+	[bootMenuItem setTitle:NSLocalizedString(@"Updating\u2026", "updating drives menu item")];
 	[bootMenuItem setTarget:nil];
 	[bootMenuItem setAction:nil];
 	[bootMenuItem setSubmenu:nil];
 	[bootMenuItem setRepresentedObject:nil];
 	
-	// load media objects on a separate queue and call back to self with updateBootMenuWithMedia: when done
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6
+	// (10.6+) load media objects in the background and call back to self with updateBootMenuWithMedia: when done
 	dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	dispatch_async(queue, ^{
 		NSArray *media = [BOMedia allMedia];
@@ -151,71 +164,100 @@
 			[self updateBootMenuWithMedia:media];
 		});
 	});
+#else
+	// 10.5
+	[self updateBootMenuWithMedia:[BOMedia allMedia]];
+#endif
 }
 
-- (id)init
+- (void)menuNeedsUpdate:(NSMenu *)menu
 {
-	if (self = [super init])
-	{
-		m_statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];
-		[m_statusItem setHighlightMode:YES];
-		[m_statusItem setImage:[self statusImage]];
-		
-		NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-		
-		// restart into windows
-		bootMenuItem = [[NSMenuItem alloc] initWithTitle:@""
-											   action:nil
-										keyEquivalent:@""];
-		[menu addItem:bootMenuItem];
-		[self updateBootMenu];
-		[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(updateBootMenu) name:NSWorkspaceDidMountNotification object:nil];
-		[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(updateBootMenu) name:NSWorkspaceDidUnmountNotification object:nil];
-		
-		[menu addItem:[NSMenuItem separatorItem]];
-		
-		[menu addItemWithTitle:NSLocalizedString(@"Preferences", "preferences title menu item") action:nil keyEquivalent:@""];
-		NSMenuItem *menuItem;
-		menuItem = [menu addItemWithTitle:NSLocalizedString(@"Launch at startup", "launch at startup menu item") action:@selector(preferenceAction:) keyEquivalent:@""];
-		[menuItem setIndentationLevel:1];
-		[menuItem setRepresentedObject:BOPrefsLaunchAtStartup];
-		if ([[NSUserDefaults standardUserDefaults] boolForKey:BOPrefsLaunchAtStartup])
-			[menuItem setState:NSOnState];
-		menuItem = [menu addItemWithTitle:NSLocalizedString(@"Next restart only", "next restart only menu item") action:@selector(preferenceAction:) keyEquivalent:@""];
-		[menuItem setIndentationLevel:1];
-		[menuItem setRepresentedObject:BOPrefsNextOnly];
-		if ([[NSUserDefaults standardUserDefaults] boolForKey:BOPrefsNextOnly])
-			[menuItem setState:NSOnState];
+	[self updateBootMenuTitle];
+}
 
-		[menu addItem:[NSMenuItem separatorItem]];
-		[menu addItemWithTitle:NSLocalizedString(@"BootChamp Help", "help menu item") action:@selector(showHelp:) keyEquivalent:@""];
-		[menu addItem:[NSMenuItem separatorItem]];
-		[menu addItemWithTitle:NSLocalizedString(@"Quit", "quit menu item") action:@selector(quit:) keyEquivalent:@""];
-		[[menu itemArray] makeObjectsPerformSelector:@selector(setTarget:) withObject:self];
-		
-		[m_statusItem setMenu:menu];
-		
-		[self checkPrefs];
-	}
+- (void)applicationDidFinishLaunching:(NSNotification *)notif
+{
+	statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];
+	[statusItem setHighlightMode:YES];
+	[statusItem setImage:[self statusImage]];
 	
-	return self;	
-}
+	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
+	[menu setDelegate:self];
+	
+	// restart into windows
+	bootMenuItem = [[NSMenuItem alloc] initWithTitle:@""
+										   action:nil
+									keyEquivalent:@""];
+	[menu addItem:bootMenuItem];
+	[self updateBootMenu];
+	[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(updateBootMenu) name:NSWorkspaceDidMountNotification object:nil];
+	[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(updateBootMenu) name:NSWorkspaceDidUnmountNotification object:nil];
+	
+	[menu addItem:[NSMenuItem separatorItem]];
+	
+	[menu addItemWithTitle:NSLocalizedString(@"Preferences", "preferences title menu item") action:nil keyEquivalent:@""];
+	NSMenuItem *menuItem;
+	menuItem = [menu addItemWithTitle:NSLocalizedString(@"Launch at startup", "launch at startup menu item") action:@selector(preferenceAction:) keyEquivalent:@""];
+	[menuItem setIndentationLevel:1];
+	[menuItem setRepresentedObject:BOPrefsLaunchAtStartup];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:BOPrefsLaunchAtStartup])
+		[menuItem setState:NSOnState];
+	menuItem = [menu addItemWithTitle:NSLocalizedString(@"Next restart only", "next restart only menu item") action:@selector(preferenceAction:) keyEquivalent:@""];
+	[menuItem setIndentationLevel:1];
+	[menuItem setRepresentedObject:BOPrefsNextOnly];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:BOPrefsNextOnly])
+		[menuItem setState:NSOnState];
 
-- (void)dealloc
-{
-	[bootMenuItem release];
-	[[NSStatusBar systemStatusBar] removeStatusItem:m_statusItem];
-	[m_statusItem release];
-	[super dealloc];
+	[menu addItem:[NSMenuItem separatorItem]];
+	[menu addItemWithTitle:NSLocalizedString(@"BootChamp Help", "help menu item") action:@selector(showHelp:) keyEquivalent:@""];
+	[menu addItem:[NSMenuItem separatorItem]];
+	[menu addItemWithTitle:NSLocalizedString(@"Quit", "quit menu item") action:@selector(quit:) keyEquivalent:@""];
+	[[menu itemArray] makeObjectsPerformSelector:@selector(setTarget:) withObject:self];
+	
+	[statusItem setMenu:menu];
+	
+	[self checkPrefs];
 }
 
 - (void)bootWindows:(id)sender
 {
 	[NSApp activateIgnoringOtherApps:YES];
-	BOBoot *boot = [[[BOBoot alloc] init] autorelease];
-	boot.nextonly = [[NSUserDefaults standardUserDefaults] boolForKey:BOPrefsNextOnly];
-	boot.media = [sender representedObject];
-	[boot bootIntoWindows];
+	NSError *error = nil;
+	if (BOBoot([sender representedObject], [[NSUserDefaults standardUserDefaults] boolForKey:BOPrefsNextOnly], &error))
+		return;
+	[NSApp activateIgnoringOtherApps:YES]; // app may have gone inactive from auth dialog
+	NSString *msg = nil, *info = nil;
+	switch ([error code]) {
+		case BOBootInvalidMediaError:
+			msg = NSLocalizedString(@"BootChamp was unable to find a Windows volume", nil);
+			info = NSLocalizedString(@"Supported file systems are FAT32 and NTFS.", nil);
+			break;
+		case BOBootAuthorizationError:
+			msg = NSLocalizedString(@"BootChamp was unable to set your Windows volume as the temporary startup disk", nil);
+			info = NSLocalizedString(@"Authentication may have failed.", nil);
+			break;
+		case BOBootInstallationFailed:
+			msg = NSLocalizedString(@"BootChamp was unable to install its required helper tool.", nil);
+			info = [error localizedDescription];
+			break;
+		case BOBootInternalError:
+			msg = NSLocalizedString(@"BootChamp was unable to set your Windows volume as the temporary startup disk", nil);
+			info = [error localizedDescription];
+			break;
+		case BOBootRestartFailedError:
+			msg = NSLocalizedString(@"BootChamp was unable to restart your computer", nil);
+			info = NSLocalizedString(@"Please restart your computer manually.", nil);
+			break;
+		default:
+			break;
+	}
+	if (msg) {
+		NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+		[alert setMessageText:msg];
+		if (info)
+			[alert setInformativeText:info];
+		[alert runModal];
+	}
 }
 
 - (void)showHelp:(id)sender

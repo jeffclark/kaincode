@@ -6,24 +6,17 @@
 //  Copyright 2007-2010 Kevin Wojniak. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "BOAppController.h"
+#import <Foundation/Foundation.h>
+#import "BOStatusMenuController.h"
 
 int main(int argc, char *argv[])
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
 	[NSApplication sharedApplication];
-	
-	BOAppController *controller = [[BOAppController alloc] init];
-	
+	BOStatusMenuController *controller = [[[BOStatusMenuController alloc] init] autorelease];
 	[NSApp setDelegate:controller];
 	[NSApp run];
-	
-	[controller release];
-	
-	[pool release];
-	
+	[pool drain];
     return 0;
 }
 

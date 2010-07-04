@@ -6,29 +6,19 @@
 //  Copyright 2007-2010 Kevin Wojniak. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 enum {
-	switchSuccessError = 0,
-	noWindowsVolumeError,
-	authFailedOrBlessFailedError,
-	authCancelled,
-	bcblessError,
-	restartFailedError,
+	BOBootInvalidMediaError,
+	BOBootAuthorizationError,
+	BOBootAuthorizationCanceled,
+	BOBootInstallationFailed,
+	BOBootInternalError,
+	BOBootRestartFailedError,
 };
 
 
 @class BOMedia;
 
-@interface BOBoot : NSObject
-{
-	BOOL nextonly;
-	BOMedia *media;
-}
-
-@property (readwrite) BOOL nextonly;
-@property (readwrite, retain) BOMedia *media;
-
-- (NSInteger)bootIntoWindows;
-
-@end
+BOOL BOAuthorizationRequired();
+BOOL BOBoot(BOMedia *media, BOOL nextOnly, NSError **error);
