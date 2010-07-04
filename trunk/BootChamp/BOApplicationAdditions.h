@@ -6,7 +6,7 @@
 //  Copyright 2009-2010 Kevin Wojniak. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 
 
 @interface NSApplication (BOApplicationAdditions)

@@ -6,12 +6,15 @@
 //  Copyright 2008-2010 Kevin Wojniak. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 
-
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6
+@interface BOStatusMenuController : NSObject <NSMenuDelegate>
+#else
 @interface BOStatusMenuController : NSObject
+#endif
 {
-	NSStatusItem *m_statusItem;
+	NSStatusItem *statusItem;
 	NSMenuItem *bootMenuItem;
 }
 

@@ -6,10 +6,11 @@
 //  Copyright 2008-2010 Kevin Wojniak. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 
-@interface BOMedia : NSObject {
+@interface BOMedia : NSObject
+{
 	NSString *mountPoint;
 	NSString *deviceName;
 	NSString *name;

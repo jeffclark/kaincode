@@ -8,22 +8,18 @@
 
 #import "BOBoot.h"
 #import "BOMedia.h"
+#import "BOTaskAdditions.h"
+#import "BOHelperInstaller.h"
+#import <CommonCrypto/CommonDigest.h>
+#import <sys/stat.h>
 #import <Carbon/Carbon.h>
-#import <Security/Security.h>
 
 
-@implementation BOBoot
+static NSString *const BOBootErrorDomain = @"BOBootErrorDomain";
 
-@synthesize nextonly, media;
-
-- (void)dealloc
+static BOOL BORestart()
 {
-	self.media = nil;
-	[super dealloc];
-}
-
-- (BOOL)restartComputer
-{
+#if 1
     AEAddressDesc targetDesc;
     static const ProcessSerialNumber kPSNOfSystemProcess = { 0, kSystemProcess };
     AppleEvent eventReply = {typeNull, NULL};
@@ -45,142 +41,155 @@
         return NO;
 	
     AEDisposeDesc(&eventReply);
-	return (error == noErr);
+	return (error == noErr ? YES : NO);
+#else
+	return NO;
+#endif
 }
 
-
-- (OSStatus)blessMedia:(NSDictionary **)outputDict
+static NSString* BOHelperSource()
 {
-	OSStatus status;
-	AuthorizationRef authorizationRef;
-	
-	status = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment, kAuthorizationFlagDefaults, &authorizationRef);
-	if (status != errAuthorizationSuccess) {
-		return status;
+	static NSString *src = nil;
+	if (!src) 
+		src = [[[NSBundle mainBundle] pathForAuxiliaryExecutable:@"BOHelper"] retain];
+	return src;
+}
+
+static NSString* BOHelperDestination()
+{
+	static NSString *dest = nil;
+	if (!dest) {
+		NSString *toolSrc = BOHelperSource();
+		NSString *appSupportPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSLocalDomainMask, YES) lastObject];
+		NSString *boAppSupport = [appSupportPath stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]];
+		dest = [[boAppSupport stringByAppendingPathComponent:[toolSrc lastPathComponent]] retain];
+	}
+	return dest;
+}
+
+static char* BOCreateMD5(const char *path)
+{
+	if (!path)
+		return NULL;
+	int f = open(path, O_RDONLY);
+	if (f == -1)
+		return NULL;
+	unsigned char *data = calloc(1, CC_MD5_DIGEST_LENGTH * sizeof(unsigned char));
+	if (!data)
+		return NULL;
+	char bytes[512];
+	int bytes_read = 0;
+	CC_MD5_CTX c;
+	CC_MD5_Init(&c);
+	while ((bytes_read = read(f, bytes, sizeof(bytes))) > 0)
+		CC_MD5_Update(&c, bytes, bytes_read);
+	close(f);
+	CC_MD5_Final(data, &c);
+	char *str = calloc(1, CC_MD5_DIGEST_LENGTH*2 + 1);
+	for (int i=0; i<CC_MD5_DIGEST_LENGTH; i++)
+		sprintf(str+(i*2), "%02X", data[i]);
+	free(data);
+	return str;
+}	
+
+BOOL BOAuthorizationRequired()
+{
+	const char *dest = [BOHelperDestination() fileSystemRepresentation];
+	const char *src = [BOHelperSource() fileSystemRepresentation];
+	struct stat dest_buf, src_buf;
+	// verify dest exists
+	if (stat(dest, &dest_buf) != 0)
+		return YES;
+	// verify dest's permissions
+	if ((dest_buf.st_mode & TOOL_MODE) == 0)
+		return YES;
+	// verify dest's owner
+	if (dest_buf.st_uid != 0)
+		return YES;
+	// verify dest and src has same size
+	if (stat(src, &src_buf) != 0 || src_buf.st_size != dest_buf.st_size)
+		return YES;
+	// verify dest and src are equal
+	int md5s_equal = 0;
+	char *md5_src = BOCreateMD5(src);
+	char *md5_dest = BOCreateMD5(dest);
+	if (md5_src && md5_dest)
+		md5s_equal = strcmp(md5_src, md5_dest) == 0;
+	if (md5_src)
+		free(md5_src);
+	if (md5_dest)
+		free(md5_dest);
+	if (!md5s_equal)
+		return YES;
+	return NO;
+}
+
+BOOL BOBoot(BOMedia *media, BOOL nextOnly, NSError **error)
+{
+	if (!media) {
+		if (error)
+			*error = [NSError errorWithDomain:BOBootErrorDomain code:BOBootInvalidMediaError userInfo:nil];
+		return NO;
 	}
 	
-	NSString *prompt = [NSString stringWithFormat:NSLocalizedString(@"Administrative access is needed to change your startup disk to \"%@\".", ""), media.name];
-	const char *promptUTF8 = [prompt UTF8String];
-	AuthorizationItem envItems = {kAuthorizationEnvironmentPrompt, strlen(promptUTF8), (void *)promptUTF8, 0};
-	AuthorizationEnvironment env = {1, &envItems};
-	AuthorizationItem rightsItems = {kAuthorizationRightExecute, 0, NULL, 0};
-	AuthorizationRights rights = {1, &rightsItems};
-	status = AuthorizationCopyRights(authorizationRef, &rights, &env, kAuthorizationFlagInteractionAllowed | kAuthorizationFlagExtendRights, NULL);
-	if (status != errAuthorizationSuccess) {
-		AuthorizationFree(authorizationRef, kAuthorizationFlagDefaults);
-		return status;
+	NSString *output = nil;
+	BOTaskReturn ret;
+	NSString *toolDest = BOHelperDestination();
+	if (BOAuthorizationRequired()) {
+		NSString *prompt = [NSString stringWithFormat:NSLocalizedString(@"Administrative access is needed to change your startup disk to \"%@\".", ""), media.name];
+		ret = [NSTask launchTaskAsRootAtPath:[[NSBundle mainBundle] pathForAuxiliaryExecutable:@"BOHelperInstaller"] arguments:[NSArray arrayWithObjects:BOHelperSource(), toolDest, nil] prompt:prompt output:&output];
+		switch (ret) {
+			case BOTaskLaunched:
+				if (output && [output length] > 0) {
+					if (error)
+						*error = [NSError errorWithDomain:BOBootErrorDomain code:BOBootInstallationFailed userInfo:[NSDictionary dictionaryWithObject:output forKey:NSLocalizedDescriptionKey]];
+					return NO;
+				}
+				break;
+			case BOTaskAuthorizationCanceled:
+				if (error)
+					*error = [NSError errorWithDomain:BOBootErrorDomain code:BOBootAuthorizationCanceled userInfo:nil];
+				return NO;
+			case BOTaskError:
+				if (error)
+					*error = [NSError errorWithDomain:BOBootErrorDomain code:BOBootAuthorizationError userInfo:output ? [NSDictionary dictionaryWithObject:output forKey:NSLocalizedDescriptionKey] : nil];
+				return NO;
+		}
 	}
 	
-	char *args[5];
+	NSMutableArray *args = [NSMutableArray array];
 	if (media.deviceName) {
-		args[0] = "-device";
-		args[1] = (char *)[media.deviceName UTF8String];
+		[args addObject:@"-device"];
+		[args addObject:media.deviceName];
 	}
 	else {
-		args[0] = "-folder";
-		args[1] = (char *)[media.mountPoint UTF8String];
+		[args addObject:@"-folder"];
+		[args addObject:media.mountPoint];
 	}
-	args[2] = "-nextonly";
-	args[3] = (self.nextonly ? "yes" : "no");
-	args[4] = NULL;
+	[args addObject:@"-nextonly"];
+	[args addObject:nextOnly ? @"yes" : @"no"];
 	
-	FILE *file = NULL;
-	NSString *toolPath = [[[[NSBundle mainBundle] executablePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"bcbless"];
-	status = AuthorizationExecuteWithPrivileges(authorizationRef, [toolPath fileSystemRepresentation], kAuthorizationFlagDefaults, args, &file);
-	if (status != errAuthorizationSuccess) {
-		return status;
+	ret = [NSTask launchTaskAtPath:toolDest arguments:args output:&output];
+	switch (ret) {
+		case BOTaskLaunched:
+			break;
+		case BOTaskError:
+			if (error)
+				*error = [NSError errorWithDomain:BOBootErrorDomain code:BOBootInternalError userInfo:output ? [NSDictionary dictionaryWithObject:output forKey:NSLocalizedDescriptionKey] : nil];
+			return NO;
 	}
 	
-	if (file)
-	{
-		NSMutableString *str = [NSMutableString string];
-		char line[512];
-		while (fgets(line, 512, file) != NULL)
-			[str appendFormat:@"%s", line];
-		*outputDict = [NSPropertyListSerialization propertyListFromData:[str dataUsingEncoding:NSUTF8StringEncoding] mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:nil];
-		fclose(file);
+	if (output && [output length] > 0) {
+		if (error)
+			*error = [NSError errorWithDomain:BOBootErrorDomain code:BOBootInternalError userInfo:[NSDictionary dictionaryWithObject:output forKey:NSLocalizedDescriptionKey]];
+		return NO;
 	}
-
-	AuthorizationFree(authorizationRef, kAuthorizationFlagDefaults);
-	return status;
+	
+	if (!BORestart()) {
+		if (error)
+			*error = [NSError errorWithDomain:BOBootErrorDomain code:BOBootRestartFailedError userInfo:nil];
+		return NO;
+	}
+	
+	return YES;
 }
-
-- (int)switchToWindowsAndRestart:(NSString **)bcblessErrorMessage
-{
-	if (media == nil)
-		return noWindowsVolumeError;
-	
-	NSDictionary *outputDict = nil;
-	OSStatus status = [self blessMedia:&outputDict];
-	if (status == errAuthorizationCanceled)
-		return authCancelled;
-	else if (status != errAuthorizationSuccess)
-		return authFailedOrBlessFailedError;
-
-	if (outputDict && [outputDict isKindOfClass:[NSDictionary class]])
-	{
-		NSString *error = [outputDict objectForKey:@"Error"];
-		if (error) {
-			*bcblessErrorMessage = error;
-			return bcblessError;
-		}
-		
-#if 0
-		NSString *successMsg = [outputDict objectForKey:@"Success"];
-		*bcblessErrorMessage = successMsg;
-		return bcblessError;
-#endif
-	}
-	
-	if (![self restartComputer])
-		return restartFailedError;
-	
-	return switchSuccessError;
-}
-
-- (NSInteger)bootIntoWindows
-{
-	BOOL quit = NO;
-	NSString *bcblessErrorMessage = nil;
-	int status = [self switchToWindowsAndRestart:&bcblessErrorMessage];
-
-	[NSApp activateIgnoringOtherApps:YES]; // app may have gone inactive from auth dialog
-
-	switch (status)
-	{
-		case noWindowsVolumeError:
-			NSRunAlertPanel(NSLocalizedString(@"BootChamp was unable to find a Windows volume", nil),
-							NSLocalizedString(@"Supported file systems are FAT32 and NTFS.", nil),
-							nil,nil,nil);
-			break;
-			
-		case authFailedOrBlessFailedError:
-			NSRunAlertPanel(NSLocalizedString(@"BootChamp was unable to set your Windows volume as the temporary startup disk", nil),
-							NSLocalizedString(@"Authentication may have failed.", nil),
-							nil,nil,nil);
-			break;
-		
-		case bcblessError:
-			NSRunAlertPanel(NSLocalizedString(@"BootChamp was unable to set your Windows volume as the temporary startup disk", nil),
-							(bcblessErrorMessage ? bcblessErrorMessage : @""),
-							nil,nil,nil);
-			break;
-			
-		case restartFailedError:
-			NSRunAlertPanel(NSLocalizedString(@"BootChamp was unable to restart your computer", nil),
-							NSLocalizedString(@"Please restart your computer manually.", nil),
-							nil,nil,nil);
-			break;
-			
-		case authCancelled:
-			break;
-
-		case switchSuccessError:
-			quit = YES;
-			break;
-	}
-	
-	return quit;
-}
-
-@end

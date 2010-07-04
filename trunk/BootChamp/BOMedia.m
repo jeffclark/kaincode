@@ -11,10 +11,12 @@
 #import <DiskArbitration/DiskArbitration.h>
 
 
-// See http://macntfs-3g.blogspot.com/
+// http://macntfs-3g.blogspot.com/
 #define KIND_NTFS_3G		@"ntfs-3g"
-// See http://www.paragon-software.com/home/ntfs-mac/
+// http://www.paragon-software.com/home/ntfs-mac/
 #define	KIND_PARAGON_NTFS	@"ufsd_NTFS"
+// http://www.tuxera.com/products/tuxera-ntfs-for-mac/
+#define KIND_TUXERA			@"fusefs_txantfs"
 
 
 @implementation BOMedia
@@ -30,7 +32,7 @@
 		return nil;
 	}
 	
-	NSArray *allowedKinds = [NSArray arrayWithObjects:@"ntfs", @"msdos", @"ufsd", @"cd9660", KIND_NTFS_3G, KIND_PARAGON_NTFS, nil];
+	NSArray *allowedKinds = [NSArray arrayWithObjects:@"ntfs", @"msdos", @"ufsd", @"cd9660", KIND_NTFS_3G, KIND_PARAGON_NTFS, KIND_TUXERA, nil];
 	
 	NSMutableArray *array = [NSMutableArray array];
 	struct statfs *buf = NULL;
@@ -61,11 +63,11 @@
 		
 		for (NSString *kind in allowedKinds)
 		{
-			if ([kind rangeOfString:volKind options:NSCaseInsensitiveSearch].location != NSNotFound)
+			if (volKind && [kind rangeOfString:volKind options:NSCaseInsensitiveSearch].location != NSNotFound)
 			{
 				isValidBootCampVolume = YES;
 				
-				if ([kind isEqualToString:KIND_NTFS_3G])
+				if ([kind isEqualToString:KIND_NTFS_3G] || [kind isEqualToString:KIND_TUXERA])
 				{
 					// When NTFS-3G/MacFUSE is installed we need to use
 					// bless's --device option instead of --folder
