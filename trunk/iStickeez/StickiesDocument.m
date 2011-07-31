@@ -8,6 +8,23 @@
 
 #import "StickiesDocument.h"
 
+struct StickiesPoint {
+	float x;
+	float y;
+};
+typedef struct StickiesPoint StickiesPoint;
+
+struct StickiesSize {
+	float width;
+	float height;
+};
+typedef struct StickiesSize StickiesSize;
+
+struct StickiesRect {
+	StickiesPoint origin;
+	StickiesSize size;
+};
+typedef struct StickiesRect StickiesRect;
 
 enum {
 	Yellow,
@@ -51,9 +68,10 @@ enum {
 			int windowFlags;
 			[coder decodeValueOfObjCType:@encode(int) at:&windowFlags];
 			
-			// decode window's frame
-			NSRect windowFrame;
-			[coder decodeValueOfObjCType:@encode(NSRect) at:&windowFrame];
+			// decode window's frame. NSRect/CGRect use 32/64-bit float values,
+			// but the struct float values here appear to always be floats.
+			StickiesRect windowFrame;
+			[coder decodeValueOfObjCType:@encode(StickiesRect) at:&windowFrame];
 			
 			// decode window color, convert to a usable NSColor object
 			int windowColor;
