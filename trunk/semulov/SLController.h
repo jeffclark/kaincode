@@ -3,19 +3,19 @@
 //  Semulov
 //
 //  Created by Kevin Wojniak on 11/5/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+//  Copyright 2006 - 2011 Kevin Wojniak. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 
-@class SUUpdater, SLPrefsController;
+@class SUUpdater;
 
 @interface SLController : NSObject
 {
 	NSStatusItem *_statusItem;
 	NSArray *_volumes;
 	SUUpdater *_updater;
-	SLPrefsController *_prefs;
+	NSWindowController *_prefs;
 }
 
 - (void)setupBindings;

@@ -3,7 +3,7 @@
 //  Semulov
 //
 //  Created by Kevin Wojniak on 11/5/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+//  Copyright 2006 - 2011 Kevin Wojniak. All rights reserved.
 //
 
 #import "SLVolume.h"
@@ -74,7 +74,7 @@
 	NSMutableDictionary *mountPoints = [NSMutableDictionary dictionary];
 	NSEnumerator *plistEnum = [[plistDict objectForKey:@"images"] objectEnumerator];
 	NSDictionary *imagesDict = nil;
-	while (imagesDict = [plistEnum nextObject])
+	while ((imagesDict = [plistEnum nextObject]))
 	{
 		NSString *imagePath = [imagesDict objectForKey:@"image-path"];
 		NSEnumerator *sysEntitiesEnum = [[imagesDict objectForKey:@"system-entities"] objectEnumerator];
@@ -85,7 +85,7 @@
 		if (dotDownloadRange.location != NSNotFound)
 			imagePath = [imagePath substringToIndex:dotDownloadRange.location];
 		
-		while (sysEntity = [sysEntitiesEnum nextObject])
+		while ((sysEntity = [sysEntitiesEnum nextObject]))
 		{
 			NSString *mountPoint = [sysEntity objectForKey:@"mount-point"];
 			
@@ -130,7 +130,7 @@
 	{
 		NSString *fileSystemType = [NSString stringWithCString:statfs->f_fstypename encoding:NSUTF8StringEncoding];
 		NSString *path = [NSString stringWithUTF8String:statfs->f_mntonname];
-		NSLog(@"%@: %@", [path lastPathComponent], fileSystemType);
+		//NSLog(@"%@: %@", [path lastPathComponent], fileSystemType);
 		if (!([path isEqualToString:@"/"] || [path hasPrefix:@"/Volumes"]))
 		{
 			[self release];
@@ -248,7 +248,7 @@
 				}
 			}
 			
-			CFStringRef devicePath;
+			CFStringRef devicePath = NULL;
 			
 			DASessionRef session = DASessionCreate(kCFAllocatorDefault);
 			if (session)
@@ -364,7 +364,9 @@
 
 void volumeUnmountCallback(FSVolumeOperation volumeOp, void *clientData, OSStatus err, FSVolumeRefNum volumeRefNum, pid_t dissenter)
 {
-	printf("callback err: %d\n", err);
+	if (err != noErr) {
+		NSLog(@"callback err: %ld", (long)err);
+	}
 }
 
 - (BOOL)eject
