@@ -118,17 +118,7 @@
 	[_statusItem setHighlightMode:YES];
 	
 	NSImage *ejectImage = [NSImage imageNamed:@"Eject"];
-	if ([ejectImage respondsToSelector:@selector(setTemplate:)])
-	{
-		// Leopard compatibility
-		[ejectImage setTemplate:YES];
-	}
-	else
-	{
-		// Leopard generates the alternative image automagically.
-		// Tiger does not so we have to set it ourselves
-		[_statusItem setAlternateImage:[NSImage imageNamed:@"EjectWhite"]];
-	}
+	[ejectImage setTemplate:YES];
 	[_statusItem setImage:ejectImage];
 	[self updateStatusItemMenu];
 }
