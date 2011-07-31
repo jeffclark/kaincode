@@ -25,7 +25,6 @@
 		A585415313E5D5BE0002EF3C /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A585413D13E5D5220002EF3C /* Growl.framework */; };
 		A585415413E5D5BE0002EF3C /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A585414913E5D5B90002EF3C /* Sparkle.framework */; };
 		A585417B13E5D6830002EF3C /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585417913E5D6830002EF3C /* Preferences.xib */; };
-		A5D982950C8B7F7B002A802F /* EjectWhite.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A5D982930C8B7F7B002A802F /* EjectWhite.pdf */; };
 		A5D982960C8B7F7B002A802F /* Eject.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A5D982940C8B7F7B002A802F /* Eject.pdf */; };
 /* End PBXBuildFile section */
 
@@ -69,7 +68,6 @@
 		A585413D13E5D5220002EF3C /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		A585414913E5D5B90002EF3C /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		A585417A13E5D6830002EF3C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
-		A5D982930C8B7F7B002A802F /* EjectWhite.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = EjectWhite.pdf; sourceTree = "<group>"; };
 		A5D982940C8B7F7B002A802F /* Eject.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Eject.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,7 +128,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A5D982930C8B7F7B002A802F /* EjectWhite.pdf */,
 				A5D982940C8B7F7B002A802F /* Eject.pdf */,
 				A5537F1B0C82312D00A1806D /* SemulovIcon.icns */,
 				A5552A130B10C2C9005EB062 /* Credits.rtf */,
@@ -221,7 +218,6 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				A5552A140B10C2C9005EB062 /* Credits.rtf in Resources */,
 				A5537F1C0C82312D00A1806D /* SemulovIcon.icns in Resources */,
-				A5D982950C8B7F7B002A802F /* EjectWhite.pdf in Resources */,
 				A5D982960C8B7F7B002A802F /* Eject.pdf in Resources */,
 				A585417B13E5D6830002EF3C /* Preferences.xib in Resources */,
 			);
