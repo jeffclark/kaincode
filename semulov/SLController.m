@@ -3,16 +3,15 @@
 //  Semulov
 //
 //  Created by Kevin Wojniak on 11/5/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+//  Copyright 2006 - 2011 Kevin Wojniak. All rights reserved.
 //
 
 #import "SLController.h"
 #import "SLVolume.h"
 #import "SLGrowlController.h"
 #import <Sparkle/SUUpdater.h>
-#import "SLPrefsController.h"
 #import "SLNSImageAdditions.h"
-#import "UKLoginItemRegistry.h"
+#import "NSApplicationAdditions.h"
 
 
 #define SLShowVolumesNumber		@"SLShowVolumesNumber"
@@ -37,15 +36,6 @@
 		[NSNumber numberWithBool:NO], SLDisableDiscardWarning,
 		[NSNumber numberWithBool:NO], SLHideInternalDrives,
 		nil]];
-}
-
-- (id)init
-{
-	if ([super init])
-	{
-	}
-	
-	return self;
 }
 
 - (void)dealoc
@@ -98,16 +88,14 @@
 {
 	if ([(NSString *)context isEqualToString:@"SLLaunchAtStartup"])
 	{
-		NSURL *appURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
 		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"SLLaunchAtStartup"])
 		{
 			// add us to the login items
-			if ([UKLoginItemRegistry indexForLoginItemWithURL:appURL] == -1)
-				[UKLoginItemRegistry addLoginItemWithURL:appURL hideIt:NO];
+			[NSApp addToLoginItems];
 		}
 		else
 		{
-			[UKLoginItemRegistry removeLoginItemWithURL:appURL];
+			[NSApp removeFromLoginItems];
 		}
 	}
 	else
@@ -316,7 +304,7 @@
 {
 	NSEnumerator *volsEnum = [_volumes objectEnumerator];
 	SLVolume *vol = nil;
-	while (vol = [volsEnum nextObject])
+	while ((vol = [volsEnum nextObject]))
 		if ([[vol path] isEqualToString:mountPath])
 			return vol;
 	return nil;
@@ -407,7 +395,7 @@
 		)
 	{
 		if ([self ejectVolumeWithFeedback:vol])
-			[[NSFileManager defaultManager] removeFileAtPath:imagePath handler:nil];
+			[[NSFileManager defaultManager] removeItemAtPath:imagePath error:nil];
 	}
 }
 
@@ -426,7 +414,7 @@
 - (void)doPrefs:(id)sender
 {
 	if (_prefs == nil)
-		_prefs = [[SLPrefsController alloc] init];
+		_prefs = [[NSWindowController alloc] initWithWindowNibName:@"Preferences"];
 	[_prefs window];
 	[NSApp activateIgnoringOtherApps:YES];
 	[_prefs showWindow:nil];
