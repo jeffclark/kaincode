@@ -24,6 +24,7 @@ typedef enum
 	SLVolumeDVD,
 	SLVolumeDVDVideo,
 	SLVolumeHardDrive,
+	SLVolumeRAMDisk,
 } SLVolumeType;
 
 @interface SLVolume : NSObject <NSCopying>
