@@ -26,7 +26,5 @@
 	<string>NSApplication</string>
 	<key>NSUIElement</key>
 	<string>1</string>
-	<key>SUFeedURL</key>
-	<string>http://www.kainjow.com/semulov_appcast.xml</string>
 </dict>
 </plist>

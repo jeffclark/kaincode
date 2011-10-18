@@ -9,9 +9,10 @@
 #import "SLController.h"
 #import "SLVolume.h"
 #import "SLGrowlController.h"
-#import <Sparkle/SUUpdater.h>
 #import "SLNSImageAdditions.h"
 #import "NSApplicationAdditions.h"
+#import "SLDeviceManager.h"
+#import "SLUnmountedVolume.h"
 
 
 #define SLShowVolumesNumber		@"SLShowVolumesNumber"
@@ -21,7 +22,15 @@
 #define SLLaunchAtStartup		@"SLLaunchAtStartup"
 #define SLDisableDiscardWarning	@"SLDisableDiscardWarning"
 #define SLHideInternalDrives	@"SLHideInternalDrives"
+#define SLShowUnmountedVolumes  @"SLShowUnmountedVolumes"
 
+
+@interface SLController (Private)
+- (void)setupBindings;
+- (void)setupStatusItem;
+- (void)updateStatusItemMenu;
+- (void)updateStatusItemMenuWithVolumes:(NSArray *)volumes;
+@end
 
 @implementation SLController
 
@@ -35,6 +44,7 @@
 		[NSNumber numberWithBool:NO], SLLaunchAtStartup,
 		[NSNumber numberWithBool:NO], SLDisableDiscardWarning,
 		[NSNumber numberWithBool:NO], SLHideInternalDrives,
+		[NSNumber numberWithBool:NO], SLShowUnmountedVolumes,																	   
 		nil]];
 }
 
@@ -47,7 +57,6 @@
 	[_statusItem release];
 
 	[_volumes release];
-	[_updater release];
 	[_prefs release];
 
 	[super dealloc];
@@ -62,12 +71,18 @@
 	
 	[[SLGrowlController sharedController] setup];
 	
-	_updater = [[SUUpdater alloc] init];
-	
 	[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(handleMount:) name:NSWorkspaceDidMountNotification object:nil];
 	[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(handleUnmount:) name:NSWorkspaceDidUnmountNotification object:nil];
 	
+	deviceManager = [[SLDeviceManager alloc] init];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unmountedVolumesChanged:) name:SLDeviceManagerUnmountedVolumesDidChangeNotification object:nil];
+	
 	[self setupBindings];
+	
+	// At startup make sure we're in the login items if the pref is set (user may have manually removed us)
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"SLLaunchAtStartup"]) {
+		[NSApp addToLoginItems];
+	}
 }
 
 #pragma mark -
@@ -82,6 +97,7 @@
 	[sdc addObserver:self forKeyPath:@"values.SLDisableInternalHD" options:0 context:SLDisableInternalHD];
 	[sdc addObserver:self forKeyPath:@"values.SLLaunchAtStartup" options:0 context:SLLaunchAtStartup];
 	[sdc addObserver:self forKeyPath:@"values.SLHideInternalDrives" options:0 context:SLHideInternalDrives];
+	[sdc addObserver:self forKeyPath:@"values.SLShowUnmountedVolumes" options:0 context:SLShowUnmountedVolumes];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -139,8 +155,24 @@
 
 - (void)updateStatusItemMenu
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // this is needed to fix memory issue when ejecting all
-	
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		@try {
+			NSArray *volumes = [SLVolume allVolumes];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self updateStatusItemMenuWithVolumes:volumes];
+			});
+		} @catch (NSException *ex) {
+			NSLog(@"Caught exception: %@", ex);
+		}
+		[pool release];
+	});
+}
+
+- (void)updateStatusItemMenuWithVolumes:(NSArray *)volumes
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
 	[_statusItem setMenu:[[[NSMenu alloc] init] autorelease]];
 	
 	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
@@ -150,9 +182,12 @@
 	BOOL showStartupDisk = [[defaultValues valueForKey:SLShowStartupDisk] boolValue];
 	BOOL showEjectAll = [[defaultValues valueForKey:SLShowEjectAll] boolValue];
 	BOOL hideInternalDrives = [[defaultValues valueForKey:SLHideInternalDrives] boolValue];
+	BOOL showUnmountedVolumes = [[defaultValues valueForKey:SLShowUnmountedVolumes] boolValue];
 	
-	[_volumes release];
-	_volumes = [[SLVolume allVolumes] retain];
+	if (_volumes != volumes) {
+		[_volumes release];
+		_volumes = [volumes retain];
+	}
 	SLVolumeType _lastType = -1;
 	NSInteger vcount = 0;
 	NSMenuItem *titleMenu = nil, *menuItem = nil, *altMenu = nil, *altaltMenu;
@@ -171,31 +206,33 @@
 			_lastType = [vol type];
 			
 			if (_lastType == SLVolumeDrive)
-				titleName = @"Volumes";
+				titleName = NSLocalizedStringFromTable(@"Volumes", @"Labels", nil);
 			else if (_lastType == SLVolumeRoot)
-				titleName = @"Startup Disk";
+				titleName = NSLocalizedStringFromTable(@"Startup Disk", @"Labels", nil);
 			else if (_lastType == SLVolumeiPod)
-				titleName = @"iPods";
+				titleName = NSLocalizedStringFromTable(@"iPods", @"Labels", nil);
 			else if (_lastType == SLVolumeNetwork)
-				titleName = @"Network";
+				titleName = NSLocalizedStringFromTable(@"Network", @"Labels", nil);
 			else if (_lastType == SLVolumeiDisk)
-				titleName = @"iDisks";
+				titleName = NSLocalizedStringFromTable(@"iDisks", @"Labels", nil);
 			else if (_lastType == SLVolumeFTP)
-				titleName = @"FTP";
+				titleName = NSLocalizedStringFromTable(@"FTP", @"Labels", nil);
 			else if (_lastType == SLVolumeWebDAV)
-				titleName = @"WebDAV";
+				titleName = NSLocalizedStringFromTable(@"WebDAV", @"Labels", nil);
 			else if (_lastType == SLVolumeDiskImage)
-				titleName = @"Disk Images";
+				titleName = NSLocalizedStringFromTable(@"Disk Images", @"Labels", nil);
 			else if (_lastType == SLVolumeDVD)
-				titleName = @"DVDs";
+				titleName = NSLocalizedStringFromTable(@"DVDs", @"Labels", nil);
 			else if (_lastType == SLVolumeDVDVideo)
-				titleName = @"Video DVDs";
+				titleName = NSLocalizedStringFromTable(@"Video DVDs", @"Labels", nil);
 			else if (_lastType == SLVolumeCDROM)
-				titleName = @"CDs";
+				titleName = NSLocalizedStringFromTable(@"CDs", @"Labels", nil);
 			else if (_lastType == SLVolumeAudioCDROM)
-				titleName = @"Audio CDs";
+				titleName = NSLocalizedStringFromTable(@"Audio CDs", @"Labels", nil);
 			else if (_lastType == SLVolumeHardDrive)
-				titleName = @"Hard Drives";
+				titleName = NSLocalizedStringFromTable(@"Hard Drives", @"Labels", nil);
+			else if (_lastType == SLVolumeRAMDisk)
+				titleName = NSLocalizedStringFromTable(@"RAM Disks", @"Labels", nil);
 			titleMenu = [[NSMenuItem alloc] initWithTitle:titleName action:nil keyEquivalent:@""];
 		}
 		
@@ -221,7 +258,7 @@
 		[altMenu setTarget:self];
 		if ([vol type] == SLVolumeDiskImage)
 		{
-			[altMenu setTitle:[NSString stringWithFormat:@"Discard %@", [vol name]]];
+			[altMenu setTitle:[NSString stringWithFormat:NSLocalizedString(@"Discard %@", nil), [vol name]]];
 			[altMenu setAction:@selector(doEjectAndDeleteDiskImage:)];
 		}
 		if (![self volumeCanBeEjected:vol])
@@ -234,7 +271,7 @@
 		[altaltMenu setRepresentedObject:vol];
 		[altaltMenu setImage:mainItemImage];
 		[altaltMenu setIndentationLevel:1];
-		[altaltMenu setTitle:[NSString stringWithFormat:@"Show %@", [vol name]]];
+		[altaltMenu setTitle:[NSString stringWithFormat:NSLocalizedString(@"Show %@", nil), [vol name]]];
 		[altaltMenu setAction:@selector(doShowInFinder:)];
 		[altaltMenu setTarget:self];
 		
@@ -253,7 +290,7 @@
 	}
 	
 	if (showVolumesNumber)
-		[_statusItem setTitle:[NSString stringWithFormat:@"%d", vcount]];
+		[_statusItem setTitle:[NSString stringWithFormat:@"%ld", (long)vcount]];
 	else
 		[_statusItem setTitle:nil];
 	
@@ -262,23 +299,36 @@
 		if (showEjectAll)
 		{
 			[menu addItem:[NSMenuItem separatorItem]];
-			[menu addItemWithTitle:@"Eject All" action:@selector(doEjectAll:) keyEquivalent:@""];
+			[menu addItemWithTitle:NSLocalizedString(@"Eject All", nil) action:@selector(doEjectAll:) keyEquivalent:@""];
 		}
 		
 		[menu addItem:[NSMenuItem separatorItem]];
 	}
-
+	
+	if (showUnmountedVolumes) {
+		NSArray *unmountedVols = deviceManager.unmountedVolumes;
+		if ([unmountedVols count] > 0) {
+			[[menu addItemWithTitle:NSLocalizedString(@"Unmounted", nil) action:@selector(doEjectAll:) keyEquivalent:@""] setAction:nil];
+			for (SLUnmountedVolume *uvol in unmountedVols) {
+				menuItem = [[[NSMenuItem alloc] initWithTitle:uvol.name action:@selector(doMount:) keyEquivalent:@""] autorelease];
+				[menuItem setIndentationLevel:1];
+				[menuItem setRepresentedObject:uvol.diskID];
+				[menuItem setImage:[uvol.icon slResize:NSMakeSize(16, 16)]];
+				[menu addItem:menuItem];
+			}
+			[menu addItem:[NSMenuItem separatorItem]];
+		}
+	}
 	
 	NSMenuItem *slMenuItem = [[[NSMenuItem alloc] initWithTitle:@"Semulov" action:nil keyEquivalent:@""] autorelease];
 	NSMenu *slSubmenu = [[[NSMenu alloc] init] autorelease];
-	[slSubmenu addItemWithTitle:@"About" action:@selector(doAbout:) keyEquivalent:@""];
+	[slSubmenu addItemWithTitle:NSLocalizedString(@"About", nil) action:@selector(doAbout:) keyEquivalent:@""];
 	[slSubmenu addItem:[NSMenuItem separatorItem]];
-	[slSubmenu addItemWithTitle:@"Preferences..." action:@selector(doPrefs:) keyEquivalent:@""];
-	[slSubmenu addItemWithTitle:@"Check for Updates..." action:@selector(doUpdates:) keyEquivalent:@""];
+	[slSubmenu addItemWithTitle:NSLocalizedString(@"Preferences\u2026", nil) action:@selector(doPrefs:) keyEquivalent:@""];
 	[slSubmenu addItem:[NSMenuItem separatorItem]];
-	[slSubmenu addItemWithTitle:@"Send Feedback" action:@selector(doFeedback:) keyEquivalent:@""];
+	[slSubmenu addItemWithTitle:NSLocalizedString(@"Send Feedback", nil) action:@selector(doFeedback:) keyEquivalent:@""];
 	[slSubmenu addItem:[NSMenuItem separatorItem]];
-	[slSubmenu addItemWithTitle:@"Quit" action:@selector(doQuit:) keyEquivalent:@""];
+	[slSubmenu addItemWithTitle:NSLocalizedString(@"Quit", nil) action:@selector(doQuit:) keyEquivalent:@""];
 	[slMenuItem setSubmenu:slSubmenu];
 	[menu addItem:slMenuItem];
 
@@ -292,11 +342,11 @@
 
 - (SLVolume *)volumeWithMountPath:(NSString *)mountPath
 {
-	NSEnumerator *volsEnum = [_volumes objectEnumerator];
 	SLVolume *vol = nil;
-	while ((vol = [volsEnum nextObject]))
+	for (vol in _volumes) {
 		if ([[vol path] isEqualToString:mountPath])
 			return vol;
+	}
 	return nil;
 }
 
@@ -313,6 +363,11 @@
 	[[SLGrowlController sharedController] postVolumeUnmounted:
 		[self volumeWithMountPath:[[not userInfo] objectForKey:@"NSDevicePath"]]];
 
+	[self updateStatusItemMenu];
+}
+
+- (void)unmountedVolumesChanged:(NSNotification *)notif
+{
 	[self updateStatusItemMenu];
 }
 
@@ -335,7 +390,7 @@
 	if (![volume eject])
 	{
 		[NSApp activateIgnoringOtherApps:YES];
-		NSRunAlertPanel(@"Unmount failed",@"Failed to eject volume.",@"OK",nil,nil);
+		NSRunAlertPanel(NSLocalizedString(@"Unmount failed", nil), NSLocalizedString(@"Failed to eject volume.", nil), nil, nil, nil);
 		return NO;
 	}
 	return YES;
@@ -374,14 +429,14 @@
 
 	if (![[NSFileManager defaultManager] fileExistsAtPath:imagePath])
 	{
-		NSRunAlertPanel(@"Disk image not found",@"The corresponding disk image file for the mounted volume could not be found.",@"OK",nil,nil);
+		NSRunAlertPanel(NSLocalizedString(@"Disk image not found", nil), NSLocalizedString(@"The corresponding disk image file for the mounted volume could not be found.", nil), nil, nil, nil);
 		return;
 	}
 	
 	BOOL showWarning = [[NSUserDefaults standardUserDefaults] boolForKey:@"SLDisableDiscardWarning"];
 	if (
 		(showWarning == YES) ||
-		((showWarning == NO) && (NSRunAlertPanel(@"Are you sure you want to unmount this volume and delete its associated disk image?",@"You cannot undo this action.",@"No",@"Yes",nil) == NSCancelButton))
+		((showWarning == NO) && (NSRunAlertPanel(NSLocalizedString(@"Are you sure you want to unmount this volume and delete its associated disk image?", nil), NSLocalizedString(@"You cannot undo this action.", nil), NSLocalizedString(@"No", nil), NSLocalizedString(@"Yes", nil), nil) == NSCancelButton))
 		)
 	{
 		if ([self ejectVolumeWithFeedback:vol])
@@ -389,9 +444,9 @@
 	}
 }
 
-- (void)doUpdates:(id)sender
+- (void)doMount:(id)sender
 {
-	[_updater checkForUpdates:nil];
+	[deviceManager mount:[sender representedObject]];
 }
 
 - (void)doFeedback:(id)sender

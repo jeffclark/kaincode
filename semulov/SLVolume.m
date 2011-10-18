@@ -9,45 +9,16 @@
 #import "SLVolume.h"
 #import <DiskArbitration/DiskArbitration.h>
 #import <DiscRecording/DiscRecording.h>
+#import <DiskArbitration/DiskArbitration.h>
+#import <IOKit/storage/IOStorageDeviceCharacteristics.h>
+#import "NSTaskAdditions.h"
 
 
 @implementation SLVolume
 
 + (NSDictionary *)mountedDiskImages
 {
-	NSTask *hdiUtilTask = nil;
-	NSPipe *inPipe = nil, *outPipe = nil;
-	NSFileHandle *inHandle = nil, *outHandle = nil;
-	NSData *outData = nil;
-	NSString *plistStr = nil;
-	
-	hdiUtilTask = [[[NSTask alloc] init] autorelease];
-	inPipe = [NSPipe pipe];
-	inHandle = [inPipe fileHandleForWriting];
-	outPipe = [NSPipe pipe];
-	outHandle = [outPipe fileHandleForReading];
-	
-	if (!inPipe || !outPipe)
-	{
-		// couldn't get a pipe!
-		return nil;
-	}
-	
-	[hdiUtilTask setLaunchPath:@"/usr/bin/hdiutil"];
-	[hdiUtilTask setArguments:[NSArray arrayWithObjects:@"info", @"-plist", nil]];
-	[hdiUtilTask setStandardError:outPipe];
-	[hdiUtilTask setStandardOutput:outPipe];
-	[hdiUtilTask setStandardInput:inPipe];
-	
-	[hdiUtilTask launch];
-	[inHandle writeData:[NSData data]];
-	[inHandle closeFile];
-	outData = [outHandle readDataToEndOfFile];
-	[hdiUtilTask waitUntilExit];
-	
-	plistStr = [[[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding] autorelease];
-	if (plistStr == nil)
-		return nil;
+	NSString *plistStr = [NSTask outputStringForTaskAtPath:@"/usr/bin/hdiutil" arguments:[NSArray arrayWithObjects:@"info", @"-plist", nil] encoding:NSUTF8StringEncoding];
 	
 	// sometimes hdiutil returns an error in the first line or so of it's output.
 	// so we try to determine if an error exists, and skip past it to the xml
@@ -72,12 +43,12 @@
 		return nil;
 	
 	NSMutableDictionary *mountPoints = [NSMutableDictionary dictionary];
-	NSEnumerator *plistEnum = [[plistDict objectForKey:@"images"] objectEnumerator];
+	NSArray *images = [plistDict objectForKey:@"images"];
 	NSDictionary *imagesDict = nil;
-	while ((imagesDict = [plistEnum nextObject]))
+	for (imagesDict in images)
 	{
 		NSString *imagePath = [imagesDict objectForKey:@"image-path"];
-		NSEnumerator *sysEntitiesEnum = [[imagesDict objectForKey:@"system-entities"] objectEnumerator];
+		NSArray *sysEntities = [imagesDict objectForKey:@"system-entities"];
 		NSDictionary *sysEntity = nil;
 		
 		// if .dmg is mounted from safari, imagePath will be the .dmg within the .download file
@@ -85,7 +56,7 @@
 		if (dotDownloadRange.location != NSNotFound)
 			imagePath = [imagePath substringToIndex:dotDownloadRange.location];
 		
-		while ((sysEntity = [sysEntitiesEnum nextObject]))
+		for (sysEntity in sysEntities)
 		{
 			NSString *mountPoint = [sysEntity objectForKey:@"mount-point"];
 			
@@ -102,25 +73,24 @@
 + (NSArray *)allVolumes
 {
 	NSMutableArray *volumes = [NSMutableArray array];
-
-	struct statfs *buf;
-	NSInteger i, count;
-	
-	NSDictionary *diskImages = [SLVolume mountedDiskImages];
-	
-	count = getmntinfo(&buf, 0);
-	for (i=0; i<count; i++)
-	{
-		SLVolume *vol = [[SLVolume alloc] initWithStatfs:&buf[i] mountedDiskImages:diskImages];
-		if (vol)
-		{
-			[volumes addObject:vol];
-			[vol release];
+	int count = getfsstat(NULL, 0, MNT_NOWAIT);
+	if (count > 0) {
+		struct statfs *buf = calloc(count, sizeof(struct statfs));
+		if (buf) {
+			if (getfsstat(buf, count * sizeof(struct statfs), MNT_NOWAIT) > 0) {
+				NSDictionary *diskImages = [SLVolume mountedDiskImages];
+				for (int i = 0; i < count; i++) {
+					SLVolume *vol = [[SLVolume alloc] initWithStatfs:&buf[i] mountedDiskImages:diskImages];
+					if (vol) {
+						[volumes addObject:vol];
+						[vol release];
+					}
+				}
+			}
+			free(buf);
 		}
 	}
-	
 	[volumes sortUsingSelector:@selector(compare:)];
-	
 	return volumes;
 }
 
@@ -143,8 +113,7 @@
 			_root = YES;
 		
 		_path = [path copy];		
-		_name = [[[NSFileManager defaultManager] displayNameAtPath:path] copy];
-		_image = [[[NSWorkspace sharedWorkspace] iconForFile:path] copy];		
+		_name = [[[[[NSFileManager alloc] init] autorelease] displayNameAtPath:path] copy];
 
 		BOOL gotCatalogInfo = NO;
 		FSRef ref;
@@ -165,19 +134,17 @@
 					_hostURL = [(NSURL *)hostURL copy];
 					CFRelease(hostURL);
 					
-					if ([[_hostURL host] isEqualToString:@"idisk.mac.com"])
+					if ([[_hostURL host] isEqualToString:@"idisk.mac.com"]) {
 						_type = SLVolumeiDisk;
-					else if ([[_hostURL scheme] isEqualToString:@"ftp"])
+					} else if ([[_hostURL scheme] isEqualToString:@"ftp"]) {
 						_type = SLVolumeFTP;
-					else
-					{
-						if ([fileSystemType isEqualToString:@"webdav"])
-						{
+					} else if ([[_hostURL scheme] isEqualToString:@"afp"]) {
+						// keep as SLVolumeNetwork
+					} else {
+						if ([fileSystemType isEqualToString:@"webdav"]) {
 							_type = SLVolumeWebDAV;
-						}
-						else
-						{
-							NSLog(@"uknown URL: %@", _hostURL);
+						} else {
+							NSLog(@"uknown URL: %@ (%@)", _hostURL, fileSystemType);
 						}
 					}
 				}
@@ -282,6 +249,30 @@
 							_type = SLVolumeHardDrive;
 						}
 						
+						if ([self type] == SLVolumeDiskImage) {
+							DADiskRef parentDisk = DADiskCopyWholeDisk(disk);
+							if (parentDisk) {
+								io_service_t ioMedia = DADiskCopyIOMedia(parentDisk);
+								if (ioMedia) {
+									CFTypeRef props = IORegistryEntrySearchCFProperty(ioMedia, kIOServicePlane, CFSTR(kIOPropertyProtocolCharacteristicsKey), kCFAllocatorDefault, kIORegistryIterateRecursively | kIORegistryIterateParents);
+									if (props) {
+										//NSLog(@"%@", props);
+										if (CFGetTypeID(props) == CFDictionaryGetTypeID()) {
+											CFTypeRef location = CFDictionaryGetValue(props, CFSTR(kIOPropertyPhysicalInterconnectLocationKey));
+											if (location && CFGetTypeID(location) == CFStringGetTypeID()) {
+												if (CFEqual(location, CFSTR(kIOPropertyInterconnectRAMKey))) {
+													_type = SLVolumeRAMDisk;
+												}
+											}
+										}
+										CFRelease(props);
+									}
+									IOObjectRelease(ioMedia);
+								}
+								CFRelease(parentDisk);
+							}
+						}
+						
 						CFRelease(desc);
 					}
 					CFRelease(disk);
@@ -349,6 +340,9 @@
 
 - (NSImage *)image
 {
+	if (!_image) {
+		_image = [[[NSWorkspace sharedWorkspace] iconForFile:_path] copy];
+	}
 	return [[_image retain] autorelease];
 }
 

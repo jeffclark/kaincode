@@ -8,18 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class SUUpdater;
+@class SLDeviceManager;
 
 @interface SLController : NSObject
 {
 	NSStatusItem *_statusItem;
 	NSArray *_volumes;
-	SUUpdater *_updater;
 	NSWindowController *_prefs;
+	SLDeviceManager *deviceManager;
 }
-
-- (void)setupBindings;
-- (void)setupStatusItem;
-- (void)updateStatusItemMenu;
 
 @end
