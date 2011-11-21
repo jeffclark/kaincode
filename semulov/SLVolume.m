@@ -228,10 +228,18 @@
 					{
 						CFBooleanRef isInternal, isEjectable;
 						CFStringRef deviceModel;
-						CFDictionaryGetValueIfPresent(desc, kDADiskDescriptionDeviceInternalKey, (void *)&isInternal);
-						CFDictionaryGetValueIfPresent(desc, kDADiskDescriptionMediaEjectableKey, (void *)&isEjectable);
-						CFDictionaryGetValueIfPresent(desc, kDADiskDescriptionDeviceModelKey, (void *)&deviceModel);
-						CFDictionaryGetValueIfPresent(desc, kDADiskDescriptionDevicePathKey, (void *)&devicePath);
+						if (!CFDictionaryGetValueIfPresent(desc, kDADiskDescriptionDeviceInternalKey, (void *)&isInternal)) {
+							isInternal = kCFBooleanFalse;
+						}
+						if (!CFDictionaryGetValueIfPresent(desc, kDADiskDescriptionMediaEjectableKey, (void *)&isEjectable)) {
+							isEjectable = kCFBooleanFalse;
+						}
+						if (!CFDictionaryGetValueIfPresent(desc, kDADiskDescriptionDeviceModelKey, (void *)&deviceModel)) {
+							deviceModel = NULL;
+						}
+						if (!CFDictionaryGetValueIfPresent(desc, kDADiskDescriptionDevicePathKey, (void *)&devicePath)) {
+							devicePath = NULL;
+						}
 						
 						// 2nd check for disk images..
 						if (([self type] != SLVolumeDiskImage) && ([(NSString *)deviceModel isEqualToString:@"Disk Image"]))
@@ -280,7 +288,7 @@
 				CFRelease(session);
 			}
 			
-			// check for a DVD
+			// check for a DVD. TODO: replace this with DiskArb checks.
 			if (devicePath) {
 				DRDevice *dvdDevice = [DRDevice deviceForBSDName:[NSString stringWithCString:statfs->f_mntfromname encoding:NSUTF8StringEncoding]]; //deviceForIORegistryEntryPath:(NSString *)devicePath];
 				if ((dvdDevice != nil) && ([dvdDevice mediaIsPresent]))
