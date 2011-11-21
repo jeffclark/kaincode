@@ -10,6 +10,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A5000D0C147ABDA20081A168 /* NSApplicationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5000D0A147ABDA20081A168 /* NSApplicationAdditions.m */; };
 		A518D7740BB19CC5009EC77B /* DiskArbitration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A518D7730BB19CC5009EC77B /* DiskArbitration.framework */; };
 		A5455F8C0AFE64C6001F61C8 /* SLController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5455F8B0AFE64C6001F61C8 /* SLController.m */; };
 		A5455FE70AFE66A1001F61C8 /* SLVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = A5455FE60AFE66A1001F61C8 /* SLVolume.m */; };
@@ -18,7 +19,6 @@
 		A5537F1C0C82312D00A1806D /* SemulovIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A5537F1B0C82312D00A1806D /* SemulovIcon.icns */; };
 		A5552A140B10C2C9005EB062 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A5552A130B10C2C9005EB062 /* Credits.rtf */; };
 		A5779DD5144DE76E00FB1D37 /* NSTaskAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5779DD4144DE76E00FB1D37 /* NSTaskAdditions.m */; };
-		A585413413E5D4E10002EF3C /* NSApplicationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A585413213E5D4E10002EF3C /* NSApplicationAdditions.m */; };
 		A585413E13E5D5220002EF3C /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A585413D13E5D5220002EF3C /* Growl.framework */; };
 		A585415313E5D5BE0002EF3C /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A585413D13E5D5220002EF3C /* Growl.framework */; };
 		A585417B13E5D6830002EF3C /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585417913E5D6830002EF3C /* Preferences.xib */; };
@@ -52,6 +52,8 @@
 		32CA4F630368D1EE00C91783 /* Semulov_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Semulov_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Semulov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Semulov.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5000D0A147ABDA20081A168 /* NSApplicationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSApplicationAdditions.m; sourceTree = "<group>"; };
+		A5000D0B147ABDA20081A168 /* NSApplicationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSApplicationAdditions.h; sourceTree = "<group>"; };
 		A518D7730BB19CC5009EC77B /* DiskArbitration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiskArbitration.framework; path = /System/Library/Frameworks/DiskArbitration.framework; sourceTree = "<absolute>"; };
 		A5455F8A0AFE64C6001F61C8 /* SLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLController.h; sourceTree = "<group>"; };
 		A5455F8B0AFE64C6001F61C8 /* SLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLController.m; sourceTree = "<group>"; };
@@ -66,8 +68,6 @@
 		A5552A130B10C2C9005EB062 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		A5779DD3144DE76E00FB1D37 /* NSTaskAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTaskAdditions.h; sourceTree = "<group>"; };
 		A5779DD4144DE76E00FB1D37 /* NSTaskAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTaskAdditions.m; sourceTree = "<group>"; };
-		A585413213E5D4E10002EF3C /* NSApplicationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSApplicationAdditions.m; path = ../../../MacRumors/MRclippy/NSApplicationAdditions.m; sourceTree = SOURCE_ROOT; };
-		A585413313E5D4E10002EF3C /* NSApplicationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSApplicationAdditions.h; path = ../../../MacRumors/MRclippy/NSApplicationAdditions.h; sourceTree = SOURCE_ROOT; };
 		A585413D13E5D5220002EF3C /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		A585417A13E5D6830002EF3C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
 		A58BD399140FFCA8007E9DF9 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -111,8 +111,8 @@
 				A54561850AFE720D001F61C8 /* SLGrowlController.m */,
 				A5537F0B0C822FE000A1806D /* SLNSImageAdditions.h */,
 				A5537F0C0C822FE000A1806D /* SLNSImageAdditions.m */,
-				A585413313E5D4E10002EF3C /* NSApplicationAdditions.h */,
-				A585413213E5D4E10002EF3C /* NSApplicationAdditions.m */,
+				A5000D0B147ABDA20081A168 /* NSApplicationAdditions.h */,
+				A5000D0A147ABDA20081A168 /* NSApplicationAdditions.m */,
 				A5779DD3144DE76E00FB1D37 /* NSTaskAdditions.h */,
 				A5779DD4144DE76E00FB1D37 /* NSTaskAdditions.m */,
 			);
@@ -270,10 +270,10 @@
 				A5455FE70AFE66A1001F61C8 /* SLVolume.m in Sources */,
 				A54561870AFE720D001F61C8 /* SLGrowlController.m in Sources */,
 				A5537F0E0C822FE000A1806D /* SLNSImageAdditions.m in Sources */,
-				A585413413E5D4E10002EF3C /* NSApplicationAdditions.m in Sources */,
 				A58BD52014100451007E9DF9 /* SLDeviceManager.m in Sources */,
 				A58BD55F141006F5007E9DF9 /* SLUnmountedVolume.m in Sources */,
 				A5779DD5144DE76E00FB1D37 /* NSTaskAdditions.m in Sources */,
+				A5000D0C147ABDA20081A168 /* NSApplicationAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
