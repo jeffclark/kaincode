@@ -1,5 +1,5 @@
-Spread 1.0
-March 12, 2012
+Spread 1.0.1
+February 28, 2012
 
 Original version by Tom Theisen
 http://tomtheisen.com/spread/
