@@ -16,7 +16,7 @@
 	if (self = [super initWithFrame:frame isPreview:isPreview])
 	{
 		[self setAnimationTimeInterval:1/30.0];
-		spread = [[Spread alloc] initWithSize:frame.size];
+		spread = [[Spread alloc] initWithSize:NSSizeToCGSize(frame.size)];
 	}
 	
 	return self;

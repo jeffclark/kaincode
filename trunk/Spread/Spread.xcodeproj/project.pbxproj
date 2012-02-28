@@ -3,35 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8D255AC70486D3F9007BF209 /* Spread_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32DBCFA80370C50100C91783 /* Spread_Prefix.pch */; };
-		8D255AC80486D3F9007BF209 /* SpreadView.h in Headers */ = {isa = PBXBuildFile; fileRef = F50079790118B23001CA0E54 /* SpreadView.h */; };
 		8D255ACC0486D3F9007BF209 /* SpreadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F500797A0118B23001CA0E54 /* SpreadView.m */; };
 		8D255ACE0486D3F9007BF209 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		8D255ACF0486D3F9007BF209 /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F27B2DFFEEEFEF11CA0E56 /* ScreenSaver.framework */; };
-		A591AFC1114B2C3C00AD5CF5 /* Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = A591AFBF114B2C3C00AD5CF5 /* Branch.h */; };
 		A591AFC2114B2C3C00AD5CF5 /* Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = A591AFC0114B2C3C00AD5CF5 /* Branch.m */; };
-		A591AFE8114B2D9000AD5CF5 /* Spread.saver in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D255AD30486D3F9007BF209 /* Spread.saver */; };
-		A591B047114B329F00AD5CF5 /* Spread.h in Headers */ = {isa = PBXBuildFile; fileRef = A591B045114B329F00AD5CF5 /* Spread.h */; };
 		A591B048114B329F00AD5CF5 /* Spread.m in Sources */ = {isa = PBXBuildFile; fileRef = A591B046114B329F00AD5CF5 /* Spread.m */; };
 		A591B0B6114B375300AD5CF5 /* Read Me.txt in Resources */ = {isa = PBXBuildFile; fileRef = A591B0B5114B375300AD5CF5 /* Read Me.txt */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		A591AFE5114B2D7E00AD5CF5 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "~/Library/Screen Savers";
-			dstSubfolderSpec = 0;
-			files = (
-				A591AFE8114B2D9000AD5CF5 /* Spread.saver in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		06F27B2DFFEEEFEF11CA0E56 /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
@@ -130,31 +112,14 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		8D255AC60486D3F9007BF209 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8D255AC70486D3F9007BF209 /* Spread_Prefix.pch in Headers */,
-				8D255AC80486D3F9007BF209 /* SpreadView.h in Headers */,
-				A591AFC1114B2C3C00AD5CF5 /* Branch.h in Headers */,
-				A591B047114B329F00AD5CF5 /* Spread.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		8D255AC50486D3F9007BF209 /* Spread */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF7AD72D08BB986600CE4634 /* Build configuration list for PBXNativeTarget "Spread" */;
 			buildPhases = (
-				8D255AC60486D3F9007BF209 /* Headers */,
 				8D255AC90486D3F9007BF209 /* Resources */,
 				8D255ACB0486D3F9007BF209 /* Sources */,
 				8D255ACD0486D3F9007BF209 /* Frameworks */,
-				8D255AD00486D3F9007BF209 /* Rez */,
-				A591AFE5114B2D7E00AD5CF5 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -171,9 +136,19 @@
 /* Begin PBXProject section */
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = EF7AD73108BB986600CE4634 /* Build configuration list for PBXProject "Spread" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 089C166AFE841209C02AAC07 /* Spread */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -194,16 +169,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXRezBuildPhase section */
-		8D255AD00486D3F9007BF209 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXRezBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		8D255ACB0486D3F9007BF209 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -222,7 +187,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -255,11 +219,11 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_GC = supported;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -269,10 +233,10 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_GC = supported;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
